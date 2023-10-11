@@ -13,14 +13,14 @@ function Navbar() {
   return (
     <>
       <nav className="bg-white fixed w-full z-20 top-0 left-0 border-b border-gray-200 shadow-md">
-        <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <a href="https://flowbite.com/" className="flex items-center">
-            <Image src="/logo.png" className="h-14 mr-3" alt="Flowbite Logo" width={75} height={100}/>
-            <span className="self-center text-2xl font-semibold whitespace-nowrap">DK Academy</span>
-        </a>
-        <div className="flex justify-center md:order-2 gap-4 ">
-            <button type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0 ">Login</button>
-            <button type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0 max-width hidden md:block">Register</button>
+        <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-3 pr-0 md:p-4">
+        <Link href="/" className="flex items-center">
+            <Image src="/logo.png" className="h-10 w-16 md:h-14 mr-3" alt="Flowbite Logo" width={75} height={100} />
+            <span className="self-center text-1xl md:text-2xl font-semibold whitespace-nowrap">DK Academy</span>
+        </Link>
+        <div className="flex justify-center md:order-2 gap-1 md:gap-4 ">
+            <button type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center">Login</button>
+            <button type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center hidden md:block">Register</button>
             <button onClick={menuIconHandler} type="button" className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 " aria-controls="navbar-sticky" aria-expanded="false">
               <span className="sr-only">Open main menu</span>
               { menuIcon ? 
