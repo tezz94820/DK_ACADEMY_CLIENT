@@ -21,7 +21,7 @@ function Sidebar({toggleHandler} : SidebarProps) {
       <div onClick={toggleHandler} className='w-screen h-full absolute top-0 right-60' />
       
       {/* mainSidebar */}
-      <div className='w-60 h-full bg-gradient-to-r from-sky-500 to-violet-800 absolute top-0 right-0 flex flex-col p-4 gap-2'>
+      <div className='w-60 h-full bg-gradient-to-r from-sky-500 to-violet-800 absolute top-0 right-0 flex flex-col p-4 gap-2 shadow-md rounded-l-lg'>
         <div className='flex gap-1'>
           <Image src="/logo.png" className="h-10 w-16 md:h-14 mr-3" alt="Flowbite Logo" width={75} height={100} />
           <span className="self-center text-1xl  font-semibold whitespace-nowrap relative right-3" >DK Academy</span>
