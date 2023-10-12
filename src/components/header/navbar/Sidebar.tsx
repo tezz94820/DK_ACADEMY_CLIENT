@@ -24,13 +24,13 @@ function Sidebar({toggleHandler} : SidebarProps) {
       <div className='w-60 h-full bg-gradient-to-r from-sky-500 to-violet-800 absolute top-0 right-0 flex flex-col p-4 gap-2 shadow-md rounded-l-lg'>
         <div className='flex gap-1'>
           <Image src="/logo.png" className="h-10 w-16 md:h-14 mr-3" alt="Flowbite Logo" width={75} height={100} />
-          <span className="self-center text-1xl  font-semibold whitespace-nowrap relative right-3" >DK Academy</span>
+          <span className="self-center text-1xl text-black font-semibold whitespace-nowrap relative right-3" >DK Academy</span>
         </div>
         <ul className="flex flex-col mt-4 font-medium">
           {navLinks.map((link) => (
             <Link key={link.name} href={link.href} onClick={toggleHandler}>
               <div className="w-full py-2 pl-3 pr-4 text-white rounded hover:bg-orange-400  hover:text-sky-500 flex flex-row gap-3">
-                <div className='h-6 w-6' dangerouslySetInnerHTML={{ __html: link.icon }} />
+                <Image src={link.icon} className="h-6 w-6" alt="Flowbite Logo" width={75} height={100} />
                 {link.name}
               </div>
             </Link>

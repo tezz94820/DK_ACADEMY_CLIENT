@@ -6,6 +6,8 @@
 
 # svg icons 
 1. https://heroicons.com/
+2. https://www.svgrepo.com/
+
 
 
 # Framer motion animations
