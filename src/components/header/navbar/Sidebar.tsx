@@ -15,7 +15,7 @@ function Sidebar({toggleHandler} : SidebarProps) {
       className='h-screen w-screen absolute top-0 right-0'
       initial={{ x: 300 }} 
       animate={{x:0}} 
-      transition={{ ease: "easeIn", duration: 0.2 }}
+      transition={{ ease: "easeInOut", duration: 0.1 }}
     >
       {/* left to sidebar like modal */}
       <div onClick={toggleHandler} className='w-screen h-full absolute top-0 right-60' />
