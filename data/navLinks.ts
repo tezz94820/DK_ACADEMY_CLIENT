@@ -19,4 +19,5 @@ export const navLinks = [
     href: "/about",
     icon: '/about.svg'
   },
+  
 ];
