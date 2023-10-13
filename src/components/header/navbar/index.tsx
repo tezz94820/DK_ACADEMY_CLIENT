@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { navLinks } from '../../../../data/navLinks';
 import Sidebar from './Sidebar';
+import { useRouter } from 'next/router';
 
 function Navbar() {
 
@@ -12,6 +13,9 @@ function Navbar() {
     setToggle(!toggle);
   }
 
+  const router = useRouter();
+  const pathName = router.pathname;
+  console.log(pathName);
   return (
     <>
       <nav className="bg-white fixed h-auto w-full z-20 top-0 left-0 border-b border-gray-200 shadow-md">
@@ -28,7 +32,11 @@ function Navbar() {
             <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white ">
               {
                 navLinks.map( link => (
-                  <Link key={link.name} href={link.href} className="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 " aria-current="page">{link.name}</Link> 
+                  <Link key={link.name} href={link.href} className={`block py-2 pl-3 pr-4 rounded md:bg-transparent md:p-0 
+                    ${(pathName == link.href) ? 'text-black' : 'md:text-blue-700'}`} 
+                  >
+                    {link.name}
+                  </Link> 
                 ))
               }
             </ul>
