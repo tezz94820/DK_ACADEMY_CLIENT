@@ -3,7 +3,7 @@ import React from 'react'
 function courses() {
 
   return (
-    <div className='absolute top-16 md:top-24 left-0 h-screen md:h-5/6 w-screen flex flex-row overflow-hidden bg-blue-400'>
+    <div className='absolute top-16 md:top-24 left-0 h-auto  md:h-5/6 w-screen flex flex-row md:overflow-hidden'>
         {/* left part */}
         <div className="bg-blue-400 hidden md:block md:overflow-y-scroll w-1/5">
             <h1> left part-1</h1>
@@ -49,7 +49,7 @@ function courses() {
         </div>
 
         {/* right part */}
-        <div className='bg-red-400 overflow-y-scroll w-full md:w-4/5'>
+        <div className='bg-red-400 w-full h-full md:overflow-y-scroll md:w-4/5'>
             {/* search bar */}
             <div className="items-center px-4 flex justify-center" >
                 <div className="relative mr-3">
@@ -66,6 +66,7 @@ function courses() {
             <h1>corousal</h1>
             <h1>filtering</h1>
             <h1>courses with scroll to load more</h1>
+            <h1> Right part-1</h1>
             <h1> Right part</h1>
             <h1> Right part</h1>
             <h1> Right part</h1>
@@ -110,8 +111,7 @@ function courses() {
             <h1> Right part</h1>
             <h1> Right part</h1>
             <h1> Right part</h1>
-            <h1> Right part</h1>
-            <h1> Right part</h1>
+            <h1> Right part-100</h1>
 
 
         </div>
