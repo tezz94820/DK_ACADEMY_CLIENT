@@ -15,7 +15,6 @@ function Navbar() {
 
   const router = useRouter();
   const pathName = router.pathname;
-  console.log(pathName);
   return (
     <>
       <nav className="bg-white fixed h-auto w-full z-20 top-0 left-0 border-b border-gray-200 shadow-md">
