@@ -28,14 +28,15 @@ function Navbar() {
 
           {/* mid */}
           <div className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
-            <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white ">
+            <ul className="flex font-medium flex-row gap-6">
               {
                 navLinks.map( link => (
-                  <Link key={link.name} href={link.href} className={`block py-2 pl-3 pr-4 rounded md:bg-transparent md:p-0 
-                    ${(pathName == link.href) ? 'text-black' : 'md:text-blue-700'}`} 
-                  >
-                    {link.name}
-                  </Link> 
+                  <li key={link.name} className='bg-transparent hover:bg-blue-100 hover:rounded py-1 px-2'>
+                    <Link href={link.href} className={` ${(pathName == link.href) ? 'text-black' : 'text-blue-700'}`}  
+                    >
+                      {link.name}
+                    </Link> 
+                  </li>
                 ))
               }
             </ul>
