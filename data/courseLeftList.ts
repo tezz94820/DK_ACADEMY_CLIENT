@@ -1,11 +1,11 @@
 export const courseLeftList = [
     {
-      name: "Home",
+      name: "PYQ Question Bank",
       href: "/",
       icon: '/home.svg'
     },
     {
-      name: "Courses",
+      name: "PYQ Video Course",
       href: "/courses",
       icon: '/courses.svg'
     },

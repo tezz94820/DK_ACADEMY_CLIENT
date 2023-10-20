@@ -1,0 +1,11 @@
+.scrollbar::-webkit-scrollbar {
+    @apply w-1
+  }
+  
+  .scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-gradient-to-r from-sky-500 to-violet-800 rounded
+  }
+  
+  .scrollbar::-webkit-scrollbar-track {
+    @apply bg-transparent  
+  }

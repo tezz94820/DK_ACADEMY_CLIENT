@@ -1,9 +1,11 @@
 import React from 'react'
+import styles from '../courseStyles.module.css'
+
 
 function CourseRight() {
   return (
     <>
-        <div className='bg-red-400 w-full h-full md:overflow-y-scroll md:w-4/5'>
+        <div className={`${styles.scrollbar} bg-red-400 w-full h-full md:overflow-y-scroll md:w-4/5`}>
             {/* search bar */}
             <div className="items-center px-4 flex justify-center" >
                 <div className="relative mr-3">
@@ -15,6 +17,7 @@ function CourseRight() {
                         className="block p-2 pl-10 w-70 text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:pl-3"
                         placeholder="Search Here..."
                     />
+                    <button type='submit'>Submit</button>
                 </div>
             </div>
             <h1>corousal</h1>
