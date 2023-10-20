@@ -17,7 +17,7 @@ function Navbar() {
   const pathName = router.pathname;
   return (
     <>
-      <nav className="bg-white fixed h-auto w-full z-20 top-0 left-0 border-b border-gray-200 shadow-md">
+      <nav className="bg-white fixed h-20 w-full z-20 top-0 left-0 border-b border-gray-200 shadow-md">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-3 pr-1 md:p-4">
          
           {/* left */}
@@ -28,7 +28,7 @@ function Navbar() {
 
           {/* mid */}
           <div className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
-            <ul className="flex font-medium flex-row gap-6">
+            <ul className="flex font-semibold flex-row gap-6">
               {
                 navLinks.map( link => (
                   <li key={link.name} className='bg-transparent hover:bg-blue-100 hover:rounded py-1 px-2'>
