@@ -8,7 +8,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <>
       <Head>
         <title>DK Academy</title>
-        <link rel="shortcut icon" href="/logo.png" />
+        <link rel="shortcut icon" href="/favicon.ICO" />
       </Head>
       <Header />
       <Component {...pageProps} />
