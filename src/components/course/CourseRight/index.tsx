@@ -6,7 +6,7 @@ import Image from 'next/image'
 function CourseRight() {
   return (
     <>
-        <div className={`${styles.scrollbar} bg-red-400 w-full h-full md:overflow-y-scroll md:w-4/5 p-4`}>
+        <div className={`${styles.scrollbar} bg-red-400 w-full h-full md:overflow-y-scroll md:w-5/6 p-4`}>
             {/* search bar */}
             <div className=" flex items-center justify-center h-8 relative my-2 " >
                 <div className='w-3/4 h-full'>
