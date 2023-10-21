@@ -17,8 +17,8 @@ function Navbar() {
   const pathName = router.pathname;
   return (
     <>
-      <nav className="bg-white fixed h-20 w-full z-20 top-0 left-0 border-b border-gray-200 shadow-md">
-        <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-3 pr-1 md:p-4">
+      <nav className="bg-white fixed h-4.3 w-full z-20 top-0 left-0 border-b border-gray-200 shadow-md">
+        <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-3 pr-1 md:p-1 md:px-4">
          
           {/* left */}
           <Link href="/" className="flex items-center">

@@ -1,31 +1,30 @@
 import React from 'react'
 import styles from '../courseStyles.module.css'
+import Image from 'next/image'
 
 
 function CourseRight() {
   return (
     <>
-        <div className={`${styles.scrollbar} bg-red-400 w-full h-full md:overflow-y-scroll md:w-4/5`}>
+        <div className={`${styles.scrollbar} bg-red-400 w-full h-full md:overflow-y-scroll md:w-4/5 p-4`}>
             {/* search bar */}
-            <div className="items-center px-4 flex justify-center" >
-                <div className="relative mr-3">
-                    <div className="absolute top-3 left-3 items-center">
-                        <svg className="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd"></path></svg>
-                    </div>
+            <div className=" flex items-center justify-center h-8 relative my-2 " >
+                <div className='w-3/4 h-full'>
+                    <Image src='/search.svg' alt="search Icon" width={22} height={22} className='absolute mt-1.5 ml-1.5' />
                     <input
                         type="text"
-                        className="block p-2 pl-10 w-70 text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:pl-3"
-                        placeholder="Search Here..."
+                        className="w-full h-full focus:outline-teal-400 pl-8 rounded-lg bg-violet-300 font-light text-sm"
+                        placeholder="Search to start learning..."
                     />
-                    <button type='submit'>Submit</button>
                 </div>
+                <button type='submit' className='text-white bg-violet-500 hover:bg-violet-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-center ml-5 h-full w-4.6'>Search</button>
             </div>
             <h1>corousal</h1>
             <h1>filtering</h1>
             <h1>courses with scroll to load more</h1>
             <h1> Right part-1</h1>
             <h1> Right part</h1>
-            <h1> Right part</h1>
+            <h1 className='text-sm'> Right part</h1>
             <h1> Right part</h1>
             <h1> Right part</h1>
             <h1> Right part</h1>
