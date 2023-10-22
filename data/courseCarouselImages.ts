@@ -6,7 +6,7 @@ export const courseCarouselImages = [
     },
     {
         id: '2',
-        href: '/ad.png',
+        href: '/art.png',
         alt: 'advertisement photo'
     },
     {
@@ -16,7 +16,7 @@ export const courseCarouselImages = [
     },
     {
         id: '4',
-        href: '/ad.png',
+        href: '/art.png',
         alt: 'advertisement photo'
     },
 
