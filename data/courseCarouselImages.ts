@@ -11,7 +11,7 @@ export const courseCarouselImages = [
     },
     {
         id: '3',
-        href: '/ad.png',
+        href: '/art2.png',
         alt: 'advertisement photo'
     },
     {

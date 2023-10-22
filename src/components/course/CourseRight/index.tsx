@@ -2,6 +2,7 @@ import React from 'react'
 import styles from '../courseStyles.module.css'
 import SearchBar from './SearchBar'
 import Carousel from './Carousel'
+import Filtering from './Filtering'
 
 
 function CourseRight() {
@@ -11,8 +12,11 @@ function CourseRight() {
             {/* search bar */}
             <SearchBar />
             <Carousel />
+            {/* only for small screen */}
+            <Filtering />
             
-            <h1 className='mt-4'>filtering</h1>
+            
+            
             <h1>courses with scroll to load more</h1>
             <h1> Right part-1</h1>
             <h1> Right part</h1>

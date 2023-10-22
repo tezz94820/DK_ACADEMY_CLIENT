@@ -30,32 +30,32 @@ export const courseLeftList = [
         icon: '/courses.svg'
       },
       {
-        name: "Services",
+        name: "Servisdsces",
         href: "/services",
         icon: '/services.svg'
       },
       {
-        name: "About",
+        name: "Absdvout",
         href: "/about",
         icon: '/about.svg'
       },
       {
-        name: "Home",
+        name: "Homvcbe",
         href: "/",
         icon: '/home.svg'
       },
       {
-        name: "Courses",
+        name: "Coursxcses",
         href: "/courses",
         icon: '/courses.svg'
       },
       {
-        name: "Services",
+        name: "Servigthces",
         href: "/services",
         icon: '/services.svg'
       },
       {
-        name: "About",
+        name: "Aboasasut",
         href: "/about",
         icon: '/about.svg'
       },

@@ -28,7 +28,7 @@ function Carousel() {
     <div className='hover:animate-pulse h-32 w-full flex relative shadow-lg shadow-indigo-500/50 mt-5 '>
       {/* left arrow */}
       <Image src='/arrow_left.svg' alt='left arrow' width={50} height={50} 
-        className='absolute left-0 top-1/4 cursor-pointer rounded-lg' 
+        className='absolute left-0 top-1/3 cursor-pointer rounded-lg' 
         onClick={prevSlide}
       />
       {/* images */}
@@ -41,7 +41,7 @@ function Carousel() {
       }
       {/* right arrow */}
       <Image src='/arrow_right.svg' alt='right arrow' width={50} height={50} 
-        className='absolute right-0 top-1/4 cursor-pointer'
+        className='absolute right-0 top-1/3 cursor-pointer'
         onClick={nextSlide}
       />
       
