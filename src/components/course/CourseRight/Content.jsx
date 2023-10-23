@@ -47,7 +47,7 @@ function Content() {
                     </div>
                     
                     {/* separator */}
-                    <hr className='border border-purple-700'/>
+                    <hr className='border border-purple-700 my-1'/>
                     
                     
                     {/* bottom */}
@@ -68,9 +68,9 @@ function Content() {
                         </div>
                       </div>
                       {/* buttons */}
-                      <div className='grid grid-cols-2 gap-5 justify-between mt-2 font-semibold'>
-                        <button className='bg-violet-200 text-violet-800 hover:text-violet-200 hover:bg-violet-800 rounded-lg p-0.5 text-sm active:animate-ping'>Explore</button>
-                        <button className='bg-violet-700 text-white hover:text-violet-800 hover:bg-violet-200 rounded-lg text-sm active:animate-ping'>Buy Now</button>
+                      <div className='grid grid-cols-2 gap-5 justify-between mt-3 font-semibold'>
+                        <button className='bg-violet-200 text-violet-800 hover:text-violet-200 hover:bg-violet-800 rounded-lg p-0.5 text-sm'>Explore</button>
+                        <button className='bg-violet-700 text-white hover:text-violet-800 hover:bg-violet-200 rounded-lg text-sm'>Buy Now</button>
                       </div>
                     </div>
 
