@@ -10,7 +10,7 @@ function Content() {
   }
 
   return (
-    <div className='grid grid-cols-2 md:grid-cols-3 gap-4 mt-3'>
+    <div className='grid grid-cols-1 md:grid-cols-3 gap-4 mt-3'>
         {
             contentList.map( (item) => (
                 <div key={item.id} className='border-gray-200 border-2 rounded shadow-lg shadow-indigo-500/50 p-2'>
