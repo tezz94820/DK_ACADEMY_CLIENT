@@ -15,3 +15,6 @@
 # Framer motion animations
 1. https://www.framer.com/motion/component/
 https://www.pw.live/study/batches?cohortId=634fb88abc72420011da2fe4&tag=State%20Exams
+
+# courses page 
+1. https://www.pw.live/

@@ -1,4 +1,12 @@
-export const courseCarouselImages = [
+interface Link{
+    id: string;
+    href: string;
+    alt: string;
+  }
+  
+type courseCarouselImagesType = Link[];
+
+export const courseCarouselImages:courseCarouselImagesType = [
     {
         id: '1',
         href: '/ad.png',

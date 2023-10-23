@@ -1,4 +1,11 @@
-export const navLinks = [
+interface navLink{
+  name: string;
+  href: string;
+  icon: string;
+}
+
+type navLinksType = navLink[];
+export const navLinks:navLinksType = [
   {
     name: "Home",
     href: "/",

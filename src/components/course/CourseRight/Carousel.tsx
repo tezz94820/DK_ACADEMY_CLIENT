@@ -25,7 +25,7 @@ function Carousel() {
   };
 
   return (
-    <div className='hover:animate-pulse h-32 w-full flex relative shadow-lg shadow-indigo-500/50 mt-5 '>
+    <div className='hover:animate-pulse h-32 w-full flex relative shadow-lg shadow-indigo-500/50 mt-3 md:mt-5 '>
       {/* left arrow */}
       <Image src='/arrow_left.svg' alt='left arrow' width={50} height={50} 
         className='absolute left-0 top-1/3 cursor-pointer rounded-lg' 

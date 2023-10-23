@@ -1,4 +1,12 @@
-export const courseLeftList = [
+interface Link{
+  name: string;
+  href: string;
+  icon: string;
+}
+
+type courseLeftListType = Link[];
+
+export const courseLeftList:courseLeftListType = [
     {
       name: "PYQ Question Bank",
       href: "/",

@@ -12,6 +12,7 @@ function courses() {
         {/* right part */}
         <CourseRight />
         
+        
     </div>
   )
 }

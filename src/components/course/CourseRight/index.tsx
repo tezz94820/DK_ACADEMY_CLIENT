@@ -3,69 +3,21 @@ import styles from '../courseStyles.module.css'
 import SearchBar from './SearchBar'
 import Carousel from './Carousel'
 import Filtering from './Filtering'
+import Content from './Content'
 
 
 function CourseRight() {
   return (
     <>
-        <div className={`${styles.scrollbar} w-full h-full md:overflow-y-scroll md:w-5/6 p-4`}>
+        <div className={`${styles.scrollbar} w-full h-full md:overflow-y-scroll md:w-5/6 p-2 md:p-4`}>
             {/* search bar */}
             <SearchBar />
             <Carousel />
             {/* only for small screen */}
             <Filtering />
-            
-            
-            
-            <h1>courses with scroll to load more</h1>
-            <h1> Right part-1</h1>
-            <h1> Right part</h1>
-            <h1 className='text-sm'> Right part</h1>
-            <h1> Right part</h1>
-            <h1> Right part</h1>
-            <h1> Right part</h1>
-            <h1> Right part</h1>
-            <h1> Right part</h1>
-            <h1> Right part</h1>
-            <h1> Right part</h1>
-            <h1> Right part</h1>
-            <h1> Right part</h1>
-            <h1> Right part</h1>
-            <h1> Right part</h1>
-            <h1> Right part</h1>
-            <h1> Right part</h1>
-            <h1> Right part</h1>
-            <h1> Right part</h1>
-            <h1> Right part</h1>
-            <h1> Right part</h1>
-            <h1> Right part</h1>
-            <h1> Right part</h1>
-            <h1> Right part</h1>
-            <h1> Right part</h1>
-            <h1> Right part</h1>
-            <h1> Right part</h1>
-            <h1> Right part</h1>
-            <h1> Right part</h1>
-            <h1> Right part</h1>
-            <h1> Right part</h1>
-            <h1> Right part</h1>
-            <h1> Right part</h1>
-            <h1> Right part</h1>
-            <h1> Right part</h1>
-            <h1> Right part</h1>
-            <h1> Right part</h1>
-            <h1> Right part</h1>
-            <h1> Right part</h1>
-            <h1> Right part</h1>
-            <h1> Right part</h1>
-            <h1> Right part</h1>
-            <h1> Right part</h1>
-            <h1> Right part</h1>
-            <h1> Right part</h1>
-            <h1> Right part</h1>
-            <h1> Right part-100</h1>
-
-
+            <p className='mt-3'>23 courses available</p>
+            <hr className='border border-purple-700'/>
+            <Content />
         </div>
     </>
   )
