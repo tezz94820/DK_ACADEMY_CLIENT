@@ -19,7 +19,7 @@ function CourseLeft() {
                     className={`flex gap-2 w-full  hover:bg-violet-300 rounded-lg shadow-sm shadow-indigo-500/50 ${focusedButton==item.id ? 'border-b-2 bg-violet-300 border-violet-600' : ''} `}
                     onClick={() => setFocusedButton(item.id)}
                   >
-                    <Image src={item.icon} alt="icon" height={5} width={5} className='h-8 w-8'/>
+                    <Image src={item.icon} alt="icon" height={5} width={5} className='h-8 w-8 my-1 ml-1'/>
                     <p className='text-xs my-auto'>{item.name}</p>
                   </Link>
                 </li>
