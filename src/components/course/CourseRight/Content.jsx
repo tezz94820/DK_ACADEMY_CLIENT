@@ -26,7 +26,7 @@ function Content() {
                       />
                     </div>
                     {/* thumbnail */}
-                    <div className='w-full h-36'>
+                    <div className='w-full h-44'>
                       <Image src={item.thumbnail} height={300} width={300} alt="thumbnail" 
                         className='rounded-lg w-full h-full'
                       />

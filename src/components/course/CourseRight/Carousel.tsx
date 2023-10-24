@@ -12,7 +12,7 @@ function Carousel() {
   useEffect( () => {
     const interval = setInterval( () => {
       setSlide(prevSlide => (prevSlide+1)%totalSlides);
-    },3000);
+    },8000);
     return () => clearInterval(interval);
   }, [])
 
@@ -46,15 +46,17 @@ function Carousel() {
       />
       
       {/* Indicators */}
-      <span className="h-5 w-20 flex justify-evenly items-center absolute bottom-0 left-[46%]">
-        {courseCarouselImages.map((_, idx) => (
-          <button
-            key={idx}
-            className={`rounded-full h-2 w-2 ${slide == idx ? 'bg-black' : 'bg-white'}`}
-            onClick={() => setSlide(idx)}
-        ></button>
-        ))}
-      </span>
+      <div className="h-5 w-full  flex justify-center items-center absolute bottom-0">
+        <div className='flex w-20 justify-evenly items-center '>
+          {courseCarouselImages.map((_, idx) => (
+            <button
+              key={idx}
+              className={`rounded-full h-2 w-2 ${slide == idx ? 'bg-black' : 'bg-white'}`}
+              onClick={() => setSlide(idx)}
+          ></button>
+          ))}
+        </div>
+      </div>
     </div>
   )
 }

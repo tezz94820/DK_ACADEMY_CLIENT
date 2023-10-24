@@ -16,7 +16,7 @@ export const courseLeftList:courseLeftListType = [
     },
     {
       id: '2',
-      name: "PYQ Video Course",
+      name: "PYQ Video Courses",
       href: "#",
       icon: '/video.svg'
     },
@@ -52,13 +52,13 @@ export const courseLeftList:courseLeftListType = [
       },
       {
         id: '8',
-        name: "Daily Test",
+        name: "Weekly Test",
         href: "#",
         icon: '/test.svg'
       },
       {
         id: '9',
-        name: "Homvcbe",
+        name: "Test Series",
         href: "#",
         icon: '/all.svg'
       },
