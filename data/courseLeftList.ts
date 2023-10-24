@@ -18,43 +18,43 @@ export const courseLeftList:courseLeftListType = [
       id: '2',
       name: "PYQ Video Course",
       href: "#",
-      icon: '/all.svg'
+      icon: '/video.svg'
     },
     {
       id: '3',
       name: "PYQ PDF chapter wise",
       href: "#",
-      icon: '/all.svg'
+      icon: '/document.svg'
     },
     {
       id: '4',
       name: "Mathematics",
       href: "#",
-      icon: '/all.svg'
+      icon: '/maths.svg'
     },
     {
         id: '5',
         name: "Chemistry",
         href: "#",
-        icon: '/all.svg'
+        icon: '/chemistry.svg'
       },
       {
         id: '6',
         name: "Physics",
         href: "#",
-        icon: '/all.svg'
+        icon: '/physics.svg'
       },
       {
         id: '7',
         name: "Practice",
         href: "#",
-        icon: '/all.svg'
+        icon: '/practice.svg'
       },
       {
         id: '8',
         name: "Daily Test",
         href: "#",
-        icon: '/all.svg'
+        icon: '/test.svg'
       },
       {
         id: '9',

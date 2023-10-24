@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { courseLeftList } from '../../../../data/courseLeftList'
 import styles from '../courseStyles.module.css'
 import Image from 'next/image'; 
