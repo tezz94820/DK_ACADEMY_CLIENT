@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
-import { courseLeftList } from '../../../../data/courseLeftList'
-import styles from '../courseStyles.module.css'
+import { courseLeftList } from '../../../../../data/courseLeftList'
+import styles from '../../courseStyles.module.css'
 import Image from 'next/image';
 
 function Filtering() {
@@ -18,7 +18,7 @@ function Filtering() {
                 className={`h-auto flex w-max bg-violet-200 my-auto rounded-lg px-1 hover:bg-violet-400 ${focusedButton==item.id ? 'border-b-2 bg-violet-300 border-violet-600' : ''}`}
               >
                   <Image src={item.icon} alt="icon" height={10} width={10} className='h-6 w-6 my-1'/>
-                  <p className='text-xs my-auto'>{item.name}</p>
+                  <p className='text-xs my-auto ml-1'>{item.name}</p>
               </button>
             </div>
           ))

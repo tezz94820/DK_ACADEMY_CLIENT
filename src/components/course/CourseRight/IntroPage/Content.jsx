@@ -1,5 +1,5 @@
 import React from 'react'
-import  { contentList } from '../../../../data/contentList'
+import  { contentList } from '../../../../../data/contentList'
 import Image from 'next/image'
 
 function Content() {

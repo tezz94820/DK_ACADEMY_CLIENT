@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { courseCarouselImages } from '../../../../data/courseCarouselImages'
+import { courseCarouselImages } from '../../../../../data/courseCarouselImages'
 import Image from 'next/image';
 import { motion } from 'framer-motion'
 
