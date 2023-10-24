@@ -1,4 +1,5 @@
 interface Link{
+  id: string;
   name: string;
   href: string;
   icon: string;
@@ -8,63 +9,75 @@ type courseLeftListType = Link[];
 
 export const courseLeftList:courseLeftListType = [
     {
-      name: "PYQ Question Bank",
-      href: "/",
-      icon: '/home.svg'
+      id: '1',
+      name: "ALL",
+      href: "#",
+      icon: '/all.svg'
     },
     {
+      id: '2',
       name: "PYQ Video Course",
-      href: "/courses",
-      icon: '/courses.svg'
+      href: "#",
+      icon: '/all.svg'
     },
     {
-      name: "Services",
-      href: "/services",
-      icon: '/services.svg'
+      id: '3',
+      name: "PYQ PDF chapter wise",
+      href: "#",
+      icon: '/all.svg'
     },
     {
-      name: "About",
-      href: "/about",
-      icon: '/about.svg'
+      id: '4',
+      name: "Mathematics",
+      href: "#",
+      icon: '/all.svg'
     },
     {
-        name: "Home",
-        href: "/",
-        icon: '/home.svg'
+        id: '5',
+        name: "Chemistry",
+        href: "#",
+        icon: '/all.svg'
       },
       {
-        name: "Courses",
-        href: "/courses",
-        icon: '/courses.svg'
+        id: '6',
+        name: "Physics",
+        href: "#",
+        icon: '/all.svg'
       },
       {
-        name: "Servisdsces",
-        href: "/services",
-        icon: '/services.svg'
+        id: '7',
+        name: "Practice",
+        href: "#",
+        icon: '/all.svg'
       },
       {
-        name: "Absdvout",
-        href: "/about",
-        icon: '/about.svg'
+        id: '8',
+        name: "Daily Test",
+        href: "#",
+        icon: '/all.svg'
       },
       {
+        id: '9',
         name: "Homvcbe",
-        href: "/",
-        icon: '/home.svg'
+        href: "#",
+        icon: '/all.svg'
       },
       {
+        id: '10',
         name: "Coursxcses",
-        href: "/courses",
-        icon: '/courses.svg'
+        href: "#",
+        icon: '/all.svg'
       },
       {
+        id: '11',
         name: "Servigthces",
-        href: "/services",
-        icon: '/services.svg'
+        href: "#",
+        icon: '/all.svg'
       },
       {
+        id: '12',
         name: "Aboasasut",
-        href: "/about",
-        icon: '/about.svg'
+        href: "#",
+        icon: '/all.svg'
       },
   ];

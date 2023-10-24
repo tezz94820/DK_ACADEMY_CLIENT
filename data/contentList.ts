@@ -18,7 +18,7 @@ type ContentListType = ContentItem[];
 export const contentList:ContentListType = [
     {
         id: "1",
-        title: "PYQ Quadratic Equations more content",
+        title: "PYQ Quadratic Video Course",
         type: 'course',
         new: true,
         thumbnail: '/thumb.png',
@@ -32,9 +32,9 @@ export const contentList:ContentListType = [
     },
     {
         id: "2",
-        title: "PYQ Quadratic Equations",
+        title: "PYQ Quadratic PDF",
         type: 'PDF',
-        new: false,
+        new: true,
         thumbnail: '/art.png',
         class: "JEE Aspirants",
         price: "2500",

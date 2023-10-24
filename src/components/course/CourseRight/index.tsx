@@ -15,7 +15,7 @@ function CourseRight() {
             <Carousel />
             {/* only for small screen */}
             <Filtering />
-            <p className='mt-3'>23 courses available</p>
+            <p className='mt-3'>13 courses available</p>
             <hr className='border border-purple-700'/>
             <Content />
         </div>

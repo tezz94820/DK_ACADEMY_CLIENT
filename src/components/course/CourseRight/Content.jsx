@@ -17,7 +17,9 @@ function Content() {
                     {/* top */}
                     <div className='flex h-12 w-full pt-1'>
                       <h3 className='text-sm w-3/4 font-bold'>{item.title}</h3>
-                      <p className='bg-yellow-300 w-8 text-center h-5 rounded-md p-0.5 text-xs ml-4 '>New</p>
+                      {
+                        item.new && <p className='bg-yellow-300 w-8 text-center h-5 rounded-md p-0.5 text-xs ml-4 '>New</p>
+                      }
                       <Image src='/watsapp.svg' height={10} width={10} alt="watsapp logo" 
                         className='h-4 w-4 ml-2 mt-0.5 cursor-pointer animate-pulse active:animate-ping' 
                         onClick={() => redirectWatsapp(item.title,item.courseLink)}
