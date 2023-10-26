@@ -1,16 +1,18 @@
-import React from 'react'
-import styles from '../courseStyles.module.css'
-import SearchBar from './IntroPage/SearchBar'
-import Carousel from './IntroPage/Carousel'
-import Filtering from './IntroPage/Filtering'
-import Content from './IntroPage/Content'
+import React, { useState } from 'react'
 import IntroPage from './IntroPage'
+import ExplorePage from './ExplorePage'
 
 
 function CourseRight() {
+
+  const [page, setPage] = useState('intro');
+  const changePage = (newPage:string):void => {
+    setPage(newPage);
+  }
   return (
     <>
-        <IntroPage />
+        { page === 'intro' && <IntroPage changePage={changePage}/>}
+        { page === 'explore' && <ExplorePage />}
         
     </>
   )

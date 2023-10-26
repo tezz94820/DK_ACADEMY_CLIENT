@@ -2,9 +2,12 @@ import React from 'react'
 import  { contentList } from '../../../../../data/contentList'
 import Image from 'next/image'
 
-function Content() {
+type ContentProps = {
+  changePage : (newPage:string) => void;
+}
+function Content({changePage} : ContentProps) {
 
-  const redirectWatsapp = (title,courseLink) => {
+  const redirectWatsapp = (title:string,courseLink:string) => {
     const message = `Hey there! I just discovered an amazing educational video course on www.dkacademy.com . It's title is ${title}. I've been finding it super insightful, and I thought you might be interested too! Check it out here: ${courseLink} #LearningTogether`
     window.open(`https://wa.me/?text=${message}`, '_blank')
   }
@@ -71,7 +74,11 @@ function Content() {
                       </div>
                       {/* buttons */}
                       <div className='grid grid-cols-2 gap-5 justify-between mt-3 font-semibold'>
-                        <button className='bg-violet-200 text-violet-800 hover:animate-pulse rounded-lg p-0.5 text-sm'>Explore</button>
+                        <button className='bg-violet-200 text-violet-800 hover:animate-pulse rounded-lg p-0.5 text-sm'
+                          onClick={() => changePage('explore')}
+                        >
+                          Explore
+                        </button>
                         <button className='bg-violet-700 text-white hover:animate-pulse rounded-lg text-sm'>Buy Now</button>
                       </div>
                     </div>

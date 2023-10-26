@@ -31,12 +31,11 @@ function Navbar() {
             <ul className="flex font-semibold flex-row gap-6">
               {
                 navLinks.map( link => (
-                  <li key={link.name} className='bg-transparent hover:bg-blue-100 hover:rounded py-1 px-2'>
-                    <Link href={link.href} className={` ${(pathName == link.href) ? 'text-black' : 'text-blue-700'}`}  
-                    >
+                  <Link key={link.name} href={link.href} className={` ${(pathName == link.href) ? 'text-black' : 'text-blue-700'}`}  >
+                    <li className='bg-transparent hover:bg-blue-100 hover:rounded py-1 px-2'>
                       {link.name}
-                    </Link> 
-                  </li>
+                    </li>
+                  </Link> 
                 ))
               }
             </ul>
