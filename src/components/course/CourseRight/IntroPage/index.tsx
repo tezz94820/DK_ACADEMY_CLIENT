@@ -8,7 +8,7 @@ import Content from './Content'
 type InroPageProps = {
   changePage : (newPage:string) => void;
 }
-function Index({changePage}: InroPageProps) {
+function IntroPage({changePage}: InroPageProps) {
   return (
     <>
         <div className={`${styles.scrollbar} w-full h-full md:overflow-y-scroll md:w-5/6 p-2 md:p-4`}>
@@ -25,4 +25,4 @@ function Index({changePage}: InroPageProps) {
   )
 }
 
-export default Index
+export default IntroPage
