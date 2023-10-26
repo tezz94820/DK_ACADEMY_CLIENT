@@ -1,6 +1,6 @@
 import React from 'react'
 
-function index() {
+function FreeDemoVideos() {
   return (
     <div>
         Free Demo videos
@@ -8,4 +8,4 @@ function index() {
   )
 }
 
-export default index
+export default FreeDemoVideos

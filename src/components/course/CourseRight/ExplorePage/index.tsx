@@ -7,7 +7,7 @@ import Description from './Description'
 
 
 
-function Index() {
+function ExplorePage() {
   const [pageNavLink, setPageNavLink] = useState('1')
   const changePageNavLink = (component:string) => {
     setPageNavLink(component)
@@ -21,4 +21,4 @@ function Index() {
   )
 }
 
-export default Index
+export default ExplorePage

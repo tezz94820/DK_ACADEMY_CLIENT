@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import ExplorePage from './ExplorePage/Index'
-import IntroPage from './IntroPage/Index';
+import ExplorePage from './ExplorePage'
+import IntroPage from './IntroPage';
 
 
 function CourseRight() {

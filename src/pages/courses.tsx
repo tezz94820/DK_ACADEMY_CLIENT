@@ -1,5 +1,5 @@
-import CourseLeft from '@/components/course/CourseLeft/Index'
-import CourseRight from '@/components/course/CourseRight/Index'
+import CourseLeft from '@/components/course/CourseLeft'
+import CourseRight from '@/components/course/CourseRight'
 import React from 'react'
 
 function courses() {
