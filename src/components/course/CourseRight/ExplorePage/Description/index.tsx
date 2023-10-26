@@ -1,11 +1,11 @@
-import React,{ useState} from 'react'
+import React from 'react'
 import { IndividualCourseDetails } from '../../../../../../data/IndividualCourseDetails'
 import styles from '../../courseStyles.module.css'
 import LeftDescription from './LeftDescription'
 import Teachers from './Teachers'
 import RightCard from './RightCard'
 
-function index() {
+function Description() {
   return (
     <>
         <div className='md:grid md:grid-cols-7 flex flex-col'>
@@ -23,4 +23,4 @@ function index() {
   )
 }
 
-export default index
+export default Description
