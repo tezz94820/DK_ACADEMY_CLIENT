@@ -8,7 +8,7 @@ type DescriptionProps = {
 
 function LeftDescription( {description} : DescriptionProps) {
   return (
-    <div className='h-max shadow-lg shadow-indigo-500/50 p-1 md:p-5 rounded-3xl mt-5'>
+    <div className='h-max shadow-lg shadow-indigo-500/50 p-1 md:p-5 border-gray-200 border-2 rounded-3xl mt-5'>
         <h2 className='text-xl font-bold mb-3 ml-3 '>Description</h2>
         <ul>
         {

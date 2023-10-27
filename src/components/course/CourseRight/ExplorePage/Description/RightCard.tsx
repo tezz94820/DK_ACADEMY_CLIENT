@@ -4,7 +4,7 @@ import Image from 'next/image'
 function RightCard({item}: {item:IndividualCourseType}) {
   return (
     <div className=' sticky top-0 h-80 w-full flex justify-center items-center mt-1'>
-        <div className='h-76 w-80 rounded-lg  flex flex-col p-2 shadow-lg shadow-indigo-500/50'>
+        <div className='h-76 w-80 rounded-lg  flex flex-col p-2 shadow-lg shadow-indigo-500/50 border-gray-200 border-2'>
         {/* top */}
           <div className='flex flex-col'>
             <Image src={item.thumbnail} alt="thumbnail" height={500} width={500} 

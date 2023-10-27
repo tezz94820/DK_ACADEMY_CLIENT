@@ -8,7 +8,7 @@ type TeachersProps = {
 }
 function Teachers({teachers}: TeachersProps) {
   return (
-    <div className='h-max shadow-lg shadow-indigo-500/50 p-1 md:p-5 rounded-3xl mt-5 flex flex-col'>
+    <div className='h-max shadow-lg shadow-indigo-500/50 p-1 md:p-5 rounded-3xl mt-5 flex flex-col border-gray-200 border-2'>
       <div> 
         <h2 className='text-lg font-bold'>Know Your Teachers</h2>
       </div>
