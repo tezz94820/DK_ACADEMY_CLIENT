@@ -13,12 +13,12 @@ function Login() {
             {/* left part of form */}
             <div className='flex justify-center items-center'>
                 <div className='rounded-lg h-max w-5/6 ml-5 flex flex-col p-8  bg-gradient-to-br from-gray-500 to-black'>
-                    <div className='flex h-max items-center'>
+                    <div className='flex h-max items-center cursor-pointer' onClick={() => router.push('/')}>
                         <Image src="/logo.png" width={200} height={200} alt='logo' className='h-10 w-12'/>
                         <h2 className='font-bold text-lg ml-2 text-white'>DK Academy</h2>
                     </div>
                     <div className='flex flex-col h-max mt-3'>
-                        <h2 className='text-white text-xl font-bold'>Create Your Account</h2>
+                        <h2 className='text-white text-xl font-bold'>LogIn Your Account</h2>
                         <p className='text-slate-300 text-sm'>
                             Start your Learning Journey. Don&apos;t have an account? 
                             <span className='text-blue-500 hover:cursor-pointer hover:underline hover:underline-offset-4' onClick={() => router.push('/register')}>&nbsp;Register here</span>
@@ -46,7 +46,7 @@ function Login() {
                             {/* handwritten form */}
                             <div className='grid grid-cols-1 w-full gap-2 md:gap-4'>
                                 <div className='flex flex-col'>
-                                    <label htmlFor='phone' className='text-white'>Email/Phone Number</label>
+                                    <label htmlFor='phone' className='text-white'>Email / Phone Number</label>
                                     <input type='text' id='phone' name='phone' placeholder='e.g. 0123456789 or name@company.com' required className='mt-0.5 md:mt-2 text-sm focus:outline-0 focus:ring-4 focus:ring-lime-400 rounded-md px-2 py-1'/>
                                 </div>
                                 <div className='flex flex-col'>

@@ -17,8 +17,8 @@ export const navLinks:navLinksType = [
     icon: '/courses.svg'
   },
   {
-    name: "Services",
-    href: "/services",
+    name: "Achievements",
+    href: "/achievements",
     icon: '/services.svg'
   },
   {

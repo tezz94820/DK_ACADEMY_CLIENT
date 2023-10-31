@@ -13,7 +13,7 @@ function Register() {
             {/* left part of form */}
             <div className='flex justify-center items-center'>
                 <div className='rounded-lg h-max w-5/6 ml-5 flex flex-col p-8  bg-gradient-to-br from-gray-500 to-black'>
-                    <div className='flex h-max items-center'>
+                    <div className='flex h-max items-center cursor-pointer' onClick={() => router.push('/')}>
                         <Image src="/logo.png" width={200} height={200} alt='logo' className='h-10 w-12'/>
                         <h2 className='font-bold text-lg ml-2 text-white'>DK Academy</h2>
                     </div>
