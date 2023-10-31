@@ -59,7 +59,7 @@ function Register() {
                             <div className='flex-col mt-6'>
                                 <div className='flex'>
                                     <input id="terms" type="checkbox" className="w-6 h-6 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 mr-3" required />
-                                    <label htmlFor="terms" className="text-slate-300 text-sm">By signing up, you are creating a DK Academy's account, and you agree to DK Academy <a className="text-blue-500 hover:cursor-pointer hover:underline hover:underline-offset-4" href="#">Terms and Conditions</a></label>
+                                    <label htmlFor="terms" className="text-slate-300 text-sm">By signing up, you are creating a DK Academy&apos;s account, and you agree to DK Academy <span className="text-blue-500 hover:cursor-pointer hover:underline hover:underline-offset-4">Terms and Conditions</span></label>
                                 </div>
                             </div>
 
