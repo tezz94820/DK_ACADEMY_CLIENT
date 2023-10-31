@@ -8,7 +8,7 @@ function Register() {
 
 
   return (
-    <div className='w-screen min-h-screen bg-gradient-to-r from-violet-500 to-fuchsia-500 pt-14 '>
+    <div className='w-screen min-h-screen bg-gradient-to-r from-violet-500 to-fuchsia-500 pt-14 scrollbar'>
         <div className='md:grid md:grid-cols-2  w-full h-max'>
             {/* left part of form */}
             <div className='flex justify-center items-center'>
@@ -24,6 +24,20 @@ function Register() {
                             <span className='text-blue-500 hover:cursor-pointer hover:underline hover:underline-offset-4' onClick={() => router.push('/login')}>&nbsp;Login here</span>
                             .
                         </p>
+                    </div>
+                    {/* oauth of google */}
+                    <div className='flex justify-center items-center w-3/4 mx-auto mt-5'>
+                        <button className='border flex justify-center items-center gap-2 w-full p-2 rounded-lg text-gray-400 hover:text-black hover:bg-gray-200'>
+                            <Image src="google.svg" height={100} width={100} alt="google logo" className='h-6 w-6'/>
+                            <p className='text-sm md:text-base '>Sign up with Google</p>
+                        </button>
+                    </div>
+
+                    {/* horizontal rule bar */}
+                    <div className='flex items-center gap-4 mt-4 '>
+                        <hr className='w-1/2'/>
+                        <p className='font-bold text-white'>OR</p>
+                        <hr className='w-1/2'/>
                     </div>
                     <div className='mt-3'>
                         <form action="#">
@@ -58,7 +72,7 @@ function Register() {
                             {/* terms and conditions */}
                             <div className='flex-col mt-6'>
                                 <div className='flex'>
-                                    <input id="terms" type="checkbox" className="w-6 h-6 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 mr-3" required />
+                                    <input id="terms" type="checkbox" className="w-6 h-6 border border-gray-300 rounded bg-gray-50 focus:ring-3 mr-3" required />
                                     <label htmlFor="terms" className="text-slate-300 text-sm">By signing up, you are creating a DK Academy&apos;s account, and you agree to DK Academy <span className="text-blue-500 hover:cursor-pointer hover:underline hover:underline-offset-4">Terms and Conditions</span></label>
                                 </div>
                             </div>
