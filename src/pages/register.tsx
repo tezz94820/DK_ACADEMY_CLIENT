@@ -28,30 +28,30 @@ function Register() {
                     <div className='mt-3'>
                         <form action="#">
                             {/* handwritten form */}
-                            <div className='grid grid-cols-2 w-full gap-4'>
+                            <div className='grid grid-cols-1 md:grid-cols-2 w-full gap-2 md:gap-4'>
                                 <div className='flex flex-col'>
                                     <label htmlFor='fname' className='text-white'>First Name</label>
-                                    <input type='text' id='fname' name='fname' placeholder='e.g. Rahul' required className='mt-2 text-sm focus:outline-0 focus:ring-4 focus:ring-lime-400 rounded-md px-2 py-1'/>
+                                    <input type='text' id='fname' name='fname' placeholder='e.g. Rahul' required className='mt-0.5 md:mt-2 text-sm focus:outline-0 focus:ring-4 focus:ring-lime-400 rounded-md px-2 py-1'/>
                                 </div>
                                 <div className='flex flex-col'>
                                     <label htmlFor='lname' className='text-white'>Last Name</label>
-                                    <input type='text' id='lname' name='lname' placeholder='e.g. Kumar' required className='mt-2 text-sm focus:outline-0 focus:ring-4 focus:ring-lime-400 rounded-md px-2 py-1'/>
+                                    <input type='text' id='lname' name='lname' placeholder='e.g. Kumar' required className='mt-0.5 md:mt-2 text-sm focus:outline-0 focus:ring-4 focus:ring-lime-400 rounded-md px-2 py-1'/>
                                 </div>
                                 <div className='flex flex-col'>
                                     <label htmlFor='email' className='text-white'>Email</label>
-                                    <input type='text' id='email' name='email' placeholder='name@company.com' required className='mt-2 text-sm focus:outline-0 focus:ring-4 focus:ring-lime-400 rounded-md px-2 py-1'/>
+                                    <input type='text' id='email' name='email' placeholder='name@company.com' required className='mt-0.5 md:mt-2 text-sm focus:outline-0 focus:ring-4 focus:ring-lime-400 rounded-md px-2 py-1'/>
                                 </div>
                                 <div className='flex flex-col'>
                                     <label htmlFor='phone' className='text-white'>Phone Number</label>
-                                    <input type='text' id='phone' name='phone' placeholder='e.g. 0123456789' required className='mt-2 text-sm focus:outline-0 focus:ring-4 focus:ring-lime-400 rounded-md px-2 py-1'/>
+                                    <input type='text' id='phone' name='phone' placeholder='e.g. 0123456789' required className='mt-0.5 md:mt-2 text-sm focus:outline-0 focus:ring-4 focus:ring-lime-400 rounded-md px-2 py-1'/>
                                 </div>
                                 <div className='flex flex-col'>
                                     <label htmlFor='password' className='text-white'>Password</label>
-                                    <input type='text' id='password' name='password' placeholder='••••••••' required className='mt-2 text-sm focus:outline-0 focus:ring-4 focus:ring-lime-400 rounded-md px-2 py-1'/>
+                                    <input type='text' id='password' name='password' placeholder='••••••••' required className='mt-0.5 md:mt-2 text-sm focus:outline-0 focus:ring-4 focus:ring-lime-400 rounded-md px-2 py-1'/>
                                 </div>
                                 <div className='flex flex-col'>
                                     <label htmlFor='confirmpassword' className='text-white'>Confirm Password</label>
-                                    <input type='text' id='confirmpassword' name='confirmpassword' placeholder='••••••••' required className='mt-2 text-sm focus:outline-0 focus:ring-4 focus:ring-lime-400 rounded-md px-2 py-1'/>
+                                    <input type='text' id='confirmpassword' name='confirmpassword' placeholder='••••••••' required className='mt-0.5 md:mt-2 text-sm focus:outline-0 focus:ring-4 focus:ring-lime-400 rounded-md px-2 py-1'/>
                                 </div>
                             </div>
                             
