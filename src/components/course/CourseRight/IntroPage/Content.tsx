@@ -1,13 +1,21 @@
+'use client';
+
 import React from 'react'
 import  { contentList } from '../../../../../data/contentList'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation';
 
 function Content() {
+  
+  const router = useRouter(); 
 
-  const redirectWatsapp = (title:string,courseLink:string) => {
+  const redirectWatsapp = (title:string,courseLink:string):void => {
     const message = `Hey there! I just discovered an amazing educational video course on www.dkacademy.com . It's title is ${title}. I've been finding it super insightful, and I thought you might be interested too! Check it out here: ${courseLink} #LearningTogether`
     window.open(`https://wa.me/?text=${message}`, '_blank')
+  }
+  const exploreClickHandler = ():void => {
+    router.push('/courses/explore', {scroll: false});
   }
 
   return (
@@ -73,9 +81,12 @@ function Content() {
                       {/* buttons */}
                       <div className='grid grid-cols-2 gap-5 justify-between mt-3 font-semibold'>
                         {/* <Link href='/courses/explore'> */}
-                          <Link href='/courses/explore'  className='bg-violet-200 text-violet-800 hover:animate-pulse rounded-lg p-0.5 text-sm text-center align-middle'>
+                          <button 
+                            className='bg-violet-200 text-violet-800 hover:animate-pulse rounded-lg p-0.5 text-sm text-center align-middle'
+                            onClick={exploreClickHandler}
+                          >
                             Explore
-                          </Link>
+                          </button>
                         {/* </Link> */}
                         <button className='bg-violet-700 text-white hover:animate-pulse rounded-lg text-sm'>Buy Now</button>
                       </div>

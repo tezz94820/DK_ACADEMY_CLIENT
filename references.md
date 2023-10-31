@@ -8,6 +8,10 @@
 1. https://heroicons.com/
 2. https://www.svgrepo.com/
 
+# illustrations
+1. https://www.freepik.com/free-photos-vectors/education-svg
+
+
 # responsive checker
 1. https://www.websiteplanet.com/webtools/responsive-checker/
 
