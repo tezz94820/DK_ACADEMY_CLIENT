@@ -9,7 +9,7 @@ type courseCarouselImagesType = Link[];
 export const courseCarouselImages:courseCarouselImagesType = [
     {
         id: '1',
-        href: '/ad.png',
+        href: '/art2.png',
         alt: 'advertisement photo'
     },
     {
