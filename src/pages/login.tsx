@@ -1,10 +1,35 @@
-import React from 'react';
+import React, { useState, FormEvent } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import axiosClient from '@/axios/axiosClient';
+
+
+const initialFormData = {
+    user_contact: '',
+    password: '',
+}
 
 function Login() {
 
     const router = useRouter();
+    const [formData, setFormData] = useState(initialFormData);
+
+    const formSubmitHandler = async (evt : FormEvent<HTMLFormElement>) : Promise<void> => {
+        evt.preventDefault();
+        console.log(formData);
+        try {
+            const res = await axiosClient.post('/auth/login', formData)
+            console.log(res.data);
+            const { token, user_id, name, phone} = res.data.data;
+            sessionStorage.setItem('token', token);
+            sessionStorage.setItem('user_id', user_id);
+            sessionStorage.setItem('name', name);
+            sessionStorage.setItem('phone', phone);
+
+        } catch (error:any) {
+            console.log(error.message);
+        }
+    }
 
 
   return (
@@ -42,16 +67,24 @@ function Login() {
 
 
                     <div className='mt-3'>
-                        <form action="#">
+                        <form action="POST" onSubmit={formSubmitHandler}>
                             {/* handwritten form */}
                             <div className='grid grid-cols-1 w-full gap-2 md:gap-4'>
                                 <div className='flex flex-col'>
-                                    <label htmlFor='phone' className='text-white'>Email / Phone Number</label>
-                                    <input type='text' id='phone' name='phone' placeholder='e.g. 0123456789 or name@company.com' required className='mt-0.5 md:mt-2 text-sm focus:outline-0 focus:ring-4 focus:ring-lime-400 rounded-md px-2 py-1'/>
+                                    <label htmlFor='user_contact' className='text-white'>Email / Phone Number</label>
+                                    <input type='text' id='user_contact' name='user_contact' placeholder='e.g. 0123456789 or name@company.com' required 
+                                        className='mt-0.5 md:mt-2 text-sm focus:outline-0 focus:ring-4 focus:ring-lime-400 rounded-md px-2 py-1'
+                                        value={formData.user_contact} 
+                                        onChange={evt => setFormData({ ...formData , user_contact: evt.target.value})}
+                                    />
                                 </div>
                                 <div className='flex flex-col'>
                                     <label htmlFor='password' className='text-white'>Password</label>
-                                    <input type='text' id='password' name='password' placeholder='e.g. ••••••••' required className='mt-0.5 md:mt-2 text-sm focus:outline-0 focus:ring-4 focus:ring-lime-400 rounded-md px-2 py-1'/>
+                                    <input type='password' id='password' name='password' placeholder='e.g. ••••••••' required 
+                                        className='mt-0.5 md:mt-2 text-sm focus:outline-0 focus:ring-4 focus:ring-lime-400 rounded-md px-2 py-1'
+                                        value={formData.password} 
+                                        onChange={evt => setFormData({ ...formData , password: evt.target.value})}
+                                    />
                                 </div>
                             </div>
                             

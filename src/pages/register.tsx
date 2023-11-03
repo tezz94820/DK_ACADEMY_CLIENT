@@ -1,10 +1,33 @@
-import React from 'react';
+import React, { useState, FormEvent } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import axiosClient from '@/axios/axiosClient';
+
+const initialFormData = {
+    first_name: '',
+    last_name: '',
+    email: '',
+    phone: '',
+    password: '',
+    confirmPassword: ''
+}
 
 function Register() {
 
-    const router = useRouter();
+  const router = useRouter();
+  const [formData, setFormData] = useState(initialFormData);
+
+  const formSubmitHandler = async (evt : FormEvent<HTMLFormElement>) : Promise<void> => {
+    evt.preventDefault();
+    console.log(formData);
+    try {
+        const res = await axiosClient.post('/auth/register', formData)
+        console.log(res.data);
+    } catch (error:any) {
+        console.log(error.message);
+    }
+    
+  }
 
 
   return (
@@ -40,32 +63,56 @@ function Register() {
                         <hr className='w-1/2'/>
                     </div>
                     <div className='mt-3'>
-                        <form action="#">
+                        <form action="#" onSubmit={formSubmitHandler}>
                             {/* handwritten form */}
                             <div className='grid grid-cols-1 md:grid-cols-2 w-full gap-2 md:gap-4'>
                                 <div className='flex flex-col'>
-                                    <label htmlFor='fname' className='text-white'>First Name</label>
-                                    <input type='text' id='fname' name='fname' placeholder='e.g. Rahul' required className='mt-0.5 md:mt-2 text-sm focus:outline-0 focus:ring-4 focus:ring-lime-400 rounded-md px-2 py-1'/>
+                                    <label htmlFor='first_name' className='text-white'>First Name</label>
+                                    <input type='text' id='first_name' name='first_name' placeholder='e.g. Rahul' required 
+                                        className='mt-0.5 md:mt-2 text-sm focus:outline-0 focus:ring-4 focus:ring-lime-400 rounded-md px-2 py-1' 
+                                        value={formData.first_name} 
+                                        onChange={evt => setFormData({ ...formData , first_name: evt.target.value})}
+                                    />
                                 </div>
                                 <div className='flex flex-col'>
-                                    <label htmlFor='lname' className='text-white'>Last Name</label>
-                                    <input type='text' id='lname' name='lname' placeholder='e.g. Kumar' required className='mt-0.5 md:mt-2 text-sm focus:outline-0 focus:ring-4 focus:ring-lime-400 rounded-md px-2 py-1'/>
+                                    <label htmlFor='last_name' className='text-white'>Last Name</label>
+                                    <input type='text' id='last_name' name='last_name' placeholder='e.g. Kumar' required 
+                                        className='mt-0.5 md:mt-2 text-sm focus:outline-0 focus:ring-4 focus:ring-lime-400 rounded-md px-2 py-1'
+                                        value={formData.last_name} 
+                                        onChange={evt => setFormData({ ...formData , last_name: evt.target.value})}
+                                    />
                                 </div>
                                 <div className='flex flex-col'>
                                     <label htmlFor='email' className='text-white'>Email</label>
-                                    <input type='text' id='email' name='email' placeholder='name@company.com' required className='mt-0.5 md:mt-2 text-sm focus:outline-0 focus:ring-4 focus:ring-lime-400 rounded-md px-2 py-1'/>
+                                    <input type='text' id='email' name='email' placeholder='name@company.com' required 
+                                        className='mt-0.5 md:mt-2 text-sm focus:outline-0 focus:ring-4 focus:ring-lime-400 rounded-md px-2 py-1'
+                                        value={formData.email} 
+                                        onChange={evt => setFormData({ ...formData , email: evt.target.value})}
+                                    />
                                 </div>
                                 <div className='flex flex-col'>
                                     <label htmlFor='phone' className='text-white'>Phone Number</label>
-                                    <input type='text' id='phone' name='phone' placeholder='e.g. 0123456789' required className='mt-0.5 md:mt-2 text-sm focus:outline-0 focus:ring-4 focus:ring-lime-400 rounded-md px-2 py-1'/>
+                                    <input type='number' id='phone' name='phone' placeholder='e.g. 0123456789' required 
+                                        className='mt-0.5 md:mt-2 text-sm focus:outline-0 focus:ring-4 focus:ring-lime-400 rounded-md px-2 py-1'
+                                        value={formData.phone} 
+                                        onChange={evt => setFormData({ ...formData , phone: evt.target.value})}
+                                    />
                                 </div>
                                 <div className='flex flex-col'>
                                     <label htmlFor='password' className='text-white'>Password</label>
-                                    <input type='text' id='password' name='password' placeholder='••••••••' required className='mt-0.5 md:mt-2 text-sm focus:outline-0 focus:ring-4 focus:ring-lime-400 rounded-md px-2 py-1'/>
+                                    <input type='text' id='password' name='password' placeholder='••••••••' required 
+                                        className='mt-0.5 md:mt-2 text-sm focus:outline-0 focus:ring-4 focus:ring-lime-400 rounded-md px-2 py-1'
+                                        value={formData.password} 
+                                        onChange={evt => setFormData({ ...formData , password: evt.target.value})}
+                                    />
                                 </div>
                                 <div className='flex flex-col'>
                                     <label htmlFor='confirmpassword' className='text-white'>Confirm Password</label>
-                                    <input type='text' id='confirmpassword' name='confirmpassword' placeholder='••••••••' required className='mt-0.5 md:mt-2 text-sm focus:outline-0 focus:ring-4 focus:ring-lime-400 rounded-md px-2 py-1'/>
+                                    <input type='password' id='confirmPassword' name='confirmpassword' placeholder='••••••••' required 
+                                        className='mt-0.5 md:mt-2 text-sm focus:outline-0 focus:ring-4 focus:ring-lime-400 rounded-md px-2 py-1'
+                                        value={formData.confirmPassword} 
+                                        onChange={evt => setFormData({ ...formData , confirmPassword: evt.target.value})}
+                                    />
                                 </div>
                             </div>
                             
