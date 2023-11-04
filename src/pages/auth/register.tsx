@@ -20,13 +20,15 @@ function Register() {
   const formSubmitHandler = async (evt : FormEvent<HTMLFormElement>) : Promise<void> => {
     evt.preventDefault();
     console.log(formData);
+    let res;
     try {
-        const res = await axiosClient.post('/auth/register', formData)
-        console.log(res.data);
+        res = await axiosClient.post('/auth/register', formData)
+        console.log(res.data); 
     } catch (error:any) {
         console.log(error.message);
     }
-    
+    // if res is received then vanigate to OTP Page
+    res && router.push('/auth/otp');
   }
 
 
@@ -44,14 +46,14 @@ function Register() {
                         <h2 className='text-white text-xl font-bold'>Create Your Account</h2>
                         <p className='text-slate-300 text-sm'>
                             Start your Learning Journey. Already have an account? 
-                            <span className='text-blue-500 hover:cursor-pointer hover:underline hover:underline-offset-4' onClick={() => router.push('/login')}>&nbsp;Login here</span>
+                            <span className='text-blue-500 hover:cursor-pointer hover:underline hover:underline-offset-4' onClick={() => router.push('/auth/login')}>&nbsp;Login here</span>
                             .
                         </p>
                     </div>
                     {/* oauth of google */}
                     <div className='flex justify-center items-center w-3/4 mx-auto mt-5'>
                         <button className='border flex justify-center items-center gap-2 w-full p-2 rounded-lg text-gray-400 hover:text-black hover:bg-gray-200'>
-                            <Image src="google.svg" height={100} width={100} alt="google logo" className='h-6 w-6'/>
+                            <Image src="/google.svg" height={100} width={100} alt="google logo" className='h-6 w-6'/>
                             <p className='text-sm md:text-base '>Sign up with Google</p>
                         </button>
                     </div>

@@ -46,14 +46,14 @@ function Login() {
                         <h2 className='text-white text-xl font-bold'>LogIn Your Account</h2>
                         <p className='text-slate-300 text-sm'>
                             Start your Learning Journey. Don&apos;t have an account? 
-                            <span className='text-blue-500 hover:cursor-pointer hover:underline hover:underline-offset-4' onClick={() => router.push('/register')}>&nbsp;Register here</span>
+                            <span className='text-blue-500 hover:cursor-pointer hover:underline hover:underline-offset-4' onClick={() => router.push('/auth/register')}>&nbsp;Register here</span>
                             .
                         </p>
                     </div>
                     {/* oauth of google */}
                     <div className='flex justify-center items-center w-3/4 mx-auto mt-5'>
                         <button className='border flex justify-center items-center gap-2 w-full p-2 rounded-lg text-gray-400 hover:text-black hover:bg-gray-200'>
-                            <Image src="google.svg" height={100} width={100} alt="google logo" className='h-6 w-6'/>
+                            <Image src="/google.svg" height={100} width={100} alt="google logo" className='h-6 w-6'/>
                             <p className='text-sm md:text-base '>Sign In with Google</p>
                         </button>
                     </div>
@@ -107,7 +107,7 @@ function Login() {
 
             {/* right image  */}
             <div className='hidden md:flex md:justify-center md:items-center' >
-                <Image src='login1.svg' alt='register' height={500} width={500} />
+                <Image src='/login1.svg' alt='Login SVG' height={500} width={500} />
             </div>
         </div>
 
