@@ -1,9 +1,8 @@
-import HeaderLayout from '@/components/Header/HeaderLayout';
 import React from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
-function otp() {
+function OtpPage() {
 
   const phone = "7972142271";
   const router = useRouter();
@@ -38,4 +37,4 @@ function otp() {
   )
 }
 
-export default otp
+export default OtpPage
