@@ -1,11 +1,37 @@
-import React from 'react';
+import React, { useEffect, useInsertionEffect, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import axiosClient from '@/axios/axiosClient';
 
 function OtpPage() {
 
-  const phone = "7972142271";
+  const [phone, setPhone] = useState<string | null>("**********");
+  // checking the code is rendered by the server or client
+  const ISSERVER = typeof window === "undefined";
+  // let phone:string | null = "**********";
+  
+  useEffect( () => {
+    if(!ISSERVER){
+      setPhone( sessionStorage.getItem('phone') );
+    }
+  },[phone])
+  
+  
   const router = useRouter();
+  
+  const handleSendOtp = async () => {
+    let res;
+    try {
+      res = await axiosClient.post('/auth/otp/phone', {phone});
+      console.log(res.data);
+      const { verification_code } = res.data.data;
+      sessionStorage.setItem('verification_code', verification_code);
+    } catch (error:any) {
+      console.log(error.message);
+    }
+    //navigate to verifyotp
+    res && router.push('/auth/verifyotp');
+  }
 
   return (
       <div className='min-h-screen w-screen flex flex-row  justify-center items-center bg-gradient-to-r from-violet-500 to-fuchsia-500'>
@@ -30,7 +56,9 @@ function OtpPage() {
           </div>
           
           <div className='h-max w-full flex justify-center items-center mb-5 mt-3'>
-            <button className='h-10 w-32 bg-blue-500 hover:bg-blue-700 rounded-lg mt-3 focus:ring-4 focus:outline-none'>Send OTP</button>
+            <button className='h-10 w-32 bg-blue-500 hover:bg-blue-700 rounded-lg mt-3 focus:ring-4 focus:outline-none'
+              onClick={handleSendOtp}
+            >Send OTP</button>
           </div>
         
         </div>

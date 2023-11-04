@@ -24,10 +24,12 @@ function Register() {
     try {
         res = await axiosClient.post('/auth/register', formData)
         console.log(res.data); 
+        const { phone } = res.data.data;
+        sessionStorage.setItem('phone', phone);
     } catch (error:any) {
         console.log(error.message);
     }
-    // if res is received then vanigate to OTP Page
+    // if res is received then navigate to OTP Page
     res && router.push('/auth/otp');
   }
 
