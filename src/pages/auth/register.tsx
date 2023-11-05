@@ -1,7 +1,10 @@
-import React, { useState, FormEvent } from 'react';
+"use client";
+
+import React, { useState, FormEvent, useEffect } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import axiosClient from '@/axios/axiosClient';
+import { toast } from 'react-toastify';
 
 const initialFormData = {
     first_name: '',
@@ -20,19 +23,30 @@ function Register() {
   const formSubmitHandler = async (evt : FormEvent<HTMLFormElement>) : Promise<void> => {
     evt.preventDefault();
     console.log(formData);
-    let res;
     try {
-        res = await axiosClient.post('/auth/register', formData)
-        console.log(res.data); 
-        const { phone } = res.data.data;
+        //registration api
+        const regRes = await axiosClient.post('/auth/register', formData)
+        console.log(regRes.data); 
+        const { phone } = regRes.data.data;
         sessionStorage.setItem('phone', phone);
-    } catch (error:any) {
-        console.log(error.message);
-    }
-    // if res is received then navigate to OTP Page
-    res && router.push('/auth/otp');
-  }
 
+        //if registration is successful the allot an otp
+        const otpRes = await toast.promise( axiosClient.post('/auth/otp/phone', {phone}) , {
+            pending: 'Sending OTP ... Please wait',
+            success: 'OTP Sent Successfully',
+            error: 'Error Sending OTP'
+        });
+        console.log(otpRes.data);
+        const { verification_code } = otpRes.data.data;
+        sessionStorage.setItem('verification_code', verification_code);
+        
+        // if res is received then navigate to verify OTP Page
+        otpRes && router.push('/auth/verifyotp');
+    } catch (error:any) {
+        const errorMessage = error.response.data.message || "An error occurred";
+        toast.error(error.message);
+    }
+  }
 
   return (
     <div className='w-screen min-h-screen bg-gradient-to-r from-violet-500 to-fuchsia-500 pt-14 scrollbar'>
