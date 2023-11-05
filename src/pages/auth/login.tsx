@@ -2,6 +2,7 @@ import React, { useState, FormEvent } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import axiosClient from '@/axios/axiosClient';
+import { toast } from 'react-toastify';
 
 
 const initialFormData = {
@@ -25,9 +26,11 @@ function Login() {
             sessionStorage.setItem('user_id', user_id);
             sessionStorage.setItem('name', name);
             sessionStorage.setItem('phone', phone);
-
+            toast.success("Login successful");
+            router.replace('/courses');
         } catch (error:any) {
-            console.log(error.message);
+            const errorMessage = error.response.data.message || "An error occurred";
+            toast.error(errorMessage);
         }
     }
 
