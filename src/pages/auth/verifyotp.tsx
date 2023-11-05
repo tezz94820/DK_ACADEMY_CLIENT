@@ -46,6 +46,7 @@ function VerifyOtp() {
         router.replace('/courses');
       }
     } catch (error:any) {
+      console.log(error)
       //toast error message
       const errorMessage = error.response.data.message || "An error occurred";
       toast.error(errorMessage);

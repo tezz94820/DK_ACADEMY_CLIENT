@@ -12,7 +12,7 @@ const initialFormData = {
     email: '',
     phone: '',
     password: '',
-    confirmPassword: ''
+    confirm_password: ''
 }
 
 function Register() {
@@ -44,7 +44,7 @@ function Register() {
         otpRes && router.push('/auth/verifyotp');
     } catch (error:any) {
         const errorMessage = error.response.data.message || "An error occurred";
-        toast.error(error.message);
+        toast.error(errorMessage);
     }
   }
 
@@ -126,10 +126,10 @@ function Register() {
                                 </div>
                                 <div className='flex flex-col'>
                                     <label htmlFor='confirmpassword' className='text-white'>Confirm Password</label>
-                                    <input type='password' id='confirmPassword' name='confirmpassword' placeholder='••••••••' required 
+                                    <input type='password' id='confirm_password' name='confirm_password' placeholder='••••••••' required 
                                         className='mt-0.5 md:mt-2 text-sm focus:outline-0 focus:ring-4 focus:ring-lime-400 rounded-md px-2 py-1'
-                                        value={formData.confirmPassword} 
-                                        onChange={evt => setFormData({ ...formData , confirmPassword: evt.target.value})}
+                                        value={formData.confirm_password} 
+                                        onChange={evt => setFormData({ ...formData , confirm_password: evt.target.value})}
                                     />
                                 </div>
                             </div>
