@@ -42,22 +42,17 @@ function VerifyOtp() {
         sessionStorage.setItem('user_id', user_id);
         sessionStorage.setItem('name', name);
         sessionStorage.setItem('phone', phone);
+        toast.success("OTP verified successfully");
         router.replace('/courses');
-        
       }
     } catch (error:any) {
-      const errorMessage = error.response.data.message || "An error occurred";
       //toast error message
-      toast.error(errorMessage, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-        });
+      const errorMessage = error.response.data.message || "An error occurred";
+      toast.error(errorMessage);
+      // empty the otp input
+      setOtp(otpInitialState);
+      //focus on the 1st otp block
+      inputRefs.current[0]?.focus();
     }
   }
 
@@ -72,9 +67,12 @@ function VerifyOtp() {
       sessionStorage.setItem('verification_code', verification_code);
       setOtp(otpInitialState);
       inputRefs.current[0]?.focus();
+      toast.success("OTP sent successfully");
     }
     catch (error:any) {
-      console.log(error); // Log the entire error response for inspection
+      //toast error message
+      const errorMessage = error.response.data.message || "An error occurred";
+      toast.error(errorMessage);
     }
   }
 
@@ -134,13 +132,14 @@ function VerifyOtp() {
                 <button type="submit" className="w-4/5 bg-blue-700 text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-6 mx-auto">
                   Verify Account
                 </button>
-                <p className='mx-auto mt-3'>
-                  Didn&apos;t recieve code?
-                  <button className='text-blue-700 font-bold cursor-pointer active:animate-ping ml-2 hover:text-amber-600' onClick={resendHandler}>Resend OTP</button>
-                </p>
               </div>
             </form>
           </div>
+
+          <p className='mx-auto mt-3'>
+            Didn&apos;t recieve code?
+            <button className='text-blue-700 font-bold cursor-pointer active:animate-ping ml-2 hover:text-amber-600' onClick={resendHandler}>Resend OTP</button>
+          </p>
 
         </div>
       </div>
