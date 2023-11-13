@@ -43,7 +43,7 @@ function Register() {
         // if res is received then navigate to verify OTP Page
         otpRes && router.push('/auth/verifyotp');
     } catch (error:any) {
-        const errorMessage = error.response.data.message || "An error occurred";
+        const errorMessage = error.response?.data?.message || "An error occurred";
         toast.error(errorMessage);
     }
   }

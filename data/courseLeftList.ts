@@ -11,7 +11,7 @@ export const courseLeftList:courseLeftListType = [
     {
       id: '1',
       name: "ALL",
-      href: "#",
+      href: "/courses",
       icon: '/all.svg'
     },
     {
@@ -23,25 +23,25 @@ export const courseLeftList:courseLeftListType = [
     {
       id: '3',
       name: "PYQ PDF chapter wise",
-      href: "#",
+      href: "/courses/pyq-pdf",
       icon: '/document.svg'
     },
     {
       id: '4',
       name: "Mathematics",
-      href: "#",
+      href: "/courses/pyq-pdf/mathematics",
       icon: '/maths.svg'
     },
     {
         id: '5',
         name: "Chemistry",
-        href: "#",
+        href: "/courses/pyq-pdf/chemistry",
         icon: '/chemistry.svg'
       },
       {
         id: '6',
         name: "Physics",
-        href: "#",
+        href: "/courses/pyq-pdf/physics",
         icon: '/physics.svg'
       },
       {
