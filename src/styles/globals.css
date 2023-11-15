@@ -30,7 +30,8 @@
     background-color: red;
   }
 
-  .react-pdf__Page__canvas {
-    width: 100% !important; /* Important to override inline styles */
-    max-width: none !important; /* Important to override inline styles */
-  }
+  /* .react-pdf__Page__canvas {
+    width: 100% !important; 
+    max-width: none !important; 
+  } */
+  
