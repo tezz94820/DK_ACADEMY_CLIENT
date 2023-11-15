@@ -24,3 +24,8 @@
   .hide_scrollbar::-webkit-scrollbar {
     display: none; /* Hide scrollbar on Webkit browsers (Chrome, Safari, etc.) */
   }
+
+  .react-pdf__Page{
+    width: 100%;
+    background-color: red;
+  }

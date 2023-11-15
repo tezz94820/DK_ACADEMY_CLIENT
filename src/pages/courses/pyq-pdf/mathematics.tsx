@@ -3,8 +3,11 @@ import CourseLayout from '@/components/course/CourseLayout'
 import React from 'react'
 import Image from 'next/image'
 import { pdfModuleswise } from '../../../../data/pdfCourses'
+import { Router, useRouter } from 'next/router'
 
 const Mathematics = () => {
+
+  const router = useRouter();
 
   const redirectWatsapp = (title:string,courseLink:string):void => {
     const message = `Hey there! I just discovered an amazing educational video course on www.dkacademy.com . It's title is ${title}. I've been finding it super insightful, and I thought you might be interested too! Check it out here: ${courseLink} #LearningTogether`
@@ -90,7 +93,12 @@ const Mathematics = () => {
                               </div>
                               {/* buttons */}
                               <div className=' flex justify-between items-center mt-3 font-semibold'>
-                                <button className='bg-green-500 text-white hover:animate-pulse rounded-lg text-base w-full p-0.5 font-semibold'>Get it for Free</button>
+                                <button 
+                                  className='bg-green-500 text-white hover:animate-pulse rounded-lg text-base w-full p-0.5 font-semibold' 
+                                  onClick={() => router.push('/courses/pyq-pdf/view')}
+                                >
+                                  Get it for Free
+                                </button>
                               </div>
                             </div>
                           :
