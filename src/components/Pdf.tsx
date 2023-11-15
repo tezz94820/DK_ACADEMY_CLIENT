@@ -15,7 +15,7 @@ function Pdf() {
         Page {pageNumber} of {numPages}
       </p>
       <Document 
-        file={'/Circle_question.pdf'}
+        file={'/Circle_question2.pdf'}
         onLoadSuccess={onDocumentLoadSuccess} 
         error='NO PDF FOUND'
       >
@@ -25,7 +25,7 @@ function Pdf() {
           canvasBackground='#f68fff' 
           renderTextLayer={false}
           renderAnnotationLayer={false}
-          width={500}
+          // width={500}
           scale={2}
         />
         <Page
@@ -33,7 +33,7 @@ function Pdf() {
           canvasBackground='#f68fff' 
           renderTextLayer={false}
           renderAnnotationLayer={false}
-          width={500}
+          // width={500}
           scale={2}
         />
       </Document>
