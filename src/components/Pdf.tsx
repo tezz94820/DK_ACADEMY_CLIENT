@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Document, Page } from 'react-pdf';
 
 function Pdf() { 
-  const [numPages, setNumPages] = useState<number>();
+  const [numPages, setNumPages] = useState<number>(1);
   const [pageNumber, setPageNumber] = useState<number>(1);
 
   function onDocumentLoadSuccess({ numPages }: { numPages: number }): void {
@@ -10,30 +10,23 @@ function Pdf() {
   }
 
   return (
-    <div className='bg-blue-300 min-w-screen'>
-      <p>
+    <div className='flex flex-col bg-blue-300 w-full rounded'>
+      <div className='fixed bg-blue-300 z-10'>
         Page {pageNumber} of {numPages}
-      </p>
+      <button onClick={() => setPageNumber(pageNumber - 1)}>Prev</button>&nbsp;
+      <button onClick={() => setPageNumber((pageNumber + 1))}>Next</button>
+      </div>
       <Document 
         file={'/Circle_question2.pdf'}
         onLoadSuccess={onDocumentLoadSuccess} 
         error='NO PDF FOUND'
       >
-
         <Page
-          pageNumber={1} 
+          pageNumber={pageNumber} 
           canvasBackground='#f68fff' 
           renderTextLayer={false}
           renderAnnotationLayer={false}
-          width={500}
-          scale={2}
-        />
-        <Page
-          pageNumber={2} 
-          canvasBackground='#f68fff' 
-          renderTextLayer={false}
-          renderAnnotationLayer={false}
-          width={500}
+          width={520}
           scale={2}
         />
       </Document>
