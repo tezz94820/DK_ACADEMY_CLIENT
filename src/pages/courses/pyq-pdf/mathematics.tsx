@@ -22,7 +22,7 @@ const Mathematics = () => {
           <div className='flex flex-col'>
           {
             pdfModuleswise.map( (item,moduleIndex) => (
-              <div className='flex flex-col'>
+              <div key={item.module} className='flex flex-col'>
                 <h1 className='font-semibold text-2xl mb-4 text-center align-middle '>{item.module}</h1>
                 <div className='grid grid-cols-1 md:grid-cols-3 gap-2'>
                   {
