@@ -17,9 +17,10 @@ function Pdf() {
       <button onClick={() => setPageNumber((pageNumber + 1))}>Next</button>
       </div>
       <Document 
-        file={'/Circle_question2.pdf'}
+        file={'/Circle_question2_protected.pdf'}
         onLoadSuccess={onDocumentLoadSuccess} 
         error='NO PDF FOUND'
+        options={{password: 'Tt@123999'}}
       >
         <Page
           pageNumber={pageNumber} 
