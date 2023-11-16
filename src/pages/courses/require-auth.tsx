@@ -23,7 +23,7 @@ const RequireAuth = () => {
                     <div className=''>
                         <Image 
                             className=''
-                            src="/requireAuth3.svg" alt="requireAuth" height={400} width={400}
+                            src="/RequireAuth3.svg" alt="requireAuth" height={400} width={400}
                         />
                     </div>
                     <div className='flex flex-col items-center justify-center gap-5 w-full md:w-1/2 p-5 rounded-3xl bg-gradient-to-br from-blue-900  to-blue-600 text-white'>
