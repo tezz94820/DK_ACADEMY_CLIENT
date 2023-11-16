@@ -4,7 +4,7 @@ import React from 'react'
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
-const requireAuth = () => {
+const RequireAuth = () => {
     const router = useRouter();
     const handleClick = (operation:string):void => {
         if(operation === 'register'){
@@ -38,4 +38,4 @@ const requireAuth = () => {
   )
 }
 
-export default requireAuth
+export default RequireAuth
