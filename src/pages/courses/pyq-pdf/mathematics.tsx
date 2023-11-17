@@ -95,7 +95,7 @@ const Mathematics = () => {
                               <div className=' flex justify-between items-center mt-3 font-semibold'>
                                 <button 
                                   className='bg-green-500 text-white hover:animate-pulse rounded-lg text-base w-full p-0.5 font-semibold' 
-                                  onClick={() => router.push('/courses/pyq-pdf/view')}
+                                  onClick={() => router.push('/courses/pyq-pdf/view2')}
                                 >
                                   Get it for Free
                                 </button>
