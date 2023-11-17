@@ -34,7 +34,7 @@ const View = () => {
   return (
     <HeaderLayout>
       <CourseLayout>
-        <div className={`scrollbar w-max h-full overflow-x-scroll md:overflow-x-hidden md:overflow-y-scroll md:w-5/6 p-2  relative`} onContextMenu={disableRightClick}>
+        <div className={` print-hidden scrollbar w-max h-full overflow-x-scroll md:overflow-x-hidden md:overflow-y-scroll md:w-5/6 p-2  relative`} onContextMenu={disableRightClick}>
           {/* back button */}
           <div className='absolute right-2 z-10'>
             <button className='px-2 py-1 flex bg-white rounded w-20 hover:border-2 border-2 border-blue-600 hover:border-red-700 ' onClick={backHandler}>Back</button>
