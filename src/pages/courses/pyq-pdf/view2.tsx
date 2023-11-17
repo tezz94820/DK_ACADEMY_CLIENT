@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 
-const view = () => {
+const View = () => {
 
   const [ currentPage, setCurrentPage ] = useState(1);
   const totalPages = 5;
@@ -55,4 +55,4 @@ const view = () => {
   );
 }
 
-export default view;
+export default View;
