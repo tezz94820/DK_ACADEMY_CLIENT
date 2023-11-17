@@ -50,13 +50,14 @@ const View = () => {
             </div>
           </div>
           {/* pdf page */}
-          <div className=' bg-sky-700 rounded-3xl p-2  md:p-4 h-full md:h-max flex flex-col '>
+          <div className=' bg-sky-700 rounded-3xl p-2 md:p-4 h-full md:h-max flex flex-col '>
+            <div className='bg-white w-full h-10 rounded-t-3xl '></div>
             <Image
               src={`/cq-${currentPage}.png`}
               alt='circle question image'
               height={1000}
               width={1000}
-              className='print-hidden h-full w-full rounded-3xl'
+              className='print-hidden h-full w-full rounded-b-3xl'
               onContextMenu={disableRightClick} // Attach the event handler
             />
           </div>
