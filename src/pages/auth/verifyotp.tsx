@@ -3,6 +3,9 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import axiosClient from '@/axios/axiosClient';
 import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { login } from '@/app/features/authSlice';
+
 
 function VerifyOtp() {
 
@@ -10,6 +13,7 @@ function VerifyOtp() {
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
   const otpInitialState = ['','','',''];
   const [otp, setOtp] = useState(otpInitialState);
+  const dispatch = useDispatch();
 
   const handleInputChange = (index:number, value: string, nextInputIndex:string) => {
     if(value.length===1 && index < inputRefs.current.length - 1){
@@ -38,10 +42,7 @@ function VerifyOtp() {
       console.log(res);
       const {otp_verified, name, token, phone, user_id} = res.data.data;
       if(otp_verified){
-        sessionStorage.setItem('token', token);
-        sessionStorage.setItem('user_id', user_id);
-        sessionStorage.setItem('name', name);
-        sessionStorage.setItem('phone', phone);
+        dispatch(login({token, user_id, name, phone}));
         toast.success("OTP verified successfully");
         router.replace('/courses');
       }

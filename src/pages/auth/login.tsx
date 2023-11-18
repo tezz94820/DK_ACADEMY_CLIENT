@@ -3,6 +3,8 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import axiosClient from '@/axios/axiosClient';
 import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux'
+import { login } from '@/app/features/authSlice';
 
 
 const initialFormData = {
@@ -14,6 +16,7 @@ function Login() {
 
     const router = useRouter();
     const [formData, setFormData] = useState(initialFormData);
+    const dispatch = useDispatch() 
 
     const formSubmitHandler = async (evt : FormEvent<HTMLFormElement>) : Promise<void> => {
         evt.preventDefault();
@@ -22,10 +25,7 @@ function Login() {
             const res = await axiosClient.post('/auth/login', formData)
             console.log(res.data);
             const { token, user_id, name, phone} = res.data.data;
-            sessionStorage.setItem('token', token);
-            sessionStorage.setItem('user_id', user_id);
-            sessionStorage.setItem('name', name);
-            sessionStorage.setItem('phone', phone);
+            dispatch(login({token, user_id, name, phone}));
             toast.success("Login successful");
             router.replace('/courses');
         } catch (error:any) {

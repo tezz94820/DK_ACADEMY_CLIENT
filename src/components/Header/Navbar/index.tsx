@@ -5,16 +5,21 @@ import Image from 'next/image';
 import { navLinks } from '../../../../data/navLinks';
 import Sidebar from './Sidebar';
 import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
+import { ReduxRootState } from '@/app/store';
 
 function Navbar() {
 
   const [toggle, setToggle] = useState(false);
+  const router = useRouter();
+  const isLoggedIn = useSelector((state: ReduxRootState) => state.auth.isLoggedIn);
+  
   const toggleHandler = () => {
     setToggle(!toggle);
   }
 
-  const router = useRouter();
   const pathName = router.pathname;
+  console.log('navbar',isLoggedIn);
   return (
     <>
       <nav className="bg-white fixed h-4.3 w-full z-20 top-0 left-0 border-b border-gray-200 shadow-md">

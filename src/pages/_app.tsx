@@ -4,6 +4,8 @@ import Head from 'next/head'
 import { Analytics } from '@vercel/analytics/react';
 import { Slide, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Provider } from 'react-redux';
+import store from '@/app/store';
 
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -13,7 +15,9 @@ export default function App({ Component, pageProps }: AppProps) {
         <title>DK Academy</title>
         <link rel="shortcut icon" href="/favicon.ICO" />
       </Head>
-      <Component {...pageProps} />
+      <Provider store={store}>
+        <Component {...pageProps} />
+      </Provider>
       <Analytics />
       <ToastContainer
         position="top-right"
