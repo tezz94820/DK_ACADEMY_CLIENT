@@ -44,7 +44,7 @@ const View = () => {
             <div className='rounded bg-sky-700 p-1 text-center'>
               <p className='text-white'>Page {currentPage} of {totalPages}</p>
               <div className='flex justify-center gap-4 mt-1'>
-                <button className=' bg-white rounded w-16 hover:border-2 hover:border-red-700' onClick={handlePrev}>Prev</button>
+                <button className=' bg-white rounded w-16 border-2 border-sky-700 hover:border-red-700' onClick={handlePrev}>Prev</button>
                 <button className=' bg-white rounded w-16 hover:border-2 hover:border-red-700' onClick={handleNext}>Next</button>
               </div>
             </div>

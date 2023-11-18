@@ -16,6 +16,7 @@ const authSlice = createSlice({
             localStorage.setItem('user_id', action.payload.user_id);
             localStorage.setItem('name', action.payload.name);
             localStorage.setItem('phone', action.payload.phone);
+            localStorage.setItem('profilePicture', 'true');
         },
         logout: (state) => {
             state.isLoggedIn = false
