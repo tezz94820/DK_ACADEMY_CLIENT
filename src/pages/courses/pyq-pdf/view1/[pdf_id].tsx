@@ -13,11 +13,11 @@ import dynamic from 'next/dynamic'
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
 
  
-const DynamicPDF = dynamic(() => import('../../../components/Pdf'), {
+const DynamicPDF = dynamic(() => import('../../../../components/Pdf'), {
   ssr: false,
 })
 
-const view = () => {
+const View = () => {
   return (
     <HeaderLayout>
         <CourseLayout>
@@ -29,4 +29,4 @@ const view = () => {
   )
 }
 
-export default view
+export default View
