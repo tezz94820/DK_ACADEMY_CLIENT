@@ -1,11 +1,25 @@
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { Document, Page } from 'react-pdf';
 import { useRouter } from 'next/router'
 
 function Pdf() { 
   const [numPages, setNumPages] = useState<number>(1);
   const [pageNumber, setPageNumber] = useState<number>(1);
+  const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
   const router = useRouter();
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
 
   function onDocumentLoadSuccess({ numPages }: { numPages: number }): void {
     setNumPages(numPages);
@@ -35,7 +49,7 @@ function Pdf() {
               renderTextLayer={false}
               renderAnnotationLayer={false}
               width={520}
-              scale={2}
+              scale={windowWidth >= 768 ? 2 : 1}
               
             />
         ))}

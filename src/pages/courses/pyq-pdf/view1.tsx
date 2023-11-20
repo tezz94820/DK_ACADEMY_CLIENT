@@ -21,7 +21,7 @@ const view = () => {
   return (
     <HeaderLayout>
         <CourseLayout>
-            <div className={`scrollbar w-max h-full overflow-x-scroll md:overflow-x-hidden md:overflow-y-scroll md:w-5/6 `}>
+            <div className={`scrollbar w-max h-full overflow-x-scroll md:overflow-y-scroll md:w-5/6 `}>
                 <DynamicPDF />
             </div>
         </CourseLayout>
