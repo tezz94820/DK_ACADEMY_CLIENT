@@ -11,7 +11,7 @@ function Pdf() {
   const [pageNumber, setPageNumber] = useState<number>(1);
   const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
   const [fileLink, setFileLink] = useState('');
-  let router = useRouter();
+  const router = useRouter();
 
   useEffect(() => {
     const handleResize = () => {
@@ -24,7 +24,8 @@ function Pdf() {
         setFileLink(res.data.data.presignedUrl);
       } catch (error:any) {
         const errorMessage = error.response.data.message || "An error occurred";
-        toast.error(errorMessage);
+        // toast.error(errorMessage);
+        router.push('/courses/require-auth');
       }
     }
     getFileLink();
