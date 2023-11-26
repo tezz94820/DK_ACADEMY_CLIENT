@@ -14,7 +14,7 @@
   }
 
   .scrollbar::-webkit-scrollbar-thumb {
-    @apply bg-gradient-to-r from-sky-500 to-violet-800 rounded
+    @apply bg-gradient-to-b from-sky-500 to-violet-800 rounded
   }
 
   .scrollbar::-webkit-scrollbar-track {
@@ -58,4 +58,20 @@
   .react-pdf__Document{
     width: 100% !important;
     /* border: 2px solid red; */
+  }
+
+  .slide-right-arrow {
+    animation: slide1 1s ease-in-out infinite;
+    margin-left: 9px;
+  }
+
+  @keyframes slide1 {
+    0%,
+    100% {
+      transform: translate(-5px, 0);
+    }
+  
+    50% {
+      transform: translate(5px, 0);
+    }
   }
