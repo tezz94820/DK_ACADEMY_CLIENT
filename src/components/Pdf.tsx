@@ -69,7 +69,8 @@ function Pdf() {
       //display the solutions
       setSolutionsClicked(true);
     } catch (error:any) {
-      console.log(error.message);
+      const errorMessage = error.response.data.message || "An error occurred";
+      toast.error(errorMessage);
     }
   }
 
@@ -150,7 +151,7 @@ function Pdf() {
                 <Image src="/eye.svg" height={20} width={20} alt="eye" className='h-full w-full cursor-pointer'  onClick={() => setAllSolutionsClicked(prev => !prev)}/>
               </div>
           </div>
-          
+
           {/* content */}
           <ul className='p-2 flex flex-col gap-2'> 
             {
