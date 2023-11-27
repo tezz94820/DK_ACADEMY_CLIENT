@@ -17,10 +17,11 @@ function Pdf() {
   const [pageNumber, setPageNumber] = useState<number>(1);
   const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
   const [fileLink, setFileLink] = useState('');
-  const router = useRouter();
   const [solutions, setSolutions] = useState([]);
   const [solutionsClicked, setSolutionsClicked] = useState(false);
   const [allSolutionsClicked, setAllSolutionsClicked ] = useState(false);
+  const router = useRouter();
+  const pdfId = router.query.pdf_id;
 
   useEffect(() => {
     const handleResize = () => {
@@ -29,7 +30,7 @@ function Pdf() {
 
     const getFileLink = async () => {
       try {
-        const res = await axiosClient.get(`/pyq-pdf/pdf?pdf_id=${router.query.pdf_id}`,{headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}});
+        const res = await axiosClient.get(`/pyq-pdf/pdf?pdf_id=${pdfId}`,{headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}});
         setFileLink(res.data.data.presignedUrl);
       } catch (error:any) {
         const errorMessage = error.response.data.message || "An error occurred";
@@ -61,7 +62,7 @@ function Pdf() {
     try {
       if(solutions.length === 0){
         //get the solutions only once 
-        const res = await axiosClient.get(`pyq-pdf/solution?pdf_id=${router.query.pdf_id}`, {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}});
+        const res = await axiosClient.get(`pyq-pdf/solution?pdf_id=${pdfId}`, {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}});
         let sols = res.data.data.solutions;
         sols = sols.map( (item:{question: string , answer: string}) => ({...item, visibility:false}) );
         setSolutions(sols);
@@ -75,7 +76,8 @@ function Pdf() {
   }
 
   const showAnswerPdf = (question:string) => {
-    console.log(question);
+    const newTabUrl = `/courses/pyq-pdf/view/${pdfId}/solution/${question}`;
+    window.open(newTabUrl, '_blank');
   }
 
   const showAnswer = (question:string) => {
@@ -134,7 +136,7 @@ function Pdf() {
       </div>
 
       {/* solution box */}
-      <div className={`h-full fixed top-4.6 w-56 right-1 z-20  flex rounded-l-lg ${!solutionsClicked && 'hidden' }`} >
+      <div className={`h-[calc(100vh-4.8rem)] fixed top-4.6 w-56 right-1 z-20  flex rounded-l-lg ${!solutionsClicked && 'hidden' }`} >
         
         {/* closing */}
         <div className='w-8 h-full  flex justify-center items-center rounded-l-lg p-0.5'>

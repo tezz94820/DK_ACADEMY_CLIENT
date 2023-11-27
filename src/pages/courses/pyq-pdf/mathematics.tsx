@@ -110,7 +110,7 @@ const Mathematics = () => {
                               <div className=' flex justify-between items-center mt-3 font-semibold'>
                                 <button 
                                   className='bg-green-500 text-white hover:animate-pulse rounded-lg text-base w-full p-0.5 font-semibold' 
-                                  onClick={() => router.push(`/courses/pyq-pdf/view1/${pdf._id}`)}
+                                  onClick={() => router.push(`/courses/pyq-pdf/view/${pdf._id}`)}
                                 >
                                   Get it for Free
                                 </button>
