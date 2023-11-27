@@ -140,7 +140,7 @@ function Pdf() {
         
         {/* closing */}
         <div className='w-12 h-full rounded-l-lg p-0.5'>
-          <Image src={"/arrow_right.svg"} alt="cross" height={30} width={30} className=' h-10 w-12 bg-gradient-to-r from-blue-300 to-blue-500 rounded-lg cursor-pointer p-0.5' onClick={() => setSolutionsClicked(false)}/>
+          <Image src={"/arrow_right.svg"} alt="cross" height={30} width={30} className=' h-10 w-12 bg-gradient-to-r from-blue-300 to-blue-500 rounded-lg cursor-pointer p-0.5 hover:bg-gradient-to-r hover:from-red-300 hover:to-red-500' onClick={() => setSolutionsClicked(false)}/>
         </div>
         
         {/* main box */}
