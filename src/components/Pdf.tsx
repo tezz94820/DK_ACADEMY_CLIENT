@@ -139,8 +139,8 @@ function Pdf() {
       <div className={`h-[calc(100vh-4.8rem)] fixed top-4.6 w-56 right-1 z-20  flex rounded-l-lg ${!solutionsClicked && 'hidden' }`} >
         
         {/* closing */}
-        <div className='w-8 h-full  flex justify-center items-center rounded-l-lg p-0.5'>
-          <Image src={"/cancel.svg"} alt="cross" height={30} width={30} className=' h-20 w-20 relative left-5 bg-red-500 rounded-lg cursor-pointer p-0.5' onClick={() => setSolutionsClicked(false)}/>
+        <div className='w-12 h-full rounded-l-lg p-0.5'>
+          <Image src={"/arrow_right.svg"} alt="cross" height={30} width={30} className=' h-10 w-12 bg-gradient-to-r from-blue-300 to-blue-500 rounded-lg cursor-pointer p-0.5' onClick={() => setSolutionsClicked(false)}/>
         </div>
         
         {/* main box */}
