@@ -22,7 +22,10 @@ const Solution = () => {
     useEffect( () => {
         const getFileLink = async () => {
             try {
-                
+                if(!localStorage.getItem('token')){
+                    router.push('/courses/require-auth');
+                    return;
+                }
                 const res = await axiosClient.get(`/pyq-pdf/individual-solution?pdf_id=${pdfId}&question=${question}`, {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}})
                 setFileLink(res.data.data.presignedUrl);
             } catch (error:any) {
@@ -42,6 +45,10 @@ const Solution = () => {
     const disableRightClick = (e: React.MouseEvent<HTMLImageElement>) => {
         e.preventDefault();
     };
+
+    const closeHandler = () => {
+      window.close();
+    }
 
 
   return (
@@ -66,6 +73,12 @@ const Solution = () => {
             />
         ))}
       </Document>
+
+      {/* back button */}
+      <div className='fixed right-2 z-10'>
+        <button className='px-2 py-1 flex bg-white rounded w-20 hover:border-2 border-2 border-red-700 hover:bg-red-300' onClick={closeHandler}>Close</button>
+      </div>
+
     </div>
   )
 }

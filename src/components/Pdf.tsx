@@ -30,20 +30,26 @@ function Pdf() {
 
     const getFileLink = async () => {
       try {
+        if(!localStorage.getItem('token')){
+          router.push('/courses/require-auth');
+          return;
+        }
         const res = await axiosClient.get(`/pyq-pdf/pdf?pdf_id=${pdfId}`,{headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}});
         setFileLink(res.data.data.presignedUrl);
       } catch (error:any) {
         const errorMessage = error.response.data.message || "An error occurred";
-        // toast.error(errorMessage);
-        router.push('/courses/require-auth');
+        toast.error(errorMessage);
       }
     }
-    getFileLink();
+    
+    if(pdfId) 
+      getFileLink();
+
     window.addEventListener('resize', handleResize);
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, []);
+  }, [router]);
 
 
   function onDocumentLoadSuccess({ numPages }: { numPages: number }): void {
