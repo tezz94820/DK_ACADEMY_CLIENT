@@ -35,7 +35,6 @@ const VideoPlayer = ({videoLink}:VideoPlayerProps) => {
   return (
     <div onContextMenu={disableRightClick} className='flex justify-center items-center h-fit'>
       <div className='rounded-3xl p-2 bg-gradient-to-r from-indigo-600 via-purple-600 to-rose-500'>
-        {/* <Image src="/logo.png" alt="logo" height={100} width={100} className='w-10 h-10 bg-red-600'/> */}
         {
           error 
           ? 
@@ -49,7 +48,6 @@ const VideoPlayer = ({videoLink}:VideoPlayerProps) => {
             onError={errorHandler} 
             classname="mt-0"
             />
-            <div className='text-white font-bold text-center text-xl mt-2'> D.K SIR</div>
           </div>
         }
       </div>
