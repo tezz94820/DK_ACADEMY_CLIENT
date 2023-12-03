@@ -29,7 +29,7 @@ function Login() {
             toast.success("Login successful");
             router.replace('/courses');
         } catch (error:any) {
-            const errorMessage = error.response.data.message || "An error occurred";
+            const errorMessage = error.response?.data?.message || "An error occurred";
             toast.error(errorMessage);
         }
     }
