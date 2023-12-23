@@ -11,32 +11,61 @@ const Mathematics = () => {
 
   const router = useRouter();
   const [pdfModuleswise, setPdfModuleswise] = useState([]);
+  const [examType, setExamType] = useState<'mains'|'advance'>('mains');
 
   const redirectWatsapp = (title:string,courseLink:string):void => {
     const message = `Hey there! I just discovered an amazing educational video course on www.dkacademy.com . It's title is ${title}. I've been finding it super insightful, and I thought you might be interested too! Check it out here: ${courseLink} #LearningTogether`
     window.open(`https://wa.me/?text=${message}`, '_blank')
   }
 
-  useEffect( () => {
-    const fetchPdfCourses = async () => {
-      try {
-        const res = await axiosClient.get('pyq-pdf/subject/mathematics');
-        setPdfModuleswise(res.data.data);
-      } catch (error:any) {
-        toast.error(error.message);
-      }
+  const fetchPdfCourses = async () => {
+    try {
+      const res = await axiosClient.get(`pyq-pdf/subject/mathematics?exam_type=${examType}`);
+      setPdfModuleswise(res.data.data);
+    } catch (error:any) {
+      toast.error(error.message);
     }
+  }
+
+  // for fetching all the courses at the start of page i.e of mains exam_type
+  useEffect( () => {
     fetchPdfCourses();
   },[])
+
+  // on switching of the exam_type fetch new courses according to exam_type 
+  useEffect( () => {
+    fetchPdfCourses();
+  },[examType])
+
 
   return (
     <HeaderLayout>
       <CourseLayout>
-        <div className={`scrollbar w-full h-full md:overflow-y-scroll md:w-5/6 p-2 md:px-4 md:pb-8`} >
-          <div>
+        <div className={`scrollbar w-full h-full md:overflow-y-scroll md:w-5/6 p-2 md:px-4 md:pb-8 relative`} >
+          <div className='flex justify-between'>
+            {/* subject title */}
             <h1 className='font-semibold text-3xl '>Mathematics&nbsp;&#40;2000-2023&#41;</h1>
           </div>
-          <hr className='border border-purple-700 mt-1 mb-4'/>
+          <hr className='border border-purple-700 mt-1 mb-2'/>
+          {/* mains or advance switch  */}
+          <div className=' flex w-max border-2 border-purple-700 divide-x-2 divide-purple-700 mx-auto md:mx-0 md:absolute md:right-4 rounded-lg overflow-hidden'>
+              <label className={`cursor-pointer p-1 text-center  ${examType==="mains"?`bg-purple-400`:''}`}>
+                Mains
+                <input type="radio" name="examType" value="mains" 
+                  checked={examType === 'mains'}
+                  className='hidden' 
+                  onChange={ (e) => setExamType(e.target.value as 'mains') }
+                />
+              </label>
+              <label className={`cursor-pointer p-1 text-center ${examType==="advance"?`bg-purple-400`:''}`}>
+                advance
+                <input type="radio" name="examType" value="advance" 
+                checked={examType === 'advance'}
+                  className='hidden' 
+                  onChange={ (e) => setExamType(e.target.value as 'advance') }
+                />
+              </label>
+            </div>
           <div className='flex flex-col'>
           {
             pdfModuleswise.map( (item:any,moduleIndex) => (
@@ -110,7 +139,7 @@ const Mathematics = () => {
                               <div className=' flex justify-between items-center mt-3 font-semibold'>
                                 <button 
                                   className='bg-green-500 text-white hover:animate-pulse rounded-lg text-base w-full p-0.5 font-semibold' 
-                                  onClick={() => router.push(`/courses/pyq-pdf/view/${pdf._id}`)}
+                                  onClick={() => router.push(`/courses/pyq-pdf/view/${pdf._id}?exam_type=${examType}`)}
                                 >
                                   Get it for Free
                                 </button>

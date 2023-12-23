@@ -22,6 +22,7 @@ function Pdf() {
   const [allSolutionsClicked, setAllSolutionsClicked ] = useState(false);
   const router = useRouter();
   const pdfId = router.query.pdf_id;
+  const exam_type = router.query.exam_type;
 
   useEffect(() => {
     const handleResize = () => {
@@ -34,7 +35,7 @@ function Pdf() {
           router.push('/courses/require-auth');
           return;
         }
-        const res = await axiosClient.get(`/pyq-pdf/pdf?pdf_id=${pdfId}`,{headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}});
+        const res = await axiosClient.get(`/pyq-pdf/pdf?pdf_id=${pdfId}&exam_type=${exam_type}`,{headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}});
         setFileLink(res.data.data.presignedUrl);
       } catch (error:any) {
         const errorMessage = error.response.data.message || "An error occurred";
@@ -108,6 +109,8 @@ function Pdf() {
 
     toggleShowAllSolutions();
   },[allSolutionsClicked]);
+
+  console.log(exam_type)
 
   return (
     <div className='flex flex-col w-full rounded bg-gradient-to-r mt-2' onContextMenu={disableRightClick}>
