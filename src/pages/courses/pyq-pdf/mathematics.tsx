@@ -48,7 +48,7 @@ const Mathematics = () => {
           </div>
           <hr className='border border-purple-700 mt-1 mb-2'/>
           {/* mains or advance switch  */}
-          <div className=' flex w-max border-2 border-purple-700 divide-x-2 divide-purple-700 mx-auto md:mx-0 md:absolute md:right-4 rounded-lg overflow-hidden'>
+          <div className=' flex w-max border-2 border-purple-700 divide-x-2 divide-purple-700 absolute right-4 rounded-lg overflow-hidden'>
               <label className={`cursor-pointer p-1 text-center  ${examType==="mains"?`bg-purple-400`:''}`}>
                 Mains
                 <input type="radio" name="examType" value="mains" 
@@ -58,7 +58,7 @@ const Mathematics = () => {
                 />
               </label>
               <label className={`cursor-pointer p-1 text-center ${examType==="advance"?`bg-purple-400`:''}`}>
-                advance
+                Advance
                 <input type="radio" name="examType" value="advance" 
                 checked={examType === 'advance'}
                   className='hidden' 
