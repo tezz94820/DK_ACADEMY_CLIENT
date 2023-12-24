@@ -79,7 +79,7 @@ function Register() {
             {/* Use next/script to add Google OAuth script */}
             <Script strategy="lazyOnload" src="https://apis.google.com/js/platform.js" async defer />
             <Head>
-                <meta name="google-signin-client_id" content={process.env.NEXT_PUBLIC_GOOGLE_OAUTH_CLIENT_ID}></meta>
+                <meta name="google-signin-client_id" content={"212643915563-o4k0a0fth6kh9qivoar86juro790hrs9.apps.googleusercontent.com"}></meta>
             </Head>
 
             <div className='md:grid md:grid-cols-2  w-full h-max'>
