@@ -5,9 +5,6 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import axiosClient from '@/axios/axiosClient';
 import { toast } from 'react-toastify';
-import Head from 'next/head';
-import Script from 'next/script';
-
 
 const initialFormData = {
     first_name: '',
@@ -51,37 +48,9 @@ function Register() {
     }
   }
 
-  const handleGoogleOauth = async () => {
-    const googleOAuthURL = `https://accounts.google.com/o/oauth2/auth?client_id=YOUR_CLIENT_ID&redirect_uri=YOUR_REDIRECT_URI&scope=openid%20profile%20email&response_type=code&prompt=consent`;
-  }
-
-  function onSignIn(googleUser:any) {
-    var profile = googleUser.getBasicProfile();
-    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-    console.log('Name: ' + profile.getName());
-    console.log('Image URL: ' + profile.getImageUrl());
-    console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-  }
-
-  const handleGoogleLoginSuccess = (response:any) => {
-    // Handle successful login
-    console.log(response);
-  };
-
-  const handleGoogleLoginFailure = (error:any) => {
-    // Handle failed login
-    console.error(error);
-  };
-
   return (
     <>
         <div className='w-screen min-h-screen bg-gradient-to-r from-violet-500 to-fuchsia-500 pt-14 scrollbar'>
-            {/* Use next/script to add Google OAuth script */}
-            <Script strategy="lazyOnload" src="https://apis.google.com/js/platform.js" async defer />
-            <Head>
-                <meta name="google-signin-client_id" content={"212643915563-o4k0a0fth6kh9qivoar86juro790hrs9.apps.googleusercontent.com"}></meta>
-            </Head>
-
             <div className='md:grid md:grid-cols-2  w-full h-max'>
                 {/* left part of form */}
                 <div className='flex justify-center items-center'>
@@ -100,10 +69,9 @@ function Register() {
                         </div>
                         {/* oauth of google */}
                         <div className='flex justify-center items-center w-3/4 mx-auto mt-5'>
-                            <button className='border flex justify-center items-center gap-2 w-full p-2 rounded-lg text-gray-400 hover:text-black hover:bg-gray-200' onClick={handleGoogleOauth}>
-                                {/* <Image src="/google.svg" height={100} width={100} alt="google logo" className='h-6 w-6'/>
-                                <p className='text-sm md:text-base '>Sign up with Google</p> */}
-                                <div className="g-signin2" data-onsuccess="onSignIn"></div>
+                            <button className='border flex justify-center items-center gap-2 w-full p-2 rounded-lg text-gray-400 hover:text-black hover:bg-gray-200'>
+                                <Image src="/google.svg" height={100} width={100} alt="google logo" className='h-6 w-6'/>
+                                <p className='text-sm md:text-base '>Sign up with Google</p>
                             </button>
                         </div>
 
