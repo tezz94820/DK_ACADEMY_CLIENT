@@ -52,13 +52,13 @@ export const courseLeftList:courseLeftListType = [
       },
       {
         id: '8',
-        name: "Weekly Test",
-        href: "#",
+        name: "Test Series",
+        href: "/courses/test-series",
         icon: '/test.svg'
       },
       {
         id: '9',
-        name: "Test Series",
+        name: "Weekly Test",
         href: "#",
         icon: '/all.svg'
       },

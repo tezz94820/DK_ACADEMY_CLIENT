@@ -18,22 +18,33 @@ const Mathematics = () => {
     window.open(`https://wa.me/?text=${message}`, '_blank')
   }
 
-  const fetchPdfCourses = async () => {
-    try {
-      const res = await axiosClient.get(`pyq-pdf/subject/mathematics?exam_type=${examType}`);
-      setPdfModuleswise(res.data.data);
-    } catch (error:any) {
-      toast.error(error.message);
-    }
-  }
-
   // for fetching all the courses at the start of page i.e of mains exam_type
   useEffect( () => {
+
+    const fetchPdfCourses = async () => {
+      try {
+        const res = await axiosClient.get(`pyq-pdf/subject/mathematics?exam_type=${examType}`);
+        setPdfModuleswise(res.data.data);
+      } catch (error:any) {
+        toast.error(error.message);
+      }
+    }
+
     fetchPdfCourses();
-  },[])
+  })
 
   // on switching of the exam_type fetch new courses according to exam_type 
   useEffect( () => {
+
+    const fetchPdfCourses = async () => {
+      try {
+        const res = await axiosClient.get(`pyq-pdf/subject/mathematics?exam_type=${examType}`);
+        setPdfModuleswise(res.data.data);
+      } catch (error:any) {
+        toast.error(error.message);
+      }
+    }
+
     fetchPdfCourses();
   },[examType])
 

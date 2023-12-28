@@ -50,7 +50,7 @@ function Pdf() {
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, [router]);
+  }, [router,exam_type,pdfId]);
 
 
   function onDocumentLoadSuccess({ numPages }: { numPages: number }): void {

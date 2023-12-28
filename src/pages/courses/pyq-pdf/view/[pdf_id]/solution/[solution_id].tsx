@@ -45,7 +45,7 @@ const Solution = () => {
         if(pdfId && question){
             getFileLink();
         }
-    },[router])
+    },[router,pdfId,question])
 
     const closeHandler = () => {
         window.close();

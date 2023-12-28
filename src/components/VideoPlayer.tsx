@@ -46,7 +46,7 @@ const VideoPlayer = ({videoLink}:VideoPlayerProps) => {
             controls
             config={playerConfig}
             onError={errorHandler} 
-            classname="mt-0"
+            className="mt-0"
             />
           </div>
         }
