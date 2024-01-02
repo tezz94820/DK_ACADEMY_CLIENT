@@ -92,6 +92,21 @@ type questionsWithUserInteractionType = {
   user_interaction:string;
 }
 
+type questionInteractionAnalysisType = {
+  "not-visited": string;
+  "answered": string;
+  "not-answered":string;
+  "marked": string;
+  "marked-answered": string;
+}
+
+const initialQuestionInteractionAnalysis = {
+  "not-visited": "0",
+  "answered": "0",
+  "not-answered": "0",
+  "marked": "0",
+  "marked-answered": "0",
+}
 const tabs = [ 'PHYSICS', 'PHYSICS NUMERIC','CHEMISTRY', 'CHEMISTRY NUMERIC', 'MATHEMATICS', 'MATHEMATICS NUMERIC'];
 
 const TestWatch = () => {
@@ -112,7 +127,7 @@ const TestWatch = () => {
   const [timer, setTimer] = useState<number>(duration);
   const [selectedOption, setSelectedOption] = useState('');
   const [questionsWithUserInteraction, setQuestionsWithUserInteraction] = useState<questionsWithUserInteractionType[]>([]);
-
+  const [questionInteractionAnalysis, setQuestionInteractionAnalysis] = useState<questionInteractionAnalysisType>(initialQuestionInteractionAnalysis);
   //get test start details
   useEffect( () => {
     const fetchTestStartDetails = async () => {
@@ -330,9 +345,11 @@ const TestWatch = () => {
     //question box states
     useEffect( () => {
       const fetchQuestionUserInteraction = async () => {
+        if(!testAttemptId) return;
         try {
           const response = await axiosClient.get(`tests/test/question-states/${testAttemptId}`, {headers:{ Authorization: `Bearer ${localStorage.getItem("token")}`}});
           setQuestionsWithUserInteraction(response.data.data.question_states);
+          setQuestionInteractionAnalysis(response.data.data.question_interaction_analysis);
         } catch (error:any) {
           const errorMessage = error?.response?.data?.message || "An error occurred";
           toast.error(errorMessage);
@@ -341,7 +358,10 @@ const TestWatch = () => {
       fetchQuestionUserInteraction();
     },[testAttemptId,questionNumber]);
 
-  
+
+
+
+
   return (
     <div className='w-screen h-screen overflow-hidden select-none'>
       {/* test header 13*/}
@@ -440,23 +460,23 @@ const TestWatch = () => {
           {/* question information section */}
           <div className='h-[45%] flex flex-col justify-evenly px-3 border-2 border-l-blue-600'>
               <div className='flex items-center justify-start gap-2'>
-                <p className='bg-[url("/trial/answered.svg")] h-8 w-8 bg-no-repeat flex items-center justify-center text-base text-white'>01</p>
+                <p className='bg-[url("/trial/answered.svg")] h-8 w-8 bg-no-repeat flex items-center justify-center text-base text-white'>{questionInteractionAnalysis['answered']}</p>
                 <p>Answered</p>
               </div>
               <div className='flex items-center justify-start gap-2'>
-                <p className='bg-[url("/trial/not-answered.svg")] h-8 w-8 bg-no-repeat text-center align-middle text-base text-white'>01</p>
+                <p className='bg-[url("/trial/not-answered.svg")] h-8 w-8 bg-no-repeat text-center align-middle text-base text-white'>{questionInteractionAnalysis['not-answered']}</p>
                 <p>Not Answered</p>
               </div>
               <div className='flex items-center justify-start gap-2'>
-                <p className=' border border-gray-800 bg-gray-200 rounded h-8 w-8 bg-no-repeat flex items-center justify-center text-base text-black'>01</p>
+                <p className=' border border-gray-800 bg-gray-200 rounded h-8 w-8 bg-no-repeat flex items-center justify-center text-base text-black'>{questionInteractionAnalysis['not-visited']}</p>
                 <p>Not Visited</p>
               </div>
               <div className='flex items-center justify-start gap-2'>
-                <p className='bg-marked rounded-full h-9 w-9 bg-no-repeat flex items-center justify-center text-base text-white'>01</p>
+                <p className='bg-marked rounded-full h-9 w-9 bg-no-repeat flex items-center justify-center text-base text-white'>{questionInteractionAnalysis['marked']}</p>
                 <p>To Be Reviewed</p>
               </div>
               <div className='flex items-center justify-start gap-2'>
-                <p className='bg-[url("/trial/marked-answered.svg")] h-9 w-10 bg-no-repeat flex items-center justify-center text-base text-white'>01</p>
+                <p className='bg-[url("/trial/marked-answered.svg")] h-9 w-10 bg-no-repeat flex items-center justify-center text-base text-white'>{questionInteractionAnalysis['marked-answered']}</p>
                 <p>Answered & marked for <br/>review &#40;will be evaluated&#41;</p>
               </div>
           </div>
