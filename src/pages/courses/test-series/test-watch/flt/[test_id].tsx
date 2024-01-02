@@ -87,6 +87,11 @@ const initialCurrentQuestion = {
   ],
 }
 
+type questionsWithUserInteractionType = {
+  question_number:string;
+  user_interaction:string;
+}
+
 const tabs = [ 'PHYSICS', 'PHYSICS NUMERIC','CHEMISTRY', 'CHEMISTRY NUMERIC', 'MATHEMATICS', 'MATHEMATICS NUMERIC'];
 
 const TestWatch = () => {
@@ -96,7 +101,6 @@ const TestWatch = () => {
   const testAttemptId = router.query.test_attempt_id;
   const videoRef = useRef<HTMLVideoElement>(null);
   let duration = 180*60; //in seconds
-  const questionBoxArray:string[] = [];
 
 
 
@@ -107,10 +111,7 @@ const TestWatch = () => {
   const [questionNumber, setQuestionNumber] = useState('1');
   const [timer, setTimer] = useState<number>(duration);
   const [selectedOption, setSelectedOption] = useState('');
-
-  for(let i=1;i<=Number(testDetails.total_questions);i++){
-    questionBoxArray.push(i.toString());
-  }
+  const [questionsWithUserInteraction, setQuestionsWithUserInteraction] = useState<questionsWithUserInteractionType[]>([]);
 
   //get test start details
   useEffect( () => {
@@ -226,20 +227,64 @@ const TestWatch = () => {
 
   // questionbox
   const handleQuestionBoxClicked = async (newQuestionNumber:string) => {
+    // if no answer is selected and clikced on another question then make it not-answered in db also make sure the question is not review-later
+    const isReviewLater = questionsWithUserInteraction.find( q => q.question_number === questionNumber && q.user_interaction === 'marked' );
+    if(selectedOption === '' && !isReviewLater){
+      try {
+        const response = await axiosClient.post(
+          'tests/test/option-user-interaction',
+          { test_attempt_id:testAttemptId,question_number:questionNumber,option:"",user_interaction:"not-answered"},
+          {headers:{ Authorization: `Bearer ${localStorage.getItem("token")}`}}
+        );
+      } catch (error:any) {
+        const errorMessage = error?.response?.data?.message || "An error occurred";
+        toast.error(errorMessage);
+      }
+    }
     setQuestionNumber(newQuestionNumber);
   }
 
   //back and next
-  const handleNextQuestionButton = () => {
+  const handleNextQuestionButton = async () => {
+    // if no answer is selected and the question is not review later then  clikced on another question then make it not-answered in db
+    const isReviewLater = questionsWithUserInteraction.find( q => q.question_number === questionNumber && q.user_interaction === 'marked' );
+    if(selectedOption === '' && !isReviewLater){
+      try {
+        const response = await axiosClient.post(
+          'tests/test/option-user-interaction',
+          { test_attempt_id:testAttemptId,question_number:questionNumber,option:"",user_interaction:"not-answered"},
+          {headers:{ Authorization: `Bearer ${localStorage.getItem("token")}`}}
+        );
+      } catch (error:any) {
+        const errorMessage = error?.response?.data?.message || "An error occurred";
+        toast.error(errorMessage);
+      }
+    }
+
     setQuestionNumber((prev) => {
-      if(prev === questionBoxArray[questionBoxArray.length-1]) return prev;
+      if(prev === testDetails.total_questions) return prev;
       return (Number(prev) + 1).toString();
     })
   }
 
-  const handleBackQuestionButton = () => {
+  const handleBackQuestionButton = async () => {
+    // if no answer is selected and the question is not review later then  clikced on another question then make it not-answered in db
+    const isReviewLater = questionsWithUserInteraction.find( q => q.question_number === questionNumber && q.user_interaction === 'marked' );
+    if(selectedOption === '' && !isReviewLater){
+      try {
+        const response = await axiosClient.post(
+          'tests/test/option-user-interaction',
+          { test_attempt_id:testAttemptId,question_number:questionNumber,option:"",user_interaction:"not-answered"},
+          {headers:{ Authorization: `Bearer ${localStorage.getItem("token")}`}}
+        );
+      } catch (error:any) {
+        const errorMessage = error?.response?.data?.message || "An error occurred";
+        toast.error(errorMessage);
+      }
+    }
+
     setQuestionNumber((prev) => {
-      if(prev === questionBoxArray[0]) return prev;
+      if(prev === '1') return prev;
       return (Number(prev) - 1).toString();
     })
   }
@@ -258,7 +303,7 @@ const TestWatch = () => {
     }
     // increment question number
     setQuestionNumber((prev) => {
-      if(prev === questionBoxArray[questionBoxArray.length-1]) return prev;
+      if(prev === testDetails.total_questions) return prev;
       return (Number(prev) + 1).toString();
     })
   }
@@ -278,9 +323,23 @@ const TestWatch = () => {
     }
     // increment question number
     setQuestionNumber((prev) => {
-      if(prev === questionBoxArray[questionBoxArray.length-1]) return prev;
+      if(prev === testDetails.total_questions) return prev;
       return (Number(prev) + 1).toString();
     })  }
+
+    //question box states
+    useEffect( () => {
+      const fetchQuestionUserInteraction = async () => {
+        try {
+          const response = await axiosClient.get(`tests/test/question-states/${testAttemptId}`, {headers:{ Authorization: `Bearer ${localStorage.getItem("token")}`}});
+          setQuestionsWithUserInteraction(response.data.data.question_states);
+        } catch (error:any) {
+          const errorMessage = error?.response?.data?.message || "An error occurred";
+          toast.error(errorMessage);
+        }
+      }
+      fetchQuestionUserInteraction();
+    },[testAttemptId,questionNumber]);
 
   
   return (
@@ -405,8 +464,8 @@ const TestWatch = () => {
           <div className='h-[52%] overflow-y-auto border-2 border-blue-600'>
             <div className=' grid grid-cols-4 p-4 gap-4  '>
               {
-                questionBoxArray.map( item => (
-                  <button key={item} className={item === questionNumber ? 'focus-question' : item === '2' ? 'not-answered' : item === '3' ? 'answered' : item === '4' ? 'marked' : item === '5' ? 'marked-answered' : 'not-visited'} onClick={() => handleQuestionBoxClicked(item)}>Q{item}</button>
+                questionsWithUserInteraction.map( item => (
+                  <button key={item.question_number} className={item.question_number === questionNumber ? 'focus-question' : item.user_interaction } onClick={() => handleQuestionBoxClicked(item.question_number)}>Q{item.question_number}</button>
                 ))
               }
             </div>

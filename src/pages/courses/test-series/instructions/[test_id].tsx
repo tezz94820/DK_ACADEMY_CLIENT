@@ -114,13 +114,13 @@ const Instructions = () => {
                                 <li className='align-middle my-2'>
                                     <div className='flex items-center'>
                                         <p className='bg-[url("/trial/marked-answered.svg")] h-9 w-10 bg-no-repeat flex items-center justify-center text-base text-white mr-4'>01</p>
-                                        <span>The question&#40;s&#41; &34;Answered and Marked for Review&34; will be considered for evalution.</span>
+                                        <span>The question&#40;s&#41; &#34;Answered and Marked for Review&#34; will be considered for evalution.</span>
                                     </div>
                                 </li>
                             </ul>
                         </li>
-                        <li>You can click on the &34;&gt;&34; arrow which apperes to the left of question palette to collapse the question palette thereby maximizing the question window. To view the question palette again, you can click on &34;&lt;&34; which appears on the right side of question window.</li>
-                        <li>You can click on your &34;Profile&34; image on top right corner of your screen to change the language during the exam for entire question paper. On clicking of Profile image you will get a drop-down to change the question content to the desired language.</li>
+                        <li>You can click on the &#34;&gt;&#34; arrow which apperes to the left of question palette to collapse the question palette thereby maximizing the question window. To view the question palette again, you can click on &#34;&lt;&#34; which appears on the right side of question window.</li>
+                        <li>You can click on your &#34;Profile&#34; image on top right corner of your screen to change the language during the exam for entire question paper. On clicking of Profile image you will get a drop-down to change the question content to the desired language.</li>
                     </ol>
                 </div>
                 {/* Navigating to a Question: */}
