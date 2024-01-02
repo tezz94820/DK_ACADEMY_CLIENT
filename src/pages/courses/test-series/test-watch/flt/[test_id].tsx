@@ -1,4 +1,7 @@
 import axiosClient from '@/axios/axiosClient';
+import { current } from '@reduxjs/toolkit';
+import { ifError } from 'assert';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify';
@@ -8,28 +11,125 @@ type testDetailsType = {
   title: string;
   duration: string;
   type: string;
+  total_questions: string;
+  tabDetails:{
+    physics: string;
+    physics_numeric: string;
+    chemistry: string;
+    chemistry_numeric: string;
+    mathematics: string;
+    mathematics_numeric: string
+  }
 }
 const initialTestDetails: testDetailsType = {
   _id: '',
   title: '',
   duration: '',
   type: '',
+  total_questions: '',
+  tabDetails:{
+    physics: "",
+    physics_numeric: "",
+    chemistry: "",
+    chemistry_numeric: "",
+    mathematics: "",
+    mathematics_numeric: ""
+  }
 }
 
-const tabs = ['PHYSICS', 'PHYSICS NUMERIC', 'CHEMISTRY', 'CHEMISTRY NUMERIC', 'MATHEMATICS', 'MATHEMATICS NUMERIC'];
+type currentQuestionType = {
+  _id: string;
+  question_type: string;
+  question: string;
+  question_pattern: string;
+  question_number: string;
+  question_subject: string;
+  options: {
+    _id: string;
+    option_name: string;
+    option_type: string;
+    option: string;
+  }[];
+}
 
+const initialCurrentQuestion = {
+  _id: "1",
+  question_type: "text",
+  question: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.",
+  question_pattern: "mcq",
+  question_number: "2",
+  question_subject: "physics",
+  options: [
+    {
+      _id: "1",
+      option_name: "A",
+      option_type: 'img',
+      option: "/trial/question.png",
+    },
+    {
+      _id: "2",
+      option_name: "B",
+      option_type: 'text',
+      option: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.",
+    },
+    {
+      _id: "3",
+      option_name: "C",
+      option_type: 'img',
+      option: "/trial/question.png",
+    },
+    {
+      _id: "4",
+      option_name: "D",
+      option_type: 'text',
+      option: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.",
+    }
+  ],
+}
+
+const tabs = [ 'PHYSICS', 'PHYSICS NUMERIC','CHEMISTRY', 'CHEMISTRY NUMERIC', 'MATHEMATICS', 'MATHEMATICS NUMERIC'];
 
 const TestWatch = () => {
 
   const router = useRouter();
   let testId = router.query.test_id;
-  const [testDetails, setTestDetails] = useState<testDetailsType>(initialTestDetails);
-
-
+  const testAttemptId = router.query.test_attempt_id;
   const videoRef = useRef<HTMLVideoElement>(null);
+  let duration = 180*60; //in seconds
+  const questionBoxArray:string[] = [];
 
+
+
+  //states
+  const [testDetails, setTestDetails] = useState<testDetailsType>(initialTestDetails);
+  const [tabSelected, setTabSelected] = useState<string>(tabs[0]);
+  const [currentQuestion, setCurrentQuestion] = useState<currentQuestionType>(initialCurrentQuestion);
+  const [questionNumber, setQuestionNumber] = useState('1');
+  const [timer, setTimer] = useState<number>(duration);
+  const [selectedOption, setSelectedOption] = useState('');
+
+  for(let i=1;i<=Number(testDetails.total_questions);i++){
+    questionBoxArray.push(i.toString());
+  }
+
+  //get test start details
   useEffect( () => {
+    const fetchTestStartDetails = async () => {
+      if(!testId) return;
+      try {
+        const response = await axiosClient.get(`tests/test-start/${testId}`);
+        const data = response.data.data;
+        setTestDetails({_id:data._id,title:data.title,duration:data.duration,type:data.type,total_questions:data.total_questions,tabDetails:data.tabDetails });
+      } catch (error:any) {
+        const errorMessage = error?.response?.data?.message || "An error occurred";
+        toast.error(errorMessage);
+      }
+    }
+    fetchTestStartDetails();
+  },[router,testId]);
 
+  // start camera and audio
+  useEffect( () => {
     const startCamera = async () => {
       try {
           const stream = await navigator.mediaDevices.getUserMedia({video:true,audio:true});
@@ -44,35 +144,162 @@ const TestWatch = () => {
     startCamera();
   },[])
 
-  useEffect( () => {
-    const fetchTestDetails = async () => {
-        if(!testId){
-         return;   
-        }
-        try {
-            const res = await axiosClient.get(`tests/test-details/${testId}`);
-            setTestDetails(res.data.data);
-        } catch (error:any) {
-            const errorMessage = error?.response?.data?.message || "An error occurred";
-            toast.error(errorMessage);
-        }
+  const handleTabClicked = (tab:string) => {
+    setTabSelected(tab);
+    switch (tab) {
+      case 'PHYSICS': setQuestionNumber(testDetails.tabDetails.physics); break;
+      case 'PHYSICS NUMERIC': setQuestionNumber(testDetails.tabDetails.physics_numeric); break;
+      case 'CHEMISTRY': setQuestionNumber(testDetails.tabDetails.chemistry); break;
+      case 'CHEMISTRY NUMERIC': setQuestionNumber(testDetails.tabDetails.chemistry_numeric); break;
+      case 'MATHEMATICS': setQuestionNumber(testDetails.tabDetails.mathematics); break;
+      case 'MATHEMATICS NUMERIC': setQuestionNumber(testDetails.tabDetails.mathematics_numeric); break;
+      default: setQuestionNumber('1');
     }
-    fetchTestDetails();
+  }
 
-  },[router,testId])
+  //timer
+  useEffect( () => {
+    if(timer === 0) return;
+    const interval = setInterval(() => {
+      setTimer((prev)  => prev === 0 ? 0 : prev-1);
+    }, 1000);
+    if(timer === 0) clearInterval(interval);
+    return () => clearInterval(interval);
+  },[timer]);
 
-  console.log(testDetails);
+
+  const formatTime = (time:number) => time < 10 ? `0${time}` : time;
+  const second = formatTime(timer%60);
+  const minute = formatTime(Math.floor(timer/60)%60);
+  const hour = formatTime(Math.floor(timer/3600));
+  const current_degree = (duration - timer) * 360 / duration;
+  const timer_styles = {
+    height: "60%",
+    width: "auto",
+    aspectRatio: "1/1",
+    border: "3px solid #0b68a3",
+    borderRadius: "50%",
+    backgroundImage: `conic-gradient(#0b68a3 0deg,#0b68a3 ${current_degree}deg, white ${current_degree}deg,white 360deg)`
+  }
+
+  //option
+  const handleOptionChange = (optionName:string) => {
+    setSelectedOption(optionName);
+  }
+
+  const handleClearSelection = async () => {
+    setSelectedOption('');
+    // saving the user selected option as empty with  user_interaction as not-answered
+    try {
+      const response = await axiosClient.post(
+        'tests/test/option-user-interaction',
+        { test_attempt_id:testAttemptId,question_number:questionNumber,option:"",user_interaction:"not-answered"},
+        {headers:{ Authorization: `Bearer ${localStorage.getItem("token")}`}}
+      );
+    } catch (error:any) {
+      const errorMessage = error?.response?.data?.message || "An error occurred";
+      toast.error(errorMessage);
+    }
+  }
 
 
+  // fetch individual question by question number
+  useEffect( () => {
+    const fetchQuestionByQuestionNumber = async () => {
+      if(!testId) return;
+      if(!questionNumber) return;
+      try {
+        // get the question content by questionNumber
+        const response = await axiosClient.get(`tests/test/question/${testId}/${questionNumber}`);
+        setCurrentQuestion(response.data.data[0]);
+        // get the selected option from backend 
+        const res = await axiosClient.get(`tests/test/selected-option-by-question/${testAttemptId}/${questionNumber}`, {headers:{ Authorization: `Bearer ${localStorage.getItem("token")}`}});
+        setSelectedOption(res.data.data.selected_option);
+      } catch (error:any) {
+        const errorMessage = error?.response?.data?.message || "An error occurred";
+        toast.error(errorMessage);
+      }
+    }
+
+    fetchQuestionByQuestionNumber();
+  },[testId,questionNumber,testAttemptId]) 
+
+  // questionbox
+  const handleQuestionBoxClicked = async (newQuestionNumber:string) => {
+    setQuestionNumber(newQuestionNumber);
+  }
+
+  //back and next
+  const handleNextQuestionButton = () => {
+    setQuestionNumber((prev) => {
+      if(prev === questionBoxArray[questionBoxArray.length-1]) return prev;
+      return (Number(prev) + 1).toString();
+    })
+  }
+
+  const handleBackQuestionButton = () => {
+    setQuestionNumber((prev) => {
+      if(prev === questionBoxArray[0]) return prev;
+      return (Number(prev) - 1).toString();
+    })
+  }
+
+  const handleSaveAndNext = async () => {
+    try {
+      // saving the user selected option with answered user_interaction
+      const response = await axiosClient.post(
+        'tests/test/option-user-interaction',
+        { test_attempt_id:testAttemptId,question_number:questionNumber,option:selectedOption,user_interaction:"answered"},
+        {headers:{ Authorization: `Bearer ${localStorage.getItem("token")}`}}
+      );
+    } catch (error:any) {
+      const errorMessage = error?.response?.data?.message || "An error occurred";
+      toast.error(errorMessage);
+    }
+    // increment question number
+    setQuestionNumber((prev) => {
+      if(prev === questionBoxArray[questionBoxArray.length-1]) return prev;
+      return (Number(prev) + 1).toString();
+    })
+  }
+
+  const handleReviewLater = async () => {
+    const userInteraction = selectedOption === "" ? "marked" : "marked-answered";
+    // saving the user selected option with appropriate marked user_interaction 
+    try {
+      const response = await axiosClient.post(
+        'tests/test/option-user-interaction',
+        { test_attempt_id:testAttemptId,question_number:questionNumber,option:selectedOption,user_interaction:userInteraction},
+        {headers:{ Authorization: `Bearer ${localStorage.getItem("token")}`}}
+      );
+    } catch (error:any) {
+      const errorMessage = error?.response?.data?.message || "An error occurred";
+      toast.error(errorMessage);
+    }
+    // increment question number
+    setQuestionNumber((prev) => {
+      if(prev === questionBoxArray[questionBoxArray.length-1]) return prev;
+      return (Number(prev) + 1).toString();
+    })  }
+
+  
   return (
-    <div className='w-screen h-screen overflow-hidden'>
+    <div className='w-screen h-screen overflow-hidden select-none'>
       {/* test header 13*/}
-      <div className='flex justify-between items-center px-6 bg-sky-400 h-[13%]'>
-        <h2 className='text-2xl font-bold bg-green-400 '>{testDetails.title}</h2>
-        <div className='flex items-center gap-2 bg-violet-400 h-full'>
-          <div className='bg-red-300'>Time</div>
-          <video ref={videoRef} autoPlay playsInline height={100} width={100} className='rounded-lg border-4 border-black h-full w-auto' muted={true}/>
-          <h3>Instructions</h3>
+      <div className='flex justify-between items-center px-6  h-[13%]'>
+        <h2 className='text-2xl font-bold '>{testDetails.title}</h2>
+        <div className='flex items-center gap-2 h-full'>
+          <div style={timer_styles} className='timer-clock'></div>
+          <div className='flex text-xl font-bold'>
+            <div>{hour}</div>:
+            <div>{minute}</div>:
+            <div className='animate-bounce'>{second}</div>
+          </div>
+          <video ref={videoRef} autoPlay playsInline height={100} width={100} className='rounded border border-black shadow shadow-black h-[95%] w-auto my-auto' muted={true}/>
+          {/* submit test button */}
+          <div className='flex justify-center items-center'>
+            <button className='border-2 border-red-500 px-5 py-1  rounded-lg h-max text-red-500 hover:bg-red-500 hover:text-white font-bold'>Submit Test</button>
+          </div>
         </div>
       </div>
 
@@ -82,7 +309,7 @@ const TestWatch = () => {
           {
             tabs.map( tab => (
               <div key={tab}>
-                <h3 className='text-base text-white cursor-pointer'>{tab}</h3>
+                <h3 className={`text-base text-white cursor-pointer ${tabSelected === tab ? 'underline underline-offset-8' : ''}`} onClick={() => handleTabClicked(tab)}>{tab}</h3>
               </div>
             ))
           }
@@ -93,26 +320,96 @@ const TestWatch = () => {
       <div className='w-full flex h-[79%]'>
         
         {/* test section */}
-        <div className='w-[75%] bg-green-400'>
+        <div className='w-[75%]'>
           {/* test questions and answers */}
-          <div className='w-full h-[85%] bg-purple-400'>
-            <p>Hello</p>
+          <div className='w-full h-[85%] border-2 border-y-blue-600 p-2 overflow-auto'>
+            {/* question number */}
+            <p className='text-blue-600 font-bold tracking-widest'>Q{currentQuestion.question_number}</p>
+            {/* question */}
+            {
+              currentQuestion.question_type === 'text' 
+              ?
+              <p>{currentQuestion.question}</p>
+              :
+              <Image src="/trial/question.png" height={400} width={800} alt="question" />
+            }
+            {/* options */}
+            {
+              currentQuestion.question_pattern === 'mcq' &&
+
+              <div className='flex flex-col mt-5 gap-4'>
+              {
+                ['A','B','C','D'].map( item => {
+                  const option = currentQuestion.options.filter( opt => opt.option_name === item)[0];
+                  return (
+                    <label key={item} className='flex cursor-pointer w-max'>
+                      <input type="radio" name="selectedOption" value={item} className='mr-2 h-5 w-5 my-auto'
+                        onChange={() => handleOptionChange(item)}
+                        checked={selectedOption === item}
+                      />
+                      {
+                        option.option_type === 'text' 
+                        ? 
+                          <span> {item}&#41; {option.option} </span>
+                        : 
+                          <Image src={"/trial/question.png"} height={400} width={800} alt={`option${item}`} />
+                      }
+                    </label>
+                  )
+                })
+              }
+            </div>
+              
+            }
           </div>
           {/* test question selection buttons  */}
-          <div className='w-full h-[15%] bg-red-300'>
-            <p>Hello</p>
+          <div className='w-full h-[15%]  flex justify-between items-center px-5'>
+            <div className='flex gap-3'>
+              <button className={`px-5 py-1 font-bold border-2 border-red-500 text-red-500 hover:bg-red-500 hover:text-white rounded-lg h-max ${selectedOption === '' ? 'cursor-not-allowed opacity-30' : 'cursor-pointer'}`} disabled={selectedOption === ''} onClick={handleSaveAndNext}>Save & Next</button>
+              <button className='px-5 py-1 font-bold border-2 border-purple-500 text-purple-500 rounded-lg h-max hover:bg-purple-500 hover:text-white' onClick={handleReviewLater}>Review Later</button>
+              <button className={`px-5 py-1 font-bold border-2 border-blue-800 text-blue-800 hover:bg-blue-800 hover:text-white rounded-lg h-max ${selectedOption === '' ? 'cursor-not-allowed opacity-30' : 'cursor-pointer'}`} disabled={selectedOption === ''} onClick={handleClearSelection}>Clear Selection</button>
+            </div>
+            <div className=' flex gap-3'>
+              <button className='px-5 py-1 font-bold border-2 border-blue-500 text-blue-500 rounded-lg h-max hover:bg-blue-500 hover:text-white' onClick={handleBackQuestionButton}>&larr; Back</button>
+              <button className='px-5 py-1 font-bold border-2 border-blue-500 text-blue-500 rounded-lg h-max hover:bg-blue-500 hover:text-white' onClick={handleNextQuestionButton}>Next &rarr;</button>
+            </div>
           </div>
         </div>
 
-          {/* analysis section */}
-        <div className='w-[25%] bg-violet-500'>
-          {/* information section */}
-          <div className='h-[90%] bg-green-200'>
-            <p>hello</p>
+          {/* right question button section */}
+        <div className='w-[25%]'>
+          {/* question information section */}
+          <div className='h-[45%] flex flex-col justify-evenly px-3 border-2 border-l-blue-600'>
+              <div className='flex items-center justify-start gap-2'>
+                <p className='bg-[url("/trial/answered.svg")] h-8 w-8 bg-no-repeat flex items-center justify-center text-base text-white'>01</p>
+                <p>Answered</p>
+              </div>
+              <div className='flex items-center justify-start gap-2'>
+                <p className='bg-[url("/trial/not-answered.svg")] h-8 w-8 bg-no-repeat text-center align-middle text-base text-white'>01</p>
+                <p>Not Answered</p>
+              </div>
+              <div className='flex items-center justify-start gap-2'>
+                <p className=' border border-gray-800 bg-gray-200 rounded h-8 w-8 bg-no-repeat flex items-center justify-center text-base text-black'>01</p>
+                <p>Not Visited</p>
+              </div>
+              <div className='flex items-center justify-start gap-2'>
+                <p className='bg-marked rounded-full h-9 w-9 bg-no-repeat flex items-center justify-center text-base text-white'>01</p>
+                <p>To Be Reviewed</p>
+              </div>
+              <div className='flex items-center justify-start gap-2'>
+                <p className='bg-[url("/trial/marked-answered.svg")] h-9 w-10 bg-no-repeat flex items-center justify-center text-base text-white'>01</p>
+                <p>Answered & marked for <br/>review &#40;will be evaluated&#41;</p>
+              </div>
           </div>
-          {/* submit test button */}
-          <div className='h-[10%] flex justify-center items-center'>
-            <button className='bg-red-500 px-6 py-2 rounded-lg '>Submit Test</button>
+          {/* Question buttons */}
+          <div className='h-[52%] overflow-y-auto border-2 border-blue-600'>
+            <div className=' grid grid-cols-4 p-4 gap-4  '>
+              {
+                questionBoxArray.map( item => (
+                  <button key={item} className={item === questionNumber ? 'focus-question' : item === '2' ? 'not-answered' : item === '3' ? 'answered' : item === '4' ? 'marked' : item === '5' ? 'marked-answered' : 'not-visited'} onClick={() => handleQuestionBoxClicked(item)}>Q{item}</button>
+                ))
+              }
+            </div>
           </div>
         </div>
       

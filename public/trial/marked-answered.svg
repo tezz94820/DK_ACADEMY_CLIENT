@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="38px" height="35px" viewBox="0 0 38 35" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 58 (84663) - https://sketch.com -->
+    <title>Group 4</title>
+    <desc>Created with Sketch.</desc>
+    <g id="JEE-Main_Web" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="JEE_Main-Web-_Test--01" transform="translate(-1123.000000, -376.000000)">
+            <g id="Group-4" transform="translate(1123.000000, 376.000000)">
+                <g id="Group-3">
+                    <circle id="Oval" fill="#7C599F" cx="17.5" cy="17.5" r="17.5"></circle>
+                    <circle id="Oval" fill="#59AA00" cx="32" cy="26" r="6"></circle>
+                </g>
+                <g id="tick" transform="translate(29.000000, 24.000000)" fill="#FFFFFF" fill-rule="nonzero">
+                    <path d="M6.8974867,0.0997131344 C6.76080913,-0.0332377115 6.53921565,-0.0332377115 6.40251074,0.0997131344 L2.20929711,4.17822434 L0.597494388,2.61052669 C0.46081682,2.47757585 0.239223341,2.47758914 0.10251843,2.61052669 C-0.0341728098,2.74346424 -0.0341728098,2.95899408 0.10251843,3.09194492 L1.96180913,4.90033174 C2.09844568,5.03326929 2.32020322,5.03317621 2.45678509,4.90033174 L6.8974867,0.581144663 C7.03417794,0.448207115 7.03416426,0.23266398 6.8974867,0.0997131344 Z" id="Path"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

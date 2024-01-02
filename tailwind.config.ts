@@ -17,11 +17,17 @@ const config: Config = {
         '4.3': '4.3rem',
         '4.6': '4.6rem',
       },
+      skew: {
+        '12': '-20deg',
+      },
+      colors: {
+        'marked': '#7C599F',
+      }
     },
   },
   plugins: [require("daisyui")],
   daisyui: {
-    themes: [],
+    themes: ["light"],
   }
 }
 export default config

@@ -27,9 +27,19 @@ const Instructions = () => {
     const router = useRouter();
     let testId = router.query.test_id;
 
-    const handleProceed = (event:FormEvent<HTMLFormElement>) => {
+    const handleProceed = async (event:FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        router.push(`/courses/test-series/test-watch/${testDetails.type}/${testDetails._id}`)
+        let testAttemptId:string; 
+
+        try {
+            const response = await axiosClient.get(`tests/test-attempt-registry/${testId}`, {headers:{ Authorization: `Bearer ${localStorage.getItem("token")}`}});
+            testAttemptId = response.data.data.test_attempt_id;
+        } catch (error:any) {
+            const errorMessage = error?.response?.data?.message || "An error occurred";
+            toast.error(errorMessage);
+            return;
+        }
+        router.push(`/courses/test-series/test-watch/${testDetails.type}/${testDetails._id}?test_attempt_id=${testAttemptId}`);
         const element = document.documentElement;
         if(element.requestFullscreen){
             element.requestFullscreen();
@@ -77,33 +87,33 @@ const Instructions = () => {
                         <li>
                             The Questions Palette displayed on the right side of screen will show the status of each question using one of the following symbols:
                             <ul className='list-disc list-outside pl-10'>
-                                <li className='align-middle bg-blue-300 my-2'>
-                                    <div className='flex '>
-                                        <Image src={"/logo.png"} height={50} width={50} alt="Answerd Symbol" className='h-10 w-auto' />
+                                <li className='align-middle my-2'>
+                                    <div className='flex items-center'>
+                                        <p className=' border border-gray-800 bg-gray-200 rounded h-8 w-8 bg-no-repeat flex items-center justify-center text-base text-black mr-4'>01</p>
                                         <span>You have not visited the question yet.</span>
                                     </div>
                                 </li>
-                                <li className='align-middle bg-blue-300 my-2'>
-                                    <div className='flex '>
-                                        <Image src={"/logo.png"} height={50} width={50} alt="Answerd Symbol" className='h-10 w-auto' />
+                                <li className='align-middle my-2'>
+                                    <div className='flex items-center'>
+                                        <p className='bg-[url("/trial/not-answered.svg")] h-8 w-8 bg-no-repeat text-center align-middle text-base text-white mr-4'>01</p>
                                         <span>You have not answered the question.</span>
                                     </div>
                                 </li>
-                                <li className='align-middle bg-blue-300 my-2'>
-                                    <div className='flex '>
-                                        <Image src={"/logo.png"} height={50} width={50} alt="Answerd Symbol" className='h-10 w-auto' />
+                                <li className='align-middle my-2'>
+                                    <div className='flex items-center'>
+                                        <p className='bg-[url("/trial/answered.svg")] h-8 w-8 bg-no-repeat flex items-center justify-center text-base text-white mr-4'>01</p>
                                         <span>You have answered the question.</span>
                                     </div>
                                 </li>
-                                <li className='align-middle bg-blue-300 my-2'>
-                                    <div className='flex '>
-                                        <Image src={"/logo.png"} height={50} width={50} alt="Answerd Symbol" className='h-10 w-auto' />
+                                <li className='align-middle my-2'>
+                                    <div className='flex items-center'>
+                                        <p className='bg-marked rounded-full h-9 w-9 bg-no-repeat flex items-center justify-center text-base text-white mr-4'>01</p>
                                         <span>You have NOT answered the question, but have marked the question for review.</span>
                                     </div>
                                 </li>
-                                <li className='align-middle bg-blue-300 my-2'>
-                                    <div className='flex '>
-                                        <Image src={"/logo.png"} height={50} width={50} alt="Answerd Symbol" className='h-10 w-auto' />
+                                <li className='align-middle my-2'>
+                                    <div className='flex items-center'>
+                                        <p className='bg-[url("/trial/marked-answered.svg")] h-9 w-10 bg-no-repeat flex items-center justify-center text-base text-white mr-4'>01</p>
                                         <span>The question&#40;s&#41; &34;Answered and Marked for Review&34; will be considered for evalution.</span>
                                     </div>
                                 </li>

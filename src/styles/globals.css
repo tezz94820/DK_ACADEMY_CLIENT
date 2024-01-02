@@ -70,8 +70,39 @@
     100% {
       transform: translate(-5px, 0);
     }
-  
+
     50% {
       transform: translate(5px, 0);
     }
   }
+
+.red-box:after {
+    content: '';
+    border-right: 1rem solid green;
+    position: absolute;
+    right: 0;
+}
+
+.not-visited{
+  @apply border border-gray-800 bg-gray-200 rounded flex items-center justify-center text-base w-auto aspect-square
+}
+
+.answered{
+  @apply bg-[url("/trial/answered.svg")] bg-cover bg-no-repeat w-auto aspect-square text-base text-white
+}
+
+.not-answered{
+  @apply bg-[url("/trial/not-answered.svg")] bg-cover bg-no-repeat w-auto aspect-square text-base text-white
+}
+
+.marked{
+  @apply bg-marked rounded-full bg-cover bg-no-repeat w-auto aspect-square text-base text-white
+}
+
+.marked-answered{
+  @apply bg-[url("/trial/marked-answered.svg")] bg-contain bg-no-repeat w-auto aspect-square text-base text-white
+}
+
+.focus-question{
+  @apply border-2 border-blue-800 text-blue-800 rounded
+}
