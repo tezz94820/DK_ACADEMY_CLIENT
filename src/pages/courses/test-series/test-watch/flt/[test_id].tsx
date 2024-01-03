@@ -13,12 +13,13 @@ type testDetailsType = {
   type: string;
   total_questions: string;
   tabDetails:{
-    physics: string;
-    physics_numeric: string;
-    chemistry: string;
-    chemistry_numeric: string;
-    mathematics: string;
-    mathematics_numeric: string
+    ['PHYSICS']: string;
+    ['PHYSICS NUMERIC']: string;
+    ['CHEMISTRY']: string;
+    ['CHEMISTRY NUMERIC']: string;
+    ['MATHEMATICS']: string;
+    ['MATHEMATICS NUMERIC']: string;
+    [key: string]: string;
   }
 }
 const initialTestDetails: testDetailsType = {
@@ -28,12 +29,12 @@ const initialTestDetails: testDetailsType = {
   type: '',
   total_questions: '',
   tabDetails:{
-    physics: "",
-    physics_numeric: "",
-    chemistry: "",
-    chemistry_numeric: "",
-    mathematics: "",
-    mathematics_numeric: ""
+    ['PHYSICS']: "",
+    ['PHYSICS NUMERIC']: "",
+    ['CHEMISTRY']: "",
+    ['CHEMISTRY NUMERIC']: "",
+    ['MATHEMATICS']: "",
+    ['MATHEMATICS NUMERIC']: ""
   }
 }
 
@@ -163,18 +164,11 @@ const TestWatch = () => {
     startCamera();
   },[])
 
-  const handleTabClicked = (tab:string) => {
-    setTabSelected(tab);
-    switch (tab) {
-      case 'PHYSICS': setQuestionNumber(testDetails.tabDetails.physics); break;
-      case 'PHYSICS NUMERIC': setQuestionNumber(testDetails.tabDetails.physics_numeric); break;
-      case 'CHEMISTRY': setQuestionNumber(testDetails.tabDetails.chemistry); break;
-      case 'CHEMISTRY NUMERIC': setQuestionNumber(testDetails.tabDetails.chemistry_numeric); break;
-      case 'MATHEMATICS': setQuestionNumber(testDetails.tabDetails.mathematics); break;
-      case 'MATHEMATICS NUMERIC': setQuestionNumber(testDetails.tabDetails.mathematics_numeric); break;
-      default: setQuestionNumber('1');
-    }
-    
+  const handleTabClicked = (newTab:string) => {
+    // set the new tab selected
+    setTabSelected(newTab);
+    // set the queestion number according to tab
+    setQuestionNumber(testDetails.tabDetails[newTab]);
   }
 
   //timer
@@ -275,7 +269,7 @@ const TestWatch = () => {
           tabToSwitchTo.diff = currentDiff;
       }
     }
-    setTabSelected(tabToSwitchTo.tab.replace('_',' ').toUpperCase());
+    setTabSelected(tabToSwitchTo.tab);
   }
 
   //back and next
