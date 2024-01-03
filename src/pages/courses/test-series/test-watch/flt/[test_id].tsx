@@ -128,6 +128,9 @@ const TestWatch = () => {
   const [selectedOption, setSelectedOption] = useState('');
   const [questionsWithUserInteraction, setQuestionsWithUserInteraction] = useState<questionsWithUserInteractionType[]>([]);
   const [questionInteractionAnalysis, setQuestionInteractionAnalysis] = useState<questionInteractionAnalysisType>(initialQuestionInteractionAnalysis);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  
+  
   //get test start details
   useEffect( () => {
     const fetchTestStartDetails = async () => {
@@ -171,6 +174,7 @@ const TestWatch = () => {
       case 'MATHEMATICS NUMERIC': setQuestionNumber(testDetails.tabDetails.mathematics_numeric); break;
       default: setQuestionNumber('1');
     }
+    
   }
 
   //timer
@@ -257,6 +261,21 @@ const TestWatch = () => {
       }
     }
     setQuestionNumber(newQuestionNumber);
+    //handle tab switch if necessary
+    let tabToSwitchTo:{tab:string,diff:number} = { tab:'', diff:0};
+    for(const [key,value] of Object.entries(testDetails.tabDetails)){
+      const currentDiff = Number(newQuestionNumber) - Number(value);
+      if(currentDiff < 0) continue;
+      if(tabToSwitchTo.tab === '') {
+        tabToSwitchTo.tab = key;
+        tabToSwitchTo.diff = currentDiff;
+      }
+      else if(currentDiff < tabToSwitchTo.diff){
+          tabToSwitchTo.tab = key;
+          tabToSwitchTo.diff = currentDiff;
+      }
+    }
+    setTabSelected(tabToSwitchTo.tab.replace('_',' ').toUpperCase());
   }
 
   //back and next
@@ -359,7 +378,15 @@ const TestWatch = () => {
     },[testAttemptId,questionNumber]);
 
 
-
+    //auto scrolling to question button
+    useEffect ( () => {
+      const scrollContainer : HTMLDivElement|null = scrollContainerRef.current;
+      console.log(scrollContainer?.scrollTop);
+      if(scrollContainer){
+        scrollContainer.scrollTop = Number(questionNumber)/4*65;
+      }
+      
+    },[tabSelected]);
 
 
   return (
@@ -377,7 +404,7 @@ const TestWatch = () => {
           <video ref={videoRef} autoPlay playsInline height={100} width={100} className='rounded border border-black shadow shadow-black h-[95%] w-auto my-auto' muted={true}/>
           {/* submit test button */}
           <div className='flex justify-center items-center'>
-            <button className='border-2 border-red-500 px-5 py-1  rounded-lg h-max text-red-500 hover:bg-red-500 hover:text-white font-bold'>Submit Test</button>
+            <button className='border-2 border-red-500 px-5 py-1  rounded-lg h-max text-red-500 hover:bg-red-500 hover:text-white font-bold' >Submit Test</button>
           </div>
         </div>
       </div>
@@ -414,7 +441,7 @@ const TestWatch = () => {
             }
             {/* options */}
             {
-              currentQuestion.question_pattern === 'mcq' &&
+              currentQuestion.question_pattern === 'mcq' ?
 
               <div className='flex flex-col mt-5 gap-4'>
               {
@@ -437,6 +464,23 @@ const TestWatch = () => {
                   )
                 })
               }
+            </div>
+
+            : 
+            //for numerical value
+            <div className='mt-5  '>
+              <form onSubmit={ e => e.preventDefault()}>
+                <input type="text" pattern="-?\d+(\.\d+)?" title="Enter a numerical value" 
+                  className='rounded w-1/2 h-12 text-xl pl-3 border border-black'
+                  onChange={e => handleOptionChange(e.target.value)}
+                  value={selectedOption}
+                />
+                <div className={`${(/-?\d+(\.\d+)?/.test(selectedOption) || selectedOption === '') ? 'hidden' : 'block' }  w-max py-2 px-4 mt-2 flex bg-yellow-400 rounded-full`} >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                  <span className=''>Warning: Enter Numerical value!</span>
+                </div>
+              </form>
+
             </div>
               
             }
@@ -481,8 +525,8 @@ const TestWatch = () => {
               </div>
           </div>
           {/* Question buttons */}
-          <div className='h-[52%] overflow-y-auto border-2 border-blue-600'>
-            <div className=' grid grid-cols-4 p-4 gap-4  '>
+          <div className='h-[52%] overflow-y-auto border-2 border-blue-600' ref={scrollContainerRef}>
+            <div className=' grid grid-cols-4 p-4 gap-4' >
               {
                 questionsWithUserInteraction.map( item => (
                   <button key={item.question_number} className={item.question_number === questionNumber ? 'focus-question' : item.user_interaction } onClick={() => handleQuestionBoxClicked(item.question_number)}>Q{item.question_number}</button>
