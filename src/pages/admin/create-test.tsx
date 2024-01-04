@@ -42,7 +42,7 @@ function convertTo12HourFormat(timeString:string) {
 }
 
 
-const createTest = () => {
+const CreateTest = () => {
 
   const [form,setForm] = useState<formType>(initailForm); 
 
@@ -191,4 +191,4 @@ const createTest = () => {
   )
 }
 
-export default createTest
+export default CreateTest
