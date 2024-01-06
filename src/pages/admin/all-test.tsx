@@ -73,7 +73,7 @@ const AllTest = () => {
               <div key={test._id} className='flex bg-violet-200 p-4 m-2 rounded-lg '>
                 {/* thumbnail */}
                 <div className='w-1/4 '>
-                  <Image src={"/thumb.png"} height={400} width={400} alt="test thumbnail" className='w-full h-auto'/>
+                  <Image src={test.thumbnail} height={400} width={400} alt="test thumbnail" className='w-full h-36' />
                 </div>
                 <div className='pl-4 w-1/2 '>
                   <h3 className='text-2xl font-bold tracking-widest'>{test.title}</h3>
@@ -91,10 +91,15 @@ const AllTest = () => {
                   </div>
                 </div>
                 <div className='flex flex-col justify-evenly items-center w-1/4'>
-                  <button className='text-center align-middle px-6 py-2 rounded-lg bg-violet-600 flex items-center  justify-center gap-2 text-white w-1/2'
+                  <button className='text-center align-middle px-6 py-2 rounded-lg bg-violet-600 flex items-center  justify-center gap-2 text-white w-3/4 text-base'
                     onClick={() => handleEditTest(test._id)}
                   >
                     <p>Edit Test</p>
+                  </button>
+                  <button className='text-center align-middle px-6 py-2 rounded-lg bg-violet-600 flex items-center  justify-center gap-2 text-white w-3/4 text-base'
+                    
+                  >
+                    <p>Create Questions</p>
                   </button>
                 </div>
               </div>

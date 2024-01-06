@@ -72,7 +72,7 @@ const TestSeries = () => {
                       <div key={test._id} className='flex bg-violet-200 p-4 m-2 rounded-lg '>
                         {/* thumbnail */}
                         <div className='w-1/4 '>
-                          <Image src={"/thumb.png"} height={400} width={400} alt="test thumbnail" className='w-full h-auto'/>
+                          <Image src={test.thumbnail} height={400} width={400} alt="test thumbnail" className='w-full h-36'/>
                         </div>
                         <div className='pl-4 w-1/2 '>
                           <h3 className='text-2xl font-bold tracking-widest'>{test.title}</h3>

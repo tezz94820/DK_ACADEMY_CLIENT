@@ -96,6 +96,28 @@ const EditTest = () => {
     }
 
 
+    const handleDeleteTest = async (event:FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        //check if user has typed delete in the input box
+        if(event.currentTarget.deleteTest.value !== 'delete'){
+            toast.error(`Please enter "delete" to delete the Test`);
+            return;
+        }
+        try {
+            await axiosClient.delete(`admin/delete-test/${testId}`,{
+                headers:{
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            });
+            toast.success('Test deleted successfully');
+            router.back();
+        } catch (error:any) {
+            const errorMessage = error.response.data.message || "An error occurred";
+            toast.error(errorMessage);
+        }
+    }
+
+
   return (
     <div className='p-5 flex flex-col gap-5'>
 
@@ -326,6 +348,32 @@ const EditTest = () => {
                 </form>
             </div>
         </div>
+
+
+
+
+        {/* delete Test  */}
+        <div className=' bg-red-600 rounded-2xl h-max p-2'>
+            {/* title */}
+            <button className='flex flex-row justify-between items-center w-full py-3 px-10 text-white'
+                onClick={() => handleTabSelection('deleteTest')}
+            >
+                <h3 className=' text-xl font-bold tracking-wider'>Delete Test</h3>
+                <span className=' text-3xl font-bold'>{tabSelected === 'deleteTest' ? '-' :'+'}</span>
+            </button>
+            {/* container */}
+            <div className={`mt-5 px-10 ${tabSelected != 'deleteTest' && 'hidden'  } w-auto`}>
+                <form onSubmit={handleDeleteTest} className='w-auto flex gap-2'>
+                    <label className='flex justify-center items-center gap-3 w-3/4 '>
+                        <input type="text" className='border border-blue-600  h-10 rounded-xl px-4 w-5/6 ' name='deleteTest' required
+                            placeholder={`Type "delete" to delete the test`}
+                        />
+                    </label>
+                    <input type='submit' value={"Delete Test"} className='w-1/4 h-10 border-2 border-white text-white rounded-xl text-xl font-semibold hover:bg-blue-500 hover:text-white' />
+                </form>
+            </div>
+        </div>
+        
 
     </div>
   )
