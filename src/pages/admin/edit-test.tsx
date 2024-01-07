@@ -132,7 +132,7 @@ const EditTest = () => {
             </button>
             {/* container */}
             <div className={`mt-5 px-10 ${tabSelected != 'title' && 'hidden'  } w-auto`}>
-                <form onSubmit={(event) => handleContentSubmit(event,'title')} className='w-auto flex gap-2'>
+                <form onSubmit={(event) => handleContentSubmit(event,'title')} className='w-auto flex gap-2 items-center'>
                     <label className='flex justify-center items-center gap-3 w-3/4 '>
                         <p className='text-blue-600 text-lg cursor-pointer w-1/6 px-2 font-semibold'>New Title</p>
                         <input type="text" className='border border-blue-600  h-10 rounded-xl px-4 w-5/6 ' name='title' required 
@@ -156,7 +156,7 @@ const EditTest = () => {
             </button>
             {/* container */}
             <div className={`mt-5 px-10 ${tabSelected != 'type' && 'hidden'  } w-auto`}>
-                <form onSubmit={ event => handleContentSubmit(event,'type')} className='w-auto flex gap-2'>
+                <form onSubmit={ event => handleContentSubmit(event,'type')} className='w-auto flex gap-2 items-center'>
                     <label className='flex justify-center items-center gap-3 w-3/4 '>
                         <p className='text-blue-600 text-lg cursor-pointer w-1/6 px-2 font-semibold'>New Subject</p>
                         <select className='border border-blue-600  h-10 rounded-xl px-4 w-5/6 ' name='type' required 
@@ -187,7 +187,7 @@ const EditTest = () => {
             </button>
             {/* container */}
             <div className={`mt-5 px-10 ${tabSelected != 'start_date' && 'hidden'  } w-auto`}>
-                <form onSubmit={(event) => handleContentSubmit(event,'start_date')} className='w-auto flex gap-2'>
+                <form onSubmit={(event) => handleContentSubmit(event,'start_date')} className='w-auto flex gap-2 items-center'>
                     <label className='flex justify-center items-center gap-3 w-3/4 '>
                         <p className='text-blue-600 text-lg cursor-pointer w-1/6 px-2 font-semibold'>New Title</p>
                         <input type="date" className='border border-blue-600  h-10 rounded-xl px-4 w-5/6 ' name='end_date' required 
@@ -212,7 +212,7 @@ const EditTest = () => {
             </button>
             {/* container */}
             <div className={`mt-5 px-10 ${tabSelected != 'end_date' && 'hidden'  } w-auto`}>
-                <form onSubmit={(event) => handleContentSubmit(event,'end_date')} className='w-auto flex gap-2'>
+                <form onSubmit={(event) => handleContentSubmit(event,'end_date')} className='w-auto flex gap-2 items-center'>
                     <label className='flex justify-center items-center gap-3 w-3/4 '>
                         <p className='text-blue-600 text-lg cursor-pointer w-1/6 px-2 font-semibold'>New End Date</p>
                         <input type="date" className='border border-blue-600  h-10 rounded-xl px-4 w-5/6 ' name='end_date' required 
@@ -237,7 +237,7 @@ const EditTest = () => {
             </button>
             {/* container */}
             <div className={`mt-5 px-10 ${tabSelected != 'start_time' && 'hidden'  } w-auto`}>
-                <form onSubmit={(event) => handleContentSubmit(event,'start_time')} className='w-auto flex gap-2'>
+                <form onSubmit={(event) => handleContentSubmit(event,'start_time')} className='w-auto flex gap-2 items-center'>
                     <label className='flex justify-center items-center gap-3 w-3/4 '>
                         <p className='text-blue-600 text-lg cursor-pointer w-1/6 px-2 font-semibold text-center'>New Start time</p>
                         <input type="time" className='border border-blue-600  h-10 rounded-xl px-4 w-5/6 ' name='start_time' required 
@@ -262,7 +262,7 @@ const EditTest = () => {
             </button>
             {/* container */}
             <div className={`mt-5 px-10 ${tabSelected != 'end_time' && 'hidden'  } w-auto`}>
-                <form onSubmit={(event) => handleContentSubmit(event,'end_time')} className='w-auto flex gap-2'>
+                <form onSubmit={(event) => handleContentSubmit(event,'end_time')} className='w-auto flex gap-2 items-center'>
                     <label className='flex justify-center items-center gap-3 w-3/4 '>
                         <p className='text-blue-600 text-lg cursor-pointer w-1/6 px-2 font-semibold text-center'>New End Time</p>
                         <input type="time" className='border border-blue-600  h-10 rounded-xl px-4 w-5/6 ' name='end_time' required 
@@ -286,7 +286,7 @@ const EditTest = () => {
             </button>
             {/* container */}
             <div className={`mt-5 px-10 ${tabSelected != 'duration' && 'hidden'  } w-auto`}>
-                <form onSubmit={(event) => handleContentSubmit(event,'duration')} className='w-auto flex gap-2'>
+                <form onSubmit={(event) => handleContentSubmit(event,'duration')} className='w-auto flex gap-2 items-center'>
                     <label className='flex justify-center items-center gap-3 w-3/4 '>
                         <p className='text-blue-600 text-lg cursor-pointer w-1/6 px-2 font-semibold text-center'>New Duration</p>
                         <input type="number" className='border border-blue-600  h-10 rounded-xl px-4 w-5/6 ' name='duration' required placeholder="180 minutes"
@@ -311,7 +311,7 @@ const EditTest = () => {
             </button>
             {/* container */}
             <div className={`mt-5 px-10 ${tabSelected != 'total_marks' && 'hidden'  } w-auto`}>
-                <form onSubmit={(event) => handleContentSubmit(event,'total_marks')} className='w-auto flex gap-2'>
+                <form onSubmit={(event) => handleContentSubmit(event,'total_marks')} className='w-auto flex gap-2 items-center'>
                     <label className='flex justify-center items-center gap-3 w-3/4 '>
                         <p className='text-blue-600 text-lg cursor-pointer w-1/6 px-2 font-semibold text-center'>New Total marks</p>
                         <input type="number" className='border border-blue-600  h-10 rounded-xl px-4 w-5/6 ' name='total_marks' required placeholder="360 marks"
@@ -337,7 +337,7 @@ const EditTest = () => {
             </button>
             {/* container */}
             <div className={`mt-5 px-10 ${tabSelected != 'thumbnail' && 'hidden'  } w-auto`}>
-                <form onSubmit={(event) => handleContentSubmit(event,'thumbnail')} className='w-auto flex gap-2'>
+                <form onSubmit={(event) => handleContentSubmit(event,'thumbnail')} className='w-auto flex gap-2 items-center'>
                     <label className='flex justify-center items-center gap-3 w-3/4 '>
                         <p className='text-blue-600 text-lg cursor-pointer w-1/6 px-2 font-semibold text-center'>New Thumbnail</p>
                         <input type="file" className='border border-blue-600  h-10 rounded-xl px-4 w-5/6 ' name='thumbnail' required
@@ -363,7 +363,7 @@ const EditTest = () => {
             </button>
             {/* container */}
             <div className={`mt-5 px-10 ${tabSelected != 'deleteTest' && 'hidden'  } w-auto`}>
-                <form onSubmit={handleDeleteTest} className='w-auto flex gap-2'>
+                <form onSubmit={handleDeleteTest} className='w-auto flex gap-2 items-center'>
                     <label className='flex justify-center items-center gap-3 w-3/4 '>
                         <input type="text" className='border border-blue-600  h-10 rounded-xl px-4 w-5/6 ' name='deleteTest' required
                             placeholder={`Type "delete" to delete the test`}

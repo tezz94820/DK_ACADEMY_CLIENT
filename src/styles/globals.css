@@ -13,11 +13,15 @@
     @apply w-1
   }
 
-  .scrollbar::-webkit-scrollbar-thumb {
+  .scrollbar-horizontal::-webkit-scrollbar {
+    @apply h-2
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb,.scrollbar-horizontal::-webkit-scrollbar-thumb {
     @apply bg-gradient-to-b from-sky-500 to-violet-800 rounded
   }
 
-  .scrollbar::-webkit-scrollbar-track {
+  .scrollbar::-webkit-scrollbar-track,.scrollbar-horizontal::-webkit-scrollbar-track {
     @apply bg-transparent
   }
 

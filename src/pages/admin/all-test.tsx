@@ -97,7 +97,7 @@ const AllTest = () => {
                     <p>Edit Test</p>
                   </button>
                   <button className='text-center align-middle px-6 py-2 rounded-lg bg-violet-600 flex items-center  justify-center gap-2 text-white w-3/4 text-base'
-                    
+                    onClick={() => router.push('/admin/create-questions?test_id=' + test._id)}
                   >
                     <p>Create Questions</p>
                   </button>

@@ -225,7 +225,7 @@ const TestWatch = () => {
       try {
         // get the question content by questionNumber
         const response = await axiosClient.get(`tests/test/question/${testId}/${questionNumber}`);
-        setCurrentQuestion(response.data.data[0]);
+        setCurrentQuestion(response.data.data);
         // get the selected option from backend 
         const res = await axiosClient.get(`tests/test/selected-option-by-question/${testAttemptId}/${questionNumber}`, {headers:{ Authorization: `Bearer ${localStorage.getItem("token")}`}});
         setSelectedOption(res.data.data.selected_option);
