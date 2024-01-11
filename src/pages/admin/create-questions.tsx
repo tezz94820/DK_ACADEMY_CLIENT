@@ -213,7 +213,7 @@ const CreateQuestions = () => {
     formData.forEach( (value,key) => console.log(key+" -> "+value));
 
     try {
-      const response = await axiosClient.post(`admin/create-test-questions/${testId}`,formData,
+      const responsePromise = axiosClient.post(`admin/create-test-questions/${testId}`,formData,
         {
           headers:{
             'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -221,11 +221,15 @@ const CreateQuestions = () => {
           }
         }
       );
-      console.log(response.data.data);
+      const otpRes = await toast.promise( responsePromise , {
+        pending: 'Updating Test Question',
+        success: 'Successfully Updated Test Question',
+        error: 'Error in Updating Test Question'
+      });
       toast.success('Successfully Updated');
-      
-    } catch (error) {
-      
+    } catch (error:any) {
+      const errorMessage = error?.response?.data?.message || "An error occurred";
+      toast.error(errorMessage);
     }
   }
 
