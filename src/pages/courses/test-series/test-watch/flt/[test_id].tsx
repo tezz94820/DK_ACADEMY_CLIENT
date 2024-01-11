@@ -431,7 +431,7 @@ const TestWatch = () => {
               ?
               <p>{currentQuestion.question}</p>
               :
-              <Image src="/trial/question.png" height={400} width={800} alt="question" />
+              <Image src={currentQuestion.question} height={400} width={800} alt="question" className='w-[90%] h-auto'/>
             }
             {/* options */}
             {
@@ -442,7 +442,7 @@ const TestWatch = () => {
                 ['A','B','C','D'].map( item => {
                   const option = currentQuestion.options.filter( opt => opt.option_name === item)[0];
                   return (
-                    <label key={item} className='flex cursor-pointer w-max'>
+                    <label key={item} className='flex cursor-pointer w-full '>
                       <input type="radio" name="selectedOption" value={item} className='mr-2 h-5 w-5 my-auto'
                         onChange={() => handleOptionChange(item)}
                         checked={selectedOption === item}
@@ -452,7 +452,7 @@ const TestWatch = () => {
                         ? 
                           <span> {item}&#41; {option.option} </span>
                         : 
-                          <Image src={"/trial/question.png"} height={400} width={800} alt={`option${item}`} />
+                          <Image src={option.option} height={400} width={800} alt={`option${item}`} className='w-auto h-auto'/>
                       }
                     </label>
                   )

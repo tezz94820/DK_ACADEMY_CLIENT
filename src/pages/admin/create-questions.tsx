@@ -1,7 +1,6 @@
 import axiosClient from '@/axios/axiosClient';
 import Image from 'next/image';
 import { useRouter } from 'next/router'
-import { type } from 'os';
 import React, { useEffect, useState,ChangeEvent } from 'react'
 import { toast } from 'react-toastify';
 
@@ -102,7 +101,14 @@ const CreateQuestions = () => {
   const [testDetails, setTestDetails] = useState<testDetailsType>(initialTestDetails);
   const tabs = tabList[testDetails.type] || tabList.flt;
   const [selectedTab, setSelectedTab] = useState<string>(tabs[0]);
+  const [disableSubmit, setDisableSubmit] = useState<boolean>(true);
   const [form, setForm] = useState<formType>(initialForm);
+
+  //initial Render
+  useEffect( () => {
+    setSelectedTab(tabs[0]);
+    setForm({...form, question_subject:tabs[0].split(' ')[0]});
+  },[tabs])//this will run only once when tabs as a const change
 
 
   useEffect( () => {
@@ -111,6 +117,7 @@ const CreateQuestions = () => {
       try {
         const res = await axiosClient.get(`tests/test-details/${testId}`);
         setTestDetails(res.data.data);
+        // tabs = res.data.data.type;
       } catch (error:any) {
         const errorMessage = error?.response?.data?.message || "An error occurred";
         toast.error(errorMessage);
@@ -120,11 +127,29 @@ const CreateQuestions = () => {
    fetchTestDetails();
   },[testId])
 
+  // useEffect( () => {
+  //   const fetchQuestion = async () => {
+  //     if(!testId || !form.question_number) return;
+  //     try {
+  //       const questionResponse = await axiosClient.get(`tests/test/question/${testId}/${form.question_number}`);
+  //       const questionData = questionResponse.data.data;
+  //       // console.log(dataQuestion);
+  //       setForm(questionData);
+  //     } catch (error:any) {
+  //       const errorMessage = error?.response?.data?.message || "An error occurred";
+  //       toast.error(errorMessage);
+  //     }
+  //   }
+
+  //   fetchQuestion();
+  // },[testId,form.question_number])
+
   const handleTabChange = (tab:string,tabIndex:number) => {
     setSelectedTab(tab);
     const questionNumber = tabQuestionLimit[tab][0];
     const questionPattern = tabIndex % 2 === 0 ? 'mcq' : 'numeric';
-    setForm({...form, question_number: questionNumber, question_pattern: questionPattern });
+    const questionSubject = tab.split(' ')[0];
+    setForm({...form, question_number: questionNumber, question_pattern: questionPattern, question_subject:questionSubject });
   }
 
   const handleQuestionNumberChange = (qno:string) => {
@@ -157,6 +182,7 @@ const CreateQuestions = () => {
     setForm({...form, correct_option: event.target.value});
   }
 
+  
   const handleCorrectOptionNumericRangeChange = (event:ChangeEvent<HTMLInputElement>,position:string) => {
     const currentvalue = form.correct_option;
     const start = currentvalue.split('-')[0];
@@ -170,8 +196,52 @@ const CreateQuestions = () => {
     }
     setForm({...form, correct_option: newValue});
   }
+
+
+  const submitHandler = async () => {
+    console.log(form);
+    const formData = new FormData();
+    formData.append('question_number',form.question_number);
+    formData.append('question_pattern',form.question_pattern === 'numeric' ? 'numerical' : 'mcq');
+    formData.append('question_subject',form.question_subject);
+    formData.append('question', form.question);
+    form.options.forEach( option => {
+      formData.append(`option_${option.option_name}`, option.option); // option_A_option_type: text 
+    })
+    formData.append('correct_option', form.correct_option); 
+    
+    formData.forEach( (value,key) => console.log(key+" -> "+value));
+
+    try {
+      const response = await axiosClient.post(`admin/create-test-questions/${testId}`,formData,
+        {
+          headers:{
+            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+      );
+      console.log(response.data.data);
+      toast.success('Successfully Updated');
+      
+    } catch (error) {
+      
+    }
+  }
+
+  useEffect( () => {
+    const questionUpdated = form.question === '' ? false : true;
+    const correctOptionUpdated = form.correct_option === '-' ? false : true;
+    const optionsUpdated = form.options.map( option => option.option === '' ? false : true).includes(true);
+    if(questionUpdated || correctOptionUpdated || optionsUpdated) {
+      setDisableSubmit(false);
+    }
+    else{
+      setDisableSubmit(true);
+    }
+  },[form])
   
-  console.log(form.correct_option);
+  console.log(disableSubmit);
 
   return (
     <div className='w-full p-3'>
@@ -210,7 +280,7 @@ const CreateQuestions = () => {
         <div className='mt-3'>
           {/* upper */}
           <div className='flex gap-5 items-center'>
-            <span className='text-blue-600 text-xl font-bold'>Question : </span>
+            <span className={`text-blue-600 text-xl font-bold ${form.question === '' ? 'text-blue-600' : 'text-green-600'}`}>Question : </span>
             <div className='flex gap-2'>
               <button className={`px-4 py-2 rounded-lg ${form.question_type === 'text' ? 'bg-blue-600 text-white' : 'bg-blue-300 text-white'}`}
                 onClick={() => changeSelectedQuestionType('text')}
@@ -236,7 +306,7 @@ const CreateQuestions = () => {
                   value={typeof form.question ===  'object' ? '' : form.question as string}
                   onChange={(e) => setForm({...form, question: e.target.value})}
                 />
-              ) 
+              )
             }
             {/* for question image */}
             {
@@ -268,7 +338,7 @@ const CreateQuestions = () => {
                   <div key={option.option_name} className='flex flex-col gap-3'>
                     {/* upper */}
                     <div className='flex gap-5 items-center'>
-                      <h1 className='text-blue-600 text-lg font-bold'>Option - {option.option_name} : </h1>
+                      <h1 className={`text-blue-600 text-lg font-bold  ${option.option === '' ? 'text-blue-600' : 'text-green-600'}`}>Option - {option.option_name} : </h1>
                       <div className='flex gap-2'>
                         <button className={`px-4 py-2 rounded-lg ${option.option_type === 'text' ? 'bg-blue-600 text-white' : 'bg-blue-300 text-white'}`}
                           onClick={() => changeSelectedOptionType(option.option_name,'text')}
@@ -354,9 +424,18 @@ const CreateQuestions = () => {
 
         </div>
 
+        {/* {
+          !disableSubmit && (
+            <h3>Updated {form.question !== '' && 'Question'}{}</h3>
+          )
+        } */}
+
         {/* submit button */}
         <div className=' w-full flex justify-center items-center mt-5 '>
-          <button className='px-8 py-2 rounded-lg border-2 border-blue-600 text-blue-600 text-xl font-bold hover:bg-blue-600 hover:text-white'>Submit</button>
+          <button className={`px-8 py-2 rounded-lg border-2  text-xl font-bold ${disableSubmit ? 'border-gray-600 text-white-600 cursor-not-allowed hover:bg-gray-300' : 'border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white'} `}
+            disabled={disableSubmit}
+            onClick={submitHandler}
+          >Submit</button>
 
         </div>
       </div>
