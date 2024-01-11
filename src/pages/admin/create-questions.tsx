@@ -226,7 +226,6 @@ const CreateQuestions = () => {
         success: 'Successfully Updated Test Question',
         error: 'Error in Updating Test Question'
       });
-      toast.success('Successfully Updated');
     } catch (error:any) {
       const errorMessage = error?.response?.data?.message || "An error occurred";
       toast.error(errorMessage);
