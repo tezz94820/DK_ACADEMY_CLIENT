@@ -130,7 +130,8 @@ const TestWatch = () => {
   const [questionsWithUserInteraction, setQuestionsWithUserInteraction] = useState<questionsWithUserInteractionType[]>([]);
   const [questionInteractionAnalysis, setQuestionInteractionAnalysis] = useState<questionInteractionAnalysisType>(initialQuestionInteractionAnalysis);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  
+  const [fullScreenEnabled, setFullScreenEnabled] = useState<boolean>(true);
+  const [mounting, setMounting] = useState<boolean>(true);
   
   //get test start details
   useEffect( () => {
@@ -178,7 +179,9 @@ const TestWatch = () => {
       setTimer((prev)  => prev === 0 ? 0 : prev-1);
     }, 1000);
     if(timer === 0) clearInterval(interval);
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+    }
   },[timer]);
 
 
@@ -382,18 +385,71 @@ const TestWatch = () => {
       
     },[tabSelected]);
 
+    //handle user refresh and tab switch
+    useEffect( () => {
+      const handleRefreshPage = (event: BeforeUnloadEvent) => {
+        const message = 'Are you sure you want to leave? Your changes may not be saved.';
+        event.returnValue = message;
+        return message;
+      };
+      const handleVisibilityChange = () => {
+        if (document.hidden) {
+          // Page is not visible (user switched tabs)
+          alert('Switching tabs may result in closing of the Test.');
+        } else {
+          // Page is visible, You can handle any logic when the user returns to the tab
+        }
+      };
+
+      window.addEventListener('beforeunload',handleRefreshPage);
+      document.addEventListener('visibilitychange', handleVisibilityChange);
+      return () => {
+        window.removeEventListener('beforeunload',handleRefreshPage);
+        document.removeEventListener('visibilitychange', handleVisibilityChange);
+      }
+    },[])
+
+    useEffect( () => {
+      let interval:(NodeJS.Timeout|null) = null;
+      // if the screen is not fullscreen then display an alert
+      if(typeof document !== 'undefined' && !document.fullscreenElement){
+        alert('please Enter FullScreen Mode by clicking FullScreen Mode.');
+        interval = setInterval( () => {
+          alert('please Enter FullScreen Mode by clicking FullScreen Mode.');
+        },10000)
+        setFullScreenEnabled(false);
+      }
+      else{
+        if(interval) clearInterval(interval);
+      }
+
+      return () => {
+        if(interval) clearInterval(interval);
+      }
+    },[typeof document !== 'undefined' && document.fullscreenElement])
+
+
+    const handleFullScreenEnabled = () => {
+      const element = document.documentElement;
+        if(element.requestFullscreen){
+            element.requestFullscreen();
+        }
+        setFullScreenEnabled(true);
+    }
+
 
   return (
     <div className='w-screen h-screen overflow-hidden select-none'>
       {/* test header 13*/}
       <div className='flex justify-between items-center px-6  h-[13%]'>
-        <h2 className='text-2xl font-bold '>{testDetails.title}</h2>
+        <h2 className='text-2xl font-bold  '>{testDetails.title}</h2>
+        <button className={`border border-green-800 bg-green-700 px-4 py-2 text-white font-bold text-xl rounded-lg ${fullScreenEnabled ? 'hidden' : 'block'} hover:text-green-700 hover:bg-white`} onClick={handleFullScreenEnabled}>Enable FullScreen Mode</button>
         <div className='flex items-center gap-2 h-full'>
           <div style={timer_styles} className='timer-clock'></div>
           <div className='flex text-xl font-bold'>
             <div>{hour}</div>:
             <div>{minute}</div>:
-            <div className='animate-bounce'>{second}</div>
+            <div className=''>{second}</div>
           </div>
           <video ref={videoRef} autoPlay playsInline height={100} width={100} className='rounded border border-black shadow shadow-black h-[95%] w-auto my-auto' muted={true}/>
           {/* submit test button */}
@@ -429,7 +485,7 @@ const TestWatch = () => {
             {
               currentQuestion.question_type === 'text' 
               ?
-              <p>{currentQuestion.question}</p>
+              <p className='text-lg font-bold'>{currentQuestion.question}</p>
               :
               <Image src={currentQuestion.question} height={400} width={800} alt="question" className='w-[90%] h-auto'/>
             }
@@ -442,7 +498,7 @@ const TestWatch = () => {
                 ['A','B','C','D'].map( item => {
                   const option = currentQuestion.options.filter( opt => opt.option_name === item)[0];
                   return (
-                    <label key={item} className='flex cursor-pointer w-full '>
+                    <label key={item} className={`flex cursor-pointer w-full p-2 ${selectedOption === item ? 'bg-green-100' : ''} `}>
                       <input type="radio" name="selectedOption" value={item} className='mr-2 h-5 w-5 my-auto'
                         onChange={() => handleOptionChange(item)}
                         checked={selectedOption === item}
@@ -450,9 +506,12 @@ const TestWatch = () => {
                       {
                         option.option_type === 'text' 
                         ? 
-                          <span> {item}&#41; {option.option} </span>
+                          <span className='text-lg font-bold'> {item}&#41; {option.option} </span>
                         : 
+                        <span className='flex gap-2 text-lg font-bold '> 
+                          {item}&#41; 
                           <Image src={option.option} height={400} width={800} alt={`option${item}`} className='w-auto h-auto'/>
+                        </span>
                       }
                     </label>
                   )
