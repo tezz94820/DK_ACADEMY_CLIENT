@@ -109,6 +109,118 @@ const initialQuestionInteractionAnalysis = {
   "marked-answered": "0",
 }
 const tabs = [ 'PHYSICS', 'PHYSICS NUMERIC','CHEMISTRY', 'CHEMISTRY NUMERIC', 'MATHEMATICS', 'MATHEMATICS NUMERIC'];
+const summaryTabs = [ 'TOTAL', 'PHYSICS', 'PHYSICS NUMERICAL','CHEMISTRY', 'CHEMISTRY NUMERICAL', 'MATHEMATICS', 'MATHEMATICS NUMERICAL'];
+
+type TestSummaryDetailsType = {
+  total:{
+    total_questions: number;
+    answered: number;
+    not_answered: number;
+    marked_review: number;
+    not_visited: number;
+  }
+  physics:{
+    total_questions: number;
+    answered: number;
+    not_answered: number;
+    marked_review: number;
+    not_visited: number;
+  },
+  physics_numerical:{
+    total_questions: number;
+    answered: number;
+    not_answered: number;
+    marked_review: number;
+    not_visited: number;
+  },
+  chemistry:{
+    total_questions: number;
+    answered: number;
+    not_answered: number;
+    marked_review: number;
+    not_visited: number;
+  },
+  chemistry_numerical:{
+    total_questions: number;
+    answered: number;
+    not_answered: number;
+    marked_review: number;
+    not_visited: number;
+  },
+  mathematics:{
+    total_questions: number;
+    answered: number;
+    not_answered: number;
+    marked_review: number;
+    not_visited: number;
+  },
+  mathematics_numerical:{
+    total_questions: number;
+    answered: number;
+    not_answered: number;
+    marked_review: number;
+    not_visited: number;
+  }
+  [key: string]: {
+    total_questions: number;
+    answered: number;
+    not_answered: number;
+    marked_review: number;
+    not_visited: number;
+  };
+}
+
+const initialTestsummaryDetails:TestSummaryDetailsType = {
+  total:{
+    total_questions: 0,
+    answered: 0,
+    not_answered: 0,
+    marked_review: 0,
+    not_visited: 0
+  },
+  physics:{
+    total_questions: 0,
+    answered: 0,
+    not_answered: 0,
+    marked_review: 0,
+    not_visited: 0
+  },
+  physics_numerical:{
+    total_questions: 0,
+    answered: 0,
+    not_answered: 0,
+    marked_review: 0,
+    not_visited: 0
+  },
+  chemistry:{
+    total_questions: 0,
+    answered: 0,
+    not_answered: 0,
+    marked_review: 0,
+    not_visited: 0
+  },
+  chemistry_numerical:{
+    total_questions: 0,
+    answered: 0,
+    not_answered: 0,
+    marked_review: 0,
+    not_visited: 0
+  },
+  mathematics:{
+    total_questions: 0,
+    answered: 0,
+    not_answered: 0,
+    marked_review: 0,
+    not_visited: 0
+  },
+  mathematics_numerical:{
+    total_questions: 0,
+    answered: 0,
+    not_answered: 0,
+    marked_review: 0,
+    not_visited: 0
+  }
+}
 
 const TestWatch = () => {
 
@@ -131,8 +243,10 @@ const TestWatch = () => {
   const [questionInteractionAnalysis, setQuestionInteractionAnalysis] = useState<questionInteractionAnalysisType>(initialQuestionInteractionAnalysis);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [fullScreenEnabled, setFullScreenEnabled] = useState<boolean>(true);
-  const [mounting, setMounting] = useState<boolean>(true);
-  
+  const [showSummary, setShowSummary] = useState<boolean>(false);
+  const [summaryTabSelected, setSummaryTabSelected] = useState<string>(summaryTabs[0]);
+  const [testSummaryDetails, setTestSummaryDetails] = useState<TestSummaryDetailsType>(initialTestsummaryDetails);
+
   //get test start details
   useEffect( () => {
     const fetchTestStartDetails = async () => {
@@ -229,7 +343,7 @@ const TestWatch = () => {
         // get the question content by questionNumber
         const response = await axiosClient.get(`tests/test/question/${testId}/${questionNumber}`);
         setCurrentQuestion(response.data.data);
-        // get the selected option from backend 
+        // get the selected option from backend
         const res = await axiosClient.get(`tests/test/selected-option-by-question/${testAttemptId}/${questionNumber}`, {headers:{ Authorization: `Bearer ${localStorage.getItem("token")}`}});
         setSelectedOption(res.data.data.selected_option);
       } catch (error:any) {
@@ -239,7 +353,7 @@ const TestWatch = () => {
     }
 
     fetchQuestionByQuestionNumber();
-  },[testId,questionNumber,testAttemptId]) 
+  },[testId,questionNumber,testAttemptId])
 
   // questionbox
   const handleQuestionBoxClicked = async (newQuestionNumber:string) => {
@@ -341,7 +455,7 @@ const TestWatch = () => {
 
   const handleReviewLater = async () => {
     const userInteraction = selectedOption === "" ? "marked" : "marked-answered";
-    // saving the user selected option with appropriate marked user_interaction 
+    // saving the user selected option with appropriate marked user_interaction
     try {
       const response = await axiosClient.post(
         'tests/test/option-user-interaction',
@@ -382,7 +496,7 @@ const TestWatch = () => {
       if(scrollContainer){
         scrollContainer.scrollTop = Number(questionNumber)/4*65;
       }
-      
+
     },[tabSelected]);
 
     //handle user refresh and tab switch
@@ -437,161 +551,247 @@ const TestWatch = () => {
         setFullScreenEnabled(true);
     }
 
+    const handleTestSubmitToSummary = async () => {
+      setShowSummary(true);
+      try {
+        const res = await axiosClient.get(`tests/test/test-summary/${testAttemptId}`,{ headers:{'Authorization':"Bearer "+localStorage.getItem("token")} });
+        console.log(res);
+        setTestSummaryDetails(res.data.data.test_summary);
+      } catch (error:any) {
+        const message = error?.response?.data?.message || "An error occurred";
+        toast.error(message);
+      }
+    }
+
+    const handleSummaryTabClicked = (newTab:string) => {
+      setSummaryTabSelected(newTab);
+    }
+
+    useEffect( () => {
+      const handleBeforePopState = () => {
+        const answer = window.confirm('Are you sure you want to leave? Your test will be automatically Sumbmitted.');
+  
+        if (!answer) {
+          // If the user clicks Cancel, prevent the navigation
+          return false;
+        }
+  
+        // Allow the navigation to proceed
+        return true;
+      };
+
+      router.beforePopState(handleBeforePopState);
+    },[router])
+
+    console.log(summaryTabSelected);
 
   return (
-    <div className='w-screen h-screen overflow-hidden select-none'>
-      {/* test header 13*/}
-      <div className='flex justify-between items-center px-6  h-[13%]'>
-        <h2 className='text-2xl font-bold  '>{testDetails.title}</h2>
-        <button className={`border border-green-800 bg-green-700 px-4 py-2 text-white font-bold text-xl rounded-lg ${fullScreenEnabled ? 'hidden' : 'block'} hover:text-green-700 hover:bg-white`} onClick={handleFullScreenEnabled}>Enable FullScreen Mode</button>
-        <div className='flex items-center gap-2 h-full'>
-          <div style={timer_styles} className='timer-clock'></div>
-          <div className='flex text-xl font-bold'>
-            <div>{hour}</div>:
-            <div>{minute}</div>:
-            <div className=''>{second}</div>
+    <>
+    {
+      showSummary ?
+        <div className="w-screen h-screen overflow-hidden select-none relative ">
+          {/* top heading */}
+          <div className={`flex flex-col gap-4  items-center justify-center bg-blue-600 ${fullScreenEnabled ? 'py-10' : 'py-5'}`}>
+            <button className={`border border-green-800 bg-green-700 px-4 py-2 text-white font-bold text-xl rounded-lg animate-pulse ${fullScreenEnabled ? 'hidden' : 'block'} hover:text-green-700 hover:bg-white hover:animate-none`} onClick={handleFullScreenEnabled}>Enable FullScreen Mode</button>
+            <h1 className='text-3xl font-bold text-white'>Exam Summary</h1>
           </div>
-          <video ref={videoRef} autoPlay playsInline height={100} width={100} className='rounded border border-black shadow shadow-black h-[95%] w-auto my-auto' muted={true}/>
-          {/* submit test button */}
-          <div className='flex justify-center items-center'>
-            <button className='border-2 border-red-500 px-5 py-1  rounded-lg h-max text-red-500 hover:bg-red-500 hover:text-white font-bold' >Submit Test</button>
-          </div>
-        </div>
-      </div>
-
-      {/* tabs 8*/}
-      <div className='w-100 bg-blue-800 h-[8%] flex items-center' >
-        <div className='flex justify-between  w-[75%] px-6 '>
-          {
-            tabs.map( tab => (
-              <div key={tab}>
-                <h3 className={`text-base text-white cursor-pointer ${tabSelected === tab ? 'underline underline-offset-8' : ''}`} onClick={() => handleTabClicked(tab)}>{tab}</h3>
-              </div>
-            ))
-          }
-        </div>
-      </div>
-
-      {/* test content 79 */}
-      <div className='w-full flex h-[79%]'>
-        
-        {/* test section */}
-        <div className='w-[75%]'>
-          {/* test questions and answers */}
-          <div className='w-full h-[85%] border-2 border-y-blue-600 p-2 overflow-auto'>
-            {/* question number */}
-            <p className='text-blue-600 font-bold tracking-widest'>Q{currentQuestion.question_number}</p>
-            {/* question */}
+          {/* subject tabs */}
+          <div className='w-full flex gap-10 px-10 bg-gray-200'>
             {
-              currentQuestion.question_type === 'text' 
-              ?
-              <p className='text-lg font-bold'>{currentQuestion.question}</p>
-              :
-              <Image src={currentQuestion.question} height={400} width={800} alt="question" className='w-[90%] h-auto'/>
-            }
-            {/* options */}
-            {
-              currentQuestion.question_pattern === 'mcq' ?
-
-              <div className='flex flex-col mt-5 gap-4'>
-              {
-                ['A','B','C','D'].map( item => {
-                  const option = currentQuestion.options.filter( opt => opt.option_name === item)[0];
-                  return (
-                    <label key={item} className={`flex cursor-pointer w-full p-2 ${selectedOption === item ? 'bg-green-100' : ''} `}>
-                      <input type="radio" name="selectedOption" value={item} className='mr-2 h-5 w-5 my-auto'
-                        onChange={() => handleOptionChange(item)}
-                        checked={selectedOption === item}
-                      />
-                      {
-                        option.option_type === 'text' 
-                        ? 
-                          <span className='text-lg font-bold'> {item}&#41; {option.option} </span>
-                        : 
-                        <span className='flex gap-2 text-lg font-bold '> 
-                          {item}&#41; 
-                          <Image src={option.option} height={400} width={800} alt={`option${item}`} className='w-auto h-auto'/>
-                        </span>
-                      }
-                    </label>
-                  )
-                })
-              }
-            </div>
-
-            : 
-            //for numerical value
-            <div className='mt-5  '>
-              <form onSubmit={ e => e.preventDefault()}>
-                <input type="text" pattern="-?\d+(\.\d+)?" title="Enter a numerical value" 
-                  className='rounded w-1/2 h-12 text-xl pl-3 border border-black'
-                  onChange={e => handleOptionChange(e.target.value)}
-                  value={selectedOption}
-                />
-                <div className={`${(/-?\d+(\.\d+)?/.test(selectedOption) || selectedOption === '') ? 'hidden' : 'block' }  w-max py-2 px-4 mt-2 flex bg-yellow-400 rounded-full`} >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
-                  <span className=''>Warning: Enter Numerical value!</span>
-                </div>
-              </form>
-
-            </div>
-              
+              summaryTabs.map( tab => (
+                <button key={tab} className={` py-2 font-semibold ${summaryTabSelected === tab ? ' text-blue-600 underline underline-offset-8 decoration-4' : 'text-gray-600'} rounded-lg`} onClick={() => handleSummaryTabClicked(tab)}>{tab}</button>
+              ))
             }
           </div>
-          {/* test question selection buttons  */}
-          <div className='w-full h-[15%]  flex justify-between items-center px-5'>
-            <div className='flex gap-3'>
-              <button className={`px-5 py-1 font-bold border-2 border-red-500 text-red-500 hover:bg-red-500 hover:text-white rounded-lg h-max ${selectedOption === '' ? 'cursor-not-allowed opacity-30' : 'cursor-pointer'}`} disabled={selectedOption === ''} onClick={handleSaveAndNext}>Save & Next</button>
-              <button className='px-5 py-1 font-bold border-2 border-purple-500 text-purple-500 rounded-lg h-max hover:bg-purple-500 hover:text-white' onClick={handleReviewLater}>Review Later</button>
-              <button className={`px-5 py-1 font-bold border-2 border-blue-800 text-blue-800 hover:bg-blue-800 hover:text-white rounded-lg h-max ${selectedOption === '' ? 'cursor-not-allowed opacity-30' : 'cursor-pointer'}`} disabled={selectedOption === ''} onClick={handleClearSelection}>Clear Selection</button>
+          {/* tab content */}
+          <div className='px-10 mt-10 w-[30%]'>
+            <div className='flex justify-between font-bold text-blue-500 text-lg'>
+              <p>Number of Questions</p>
+              <p>{testSummaryDetails[summaryTabSelected.split(' ').join('_').toLowerCase()].total_questions}</p>
             </div>
-            <div className=' flex gap-3'>
-              <button className='px-5 py-1 font-bold border-2 border-blue-500 text-blue-500 rounded-lg h-max hover:bg-blue-500 hover:text-white' onClick={handleBackQuestionButton}>&larr; Back</button>
-              <button className='px-5 py-1 font-bold border-2 border-blue-500 text-blue-500 rounded-lg h-max hover:bg-blue-500 hover:text-white' onClick={handleNextQuestionButton}>Next &rarr;</button>
+            <div className='flex justify-between text-green-500 font-bold mt-2 text-lg'>
+              <p>Answered</p>
+              <p>{testSummaryDetails[summaryTabSelected.split(' ').join('_').toLowerCase()].answered}</p>
+            </div>
+            <div className='flex justify-between text-red-500 font-bold mt-2 text-lg'>
+              <p>Not Answered</p>
+              <p>{testSummaryDetails[summaryTabSelected.split(' ').join('_').toLowerCase()].not_answered}</p>
+            </div>
+            <div className='flex justify-between text-marked font-bold mt-2 text-lg'>
+              <p>Marked For Review</p>
+              <p>{testSummaryDetails[summaryTabSelected.split(' ').join('_').toLowerCase()].marked_review}</p>
+            </div>
+            <div className='flex justify-between font-bold mt-2 text-lg'>
+              <p>Not Visited</p>
+              <p>{testSummaryDetails[summaryTabSelected.split(' ').join('_').toLowerCase()].not_visited}</p>
             </div>
           </div>
-        </div>
 
-          {/* right question button section */}
-        <div className='w-[25%]'>
-          {/* question information section */}
-          <div className='h-[45%] flex flex-col justify-evenly px-3 border-2 border-l-blue-600'>
-              <div className='flex items-center justify-start gap-2'>
-                <p className='bg-[url("/trial/answered.svg")] h-8 w-8 bg-no-repeat flex items-center justify-center text-base text-white'>{questionInteractionAnalysis['answered']}</p>
-                <p>Answered</p>
-              </div>
-              <div className='flex items-center justify-start gap-2'>
-                <p className='bg-[url("/trial/not-answered.svg")] h-8 w-8 bg-no-repeat text-center align-middle text-base text-white'>{questionInteractionAnalysis['not-answered']}</p>
-                <p>Not Answered</p>
-              </div>
-              <div className='flex items-center justify-start gap-2'>
-                <p className=' border border-gray-800 bg-gray-200 rounded h-8 w-8 bg-no-repeat flex items-center justify-center text-base text-black'>{questionInteractionAnalysis['not-visited']}</p>
-                <p>Not Visited</p>
-              </div>
-              <div className='flex items-center justify-start gap-2'>
-                <p className='bg-marked rounded-full h-9 w-9 bg-no-repeat flex items-center justify-center text-base text-white'>{questionInteractionAnalysis['marked']}</p>
-                <p>To Be Reviewed</p>
-              </div>
-              <div className='flex items-center justify-start gap-2'>
-                <p className='bg-[url("/trial/marked-answered.svg")] h-9 w-10 bg-no-repeat flex items-center justify-center text-base text-white'>{questionInteractionAnalysis['marked-answered']}</p>
-                <p>Answered & marked for <br/>review &#40;will be evaluated&#41;</p>
-              </div>
+          <div className='w-full flex items-center justify-center gap-10 absolute bottom-5'>
+            <button className='px-6 py-2 border-2 border-blue-500 text-blue-500 rounded-full font-bold text-lg hover:bg-blue-500 hover:text-white w-40 ' onClick={() => setShowSummary(false)}>Back</button>
+            <button className='px-6 py-2 border-2 border-blue-500 text-blue-500 rounded-full font-bold text-lg hover:bg-blue-500 hover:text-white w-40 ' >Submit</button>
           </div>
-          {/* Question buttons */}
-          <div className='h-[52%] overflow-y-auto border-2 border-blue-600' ref={scrollContainerRef}>
-            <div className=' grid grid-cols-4 p-4 gap-4' >
+          
+
+        </div>
+      :
+        <div className='w-screen h-screen overflow-hidden select-none'>
+          {/* test header 13*/}
+          <div className='flex justify-between items-center px-6  h-[13%]'>
+            <h2 className='text-2xl font-bold  '>{testDetails.title}</h2>
+            <button className={`border border-green-800 bg-green-700 px-4 py-2 text-white font-bold text-xl rounded-lg animate-pulse ${fullScreenEnabled ? 'hidden' : 'block'} hover:text-green-700 hover:bg-white hover:animate-none`} onClick={handleFullScreenEnabled}>Enable FullScreen Mode</button>
+            <div className='flex items-center gap-2 h-full'>
+              <div style={timer_styles} className='timer-clock'></div>
+              <div className='flex text-xl font-bold'>
+                <div>{hour}</div>:
+                <div>{minute}</div>:
+                <div className=''>{second}</div>
+              </div>
+              <video ref={videoRef} autoPlay playsInline height={100} width={100} className='rounded border border-black shadow shadow-black h-[95%] w-auto my-auto' muted={true}/>
+              {/* submit test button */}
+              <div className='flex justify-center items-center'>
+                <button className='border-2 border-red-500 px-5 py-1  rounded-lg h-max text-red-500 hover:bg-red-500 hover:text-white font-bold' onClick={handleTestSubmitToSummary}>Submit Test</button>
+              </div>
+            </div>
+          </div>
+
+          {/* tabs 8*/}
+          <div className='w-100 bg-blue-800 h-[8%] flex items-center' >
+            <div className='flex justify-between  w-[75%] px-6 '>
               {
-                questionsWithUserInteraction.map( item => (
-                  <button key={item.question_number} className={item.question_number === questionNumber ? 'focus-question' : item.user_interaction } onClick={() => handleQuestionBoxClicked(item.question_number)}>Q{item.question_number}</button>
+                tabs.map( tab => (
+                  <div key={tab}>
+                    <h3 className={`text-base text-white cursor-pointer ${tabSelected === tab ? 'underline underline-offset-8' : ''}`} onClick={() => handleTabClicked(tab)}>{tab}</h3>
+                  </div>
                 ))
               }
             </div>
           </div>
-        </div>
-      
-      </div>
 
-    </div>
+          {/* test content 79 */}
+          <div className='w-full flex h-[79%]'>
+
+            {/* test section */}
+            <div className='w-[75%]'>
+              {/* test questions and answers */}
+              <div className='w-full h-[85%] border-2 border-y-blue-600 p-2 overflow-auto'>
+                {/* question number */}
+                <p className='text-blue-600 font-bold tracking-widest'>Q{currentQuestion.question_number}</p>
+                {/* question */}
+                {
+                  currentQuestion.question_type === 'text'
+                  ?
+                  <p className='text-lg font-bold'>{currentQuestion.question}</p>
+                  :
+                  <Image src={currentQuestion.question} height={400} width={800} alt="question" className='w-[90%] h-auto'/>
+                }
+                {/* options */}
+                {
+                  currentQuestion.question_pattern === 'mcq' ?
+
+                  <div className='flex flex-col mt-5 gap-4'>
+                  {
+                    ['A','B','C','D'].map( item => {
+                      const option = currentQuestion.options.filter( opt => opt.option_name === item)[0];
+                      return (
+                        <label key={item} className={`flex cursor-pointer w-full p-2 ${selectedOption === item ? 'bg-green-100' : ''} `}>
+                          <input type="radio" name="selectedOption" value={item} className='mr-2 h-5 w-5 my-auto'
+                            onChange={() => handleOptionChange(item)}
+                            checked={selectedOption === item}
+                          />
+                          {
+                            option.option_type === 'text'
+                            ?
+                              <span className='text-lg font-bold'> {item}&#41; {option.option} </span>
+                            :
+                            <span className='flex gap-2 text-lg font-bold '>
+                              {item}&#41;
+                              <Image src={option.option} height={400} width={800} alt={`option${item}`} className='w-auto h-auto'/>
+                            </span>
+                          }
+                        </label>
+                      )
+                    })
+                  }
+                </div>
+
+                :
+                //for numerical value
+                <div className='mt-5  '>
+                  <form onSubmit={ e => e.preventDefault()}>
+                    <input type="text" pattern="-?\d+(\.\d+)?" title="Enter a numerical value"
+                      className='rounded w-1/2 h-12 text-xl pl-3 border border-black'
+                      onChange={e => handleOptionChange(e.target.value)}
+                      value={selectedOption}
+                    />
+                    <div className={`${(/-?\d+(\.\d+)?/.test(selectedOption) || selectedOption === '') ? 'hidden' : 'block' }  w-max py-2 px-4 mt-2 flex bg-yellow-400 rounded-full`} >
+                      <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                      <span className=''>Warning: Enter Numerical value!</span>
+                    </div>
+                  </form>
+
+                </div>
+
+                }
+              </div>
+              {/* test question selection buttons  */}
+              <div className='w-full h-[15%]  flex justify-between items-center px-5'>
+                <div className='flex gap-3'>
+                  <button className={`px-5 py-1 font-bold border-2 border-red-500 text-red-500 hover:bg-red-500 hover:text-white rounded-lg h-max ${selectedOption === '' ? 'cursor-not-allowed opacity-30' : 'cursor-pointer'}`} disabled={selectedOption === ''} onClick={handleSaveAndNext}>Save & Next</button>
+                  <button className='px-5 py-1 font-bold border-2 border-purple-500 text-purple-500 rounded-lg h-max hover:bg-purple-500 hover:text-white' onClick={handleReviewLater}>Review Later</button>
+                  <button className={`px-5 py-1 font-bold border-2 border-blue-800 text-blue-800 hover:bg-blue-800 hover:text-white rounded-lg h-max ${selectedOption === '' ? 'cursor-not-allowed opacity-30' : 'cursor-pointer'}`} disabled={selectedOption === ''} onClick={handleClearSelection}>Clear Selection</button>
+                </div>
+                <div className=' flex gap-3'>
+                  <button className='px-5 py-1 font-bold border-2 border-blue-500 text-blue-500 rounded-lg h-max hover:bg-blue-500 hover:text-white' onClick={handleBackQuestionButton}>&larr; Back</button>
+                  <button className='px-5 py-1 font-bold border-2 border-blue-500 text-blue-500 rounded-lg h-max hover:bg-blue-500 hover:text-white' onClick={handleNextQuestionButton}>Next &rarr;</button>
+                </div>
+              </div>
+            </div>
+
+              {/* right question button section */}
+            <div className='w-[25%]'>
+              {/* question information section */}
+              <div className='h-[45%] flex flex-col justify-evenly px-3 border-2 border-l-blue-600'>
+                  <div className='flex items-center justify-start gap-2'>
+                    <p className='bg-[url("/trial/answered.svg")] h-8 w-8 bg-no-repeat flex items-center justify-center text-base text-white'>{questionInteractionAnalysis['answered']}</p>
+                    <p>Answered</p>
+                  </div>
+                  <div className='flex items-center justify-start gap-2'>
+                    <p className='bg-[url("/trial/not-answered.svg")] h-8 w-8 bg-no-repeat text-center align-middle text-base text-white'>{questionInteractionAnalysis['not-answered']}</p>
+                    <p>Not Answered</p>
+                  </div>
+                  <div className='flex items-center justify-start gap-2'>
+                    <p className=' border border-gray-800 bg-gray-200 rounded h-8 w-8 bg-no-repeat flex items-center justify-center text-base text-black'>{questionInteractionAnalysis['not-visited']}</p>
+                    <p>Not Visited</p>
+                  </div>
+                  <div className='flex items-center justify-start gap-2'>
+                    <p className='bg-marked rounded-full h-9 w-9 bg-no-repeat flex items-center justify-center text-base text-white'>{questionInteractionAnalysis['marked']}</p>
+                    <p>To Be Reviewed</p>
+                  </div>
+                  <div className='flex items-center justify-start gap-2'>
+                    <p className='bg-[url("/trial/marked-answered.svg")] h-9 w-10 bg-no-repeat flex items-center justify-center text-base text-white'>{questionInteractionAnalysis['marked-answered']}</p>
+                    <p>Answered & marked for <br/>review &#40;will be evaluated&#41;</p>
+                  </div>
+              </div>
+              {/* Question buttons */}
+              <div className='h-[52%] overflow-y-auto border-2 border-blue-600' ref={scrollContainerRef}>
+                <div className=' grid grid-cols-4 p-4 gap-4' >
+                  {
+                    questionsWithUserInteraction.map( item => (
+                      <button key={item.question_number} className={item.question_number === questionNumber ? 'focus-question' : item.user_interaction } onClick={() => handleQuestionBoxClicked(item.question_number)}>Q{item.question_number}</button>
+                    ))
+                  }
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+
+    }
+    </>
   )
 }
 
