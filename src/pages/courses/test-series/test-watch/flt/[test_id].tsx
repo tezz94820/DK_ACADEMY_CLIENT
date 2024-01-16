@@ -246,7 +246,7 @@ const TestWatch = () => {
   const [showSummary, setShowSummary] = useState<boolean>(false);
   const [summaryTabSelected, setSummaryTabSelected] = useState<string>(summaryTabs[0]);
   const [testSummaryDetails, setTestSummaryDetails] = useState<TestSummaryDetailsType>(initialTestsummaryDetails);
-
+  const [showSubmitModal, setShowSubmitModal] = useState<boolean>(false);
   //get test start details
   useEffect( () => {
     const fetchTestStartDetails = async () => {
@@ -583,6 +583,11 @@ const TestWatch = () => {
       router.beforePopState(handleBeforePopState);
     },[router])
 
+
+    const handleEntireTestSubmit = () => {
+      router.replace(`/courses/test-series/test-result?test_id=${testId}&test_attempt_id=${testAttemptId}`);
+    }
+
     console.log(summaryTabSelected);
 
   return (
@@ -628,11 +633,25 @@ const TestWatch = () => {
           </div>
 
           <div className='w-full flex items-center justify-center gap-10 absolute bottom-5'>
-            <button className='px-6 py-2 border-2 border-blue-500 text-blue-500 rounded-full font-bold text-lg hover:bg-blue-500 hover:text-white w-40 ' onClick={() => setShowSummary(false)}>Back</button>
-            <button className='px-6 py-2 border-2 border-blue-500 text-blue-500 rounded-full font-bold text-lg hover:bg-blue-500 hover:text-white w-40 ' >Submit</button>
+            <button className='px-6 py-1 border-2 border-blue-500 text-blue-500 rounded-full font-bold text-lg w-36 ' onClick={() => setShowSummary(false)}>Back</button>
+            <button className='px-6 py-1 border-2 border-blue-500 rounded-full font-bold text-lg bg-blue-500 text-white w-36 ' onClick={() => setShowSubmitModal(true)}>Submit</button>
           </div>
           
-
+            {/* modal */}
+          <div className={`absolute top-0 left-0 w-full h-full flex items-center z-10 justify-center  ${showSubmitModal ? 'block' : 'hidden'}`}>
+            <div className='absolute h-full z-10 w-full bg-gray-800 opacity-80'></div>
+            <div className='w-[28%] h-[30%] z-20 bg-white rounded-lg flex flex-col items-center justify-center gap-5 relative'>
+              <h3 className='text-xl font-semibold'>Are you sure you want to end the Test ?</h3>
+              <div className='flex gap-5'>
+                <button className='px-6  border-2 border-blue-500 rounded-full bg-blue-500 text-white text-xl font-semibold ' onClick={handleEntireTestSubmit}>OK</button>
+                <button className='px-6  border-2 border-blue-500 rounded-full  text-xl font-semibold' onClick={() => setShowSubmitModal(false)}>Cancel</button>
+              </div>
+              <button className='absolute top-2 right-2 h-8 w-8' onClick={() => setShowSubmitModal(false)}>
+                <Image src="/cancel.svg" height={100} width={100} alt="Close" className="w-full h-full  text-blue-500"/>
+              </button>
+            </div>
+          </div>
+        
         </div>
       :
         <div className='w-screen h-screen overflow-hidden select-none'>
