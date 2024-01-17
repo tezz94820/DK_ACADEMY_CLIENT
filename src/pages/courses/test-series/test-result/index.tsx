@@ -5,6 +5,7 @@ import React, { useEffect, useInsertionEffect, useState } from 'react'
 import { toast } from 'react-toastify';
 import Link from 'next/link';
 import Navbar from '@/components/Header/Navbar';
+import Image from 'next/image';
 
 type TestDetailsType = {
     title:string;
@@ -98,6 +99,66 @@ const initialResultData:ResultDataType = {
     }
 }
 
+type IndividualSubjectType  = {
+    _id: string;
+    question_type: string;
+    question: string;
+    question_pattern: string;
+    question_number: string;
+    question_subject: string;
+    correct_option: string;
+    user_interaction: string;
+    user_selected_option: string;
+    user_answer_is_correct: boolean;
+    options: {
+        option_name: string;
+        option_type: string;
+        option: string;
+        _id: string;
+    }[]
+} 
+
+type SubjectQuestionsType  = {
+    [key:string] :IndividualSubjectType[];
+    physics:IndividualSubjectType[];
+    physics_numerical:IndividualSubjectType[];
+    chemistry:IndividualSubjectType[];
+    chemistry_numerical:IndividualSubjectType[];
+    mathematics:IndividualSubjectType[];
+    mathematics_numerical:IndividualSubjectType[];
+}
+
+// const individualSubject:IndividualSubjectType = {
+//     _id: "1",
+//     question_type: "text",
+//     question: "lorem",
+//     question_pattern: "mcq",
+//     question_number: "1",
+//     question_subject: "physics",
+//     correct_option: "A",
+//     user_interaction: "answered",
+//     user_selected_option: "A",
+//     user_answer_is_correct: true,
+//     options: [
+//         {
+//             option_name: "A",
+//             option_type: "text",
+//             option: "Lorem",
+//             _id: "1"
+//         }
+//     ]
+// }
+
+const initialSubjectQuestions:SubjectQuestionsType = {
+    physics:[],
+    physics_numerical:[],
+    chemistry:[],
+    chemistry_numerical:[],
+    mathematics:[],
+    mathematics_numerical:[]
+}
+
+
 const subjects = ['Physics', 'Physics Numerical', 'Chemistry', 'Chemistry Numerical', 'Mathematics', 'Mathematics Numerical']
 
 const TestResult = () => {
@@ -109,6 +170,8 @@ const TestResult = () => {
     const [testDetails, setTestDetails] = useState<TestDetailsType>(initialTestDetails);
     const [currentTab, setCurrentTab] = useState<string>('performance');
     const [resultData, setResultData] = useState<ResultDataType>(initialResultData);
+    const [subjectTab, setSubjectTab] = useState<string>('All Subjects');
+    const [subjectQuestions, setSubjectQuestions] = useState<SubjectQuestionsType>(initialSubjectQuestions);
     
     useEffect( () => {
         const fetchTestStartDetails = async () => {
@@ -141,7 +204,6 @@ const TestResult = () => {
                         'Authorization': `Bearer ${localStorage.getItem('token')}`
                     }
                 });
-                console.log(response.data.data.test_result);
                 setResultData(response.data.data.test_result);
             }
             catch(error:any){
@@ -153,8 +215,32 @@ const TestResult = () => {
         fetchResultData();
     },[testAttemptId])
 
+    
+    useEffect( () => {
+        const fetchQuestionsData = async () => {
+            if(!testAttemptId) return;
+            try {
+                const response = await axiosClient.get(`tests/test/test-result/answers/${testAttemptId}`,{
+                    headers:{
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    }
+                });
+                setSubjectQuestions(response.data.data.test_questions);
+            }
+            catch(error:any){
+                const errorMessage = error?.response?.data?.message || "An error occurred";
+                toast.error(errorMessage);
+            }
+        
+        }
+        fetchQuestionsData();
+    },[testAttemptId])
+
+    console.log('subjectQuestions',subjectQuestions);
+
   return (
-    <div className='bg-gray-100'>
+    <div className='pb-10 bg-gray-100'>
         <Navbar/>
         <div className='mt-4.6 py-4 mx-auto w-[75%]'>
             {/* header title and test duration*/}
@@ -184,10 +270,12 @@ const TestResult = () => {
         { 
         currentTab === 'answers' &&
         <div className='mx-auto w-[75%] my-10'>
-            <select className='py-1 px-4 text-xl font-bold border-2 border-gray-500/50 rounded-lg'>
+            <select className='py-1 px-4 text-xl font-bold border-2 border-gray-500/50 rounded-lg cursor-pointer' 
+                onChange={(e) => setSubjectTab(e.target.value)}
+            >
                 {
                     ['All Subjects',...subjects].map( subject => (
-                        <option key={subject}>{subject}</option>
+                        <option key={subject} value={subject}> {subject} </option>
                     ))
                 }
             </select>
@@ -195,7 +283,7 @@ const TestResult = () => {
         }
 
         {/* tab content  */}
-        <div className='my-10 mx-auto w-[75%] bg-white pt-10'>
+        <div className='mt-10 mx-auto w-[75%] bg-white pt-10'>
             {
                 currentTab === 'performance' ?
                 <div>
@@ -294,9 +382,84 @@ const TestResult = () => {
                 
                 :
 
-                <div className='mx-40 flex flex-ccol gap-5'>
-                    <h1>Hello Brother</h1>
-                    <h1>Hello Sister</h1>
+                <div className='mx-5 flex flex-col gap-5'>
+                    {/* subject name */}
+                    {/* if all subjects then show all the questions and any particular subject is chosen then show only that subject. */}
+                    {
+                        (subjectTab === 'All Subjects' ? subjects : [subjectTab]).map( subjectName => (
+                            <div key={subjectName}>
+                                {/* subjectname */}
+                                <h1 className='text-2xl font-bold text-blue-600 mb-5'>{subjectName}</h1>
+                                {
+                                    subjectQuestions[subjectName.replace(' ','_').toLowerCase()].map( (question) => (
+                                        <div key={question._id} className=''>
+                                            {/* question number, correct answer,user interaction for a particular question  */}
+                                            <div className='flex justify-between'>
+                                                <div  className='flex gap-4'>
+                                                    <p className='text-lg font-bold'>Q{question.question_number}</p>
+                                                    {   ['answered','marked-answered'].includes(question.user_interaction) &&
+                                                        <p>
+                                                            {
+                                                                question.user_answer_is_correct ? 
+                                                                <span className='text-green-500 text-lg font-bold'>Correct Answer</span>
+                                                                :
+                                                                <span className='text-red-500 text-lg font-bold'>Wrong Answer</span>
+                                                            }
+                                                        </p>
+
+                                                    }
+                                                </div>
+                                                <p className='text-lg font-bold'>
+                                                    {question.user_interaction === 'not-visited' && <span>Not Visited</span>}
+                                                    {question.user_interaction === 'answered' && <span>Answered</span>}
+                                                    {question.user_interaction === 'not-answered' && <span>Not Answered</span>}
+                                                    {question.user_interaction === 'marked' && <span className='bg-marked'>Marked For review</span>}
+                                                    {question.user_interaction === 'marked-answered' && <span className='bg-marked'>Marked for Review and submitted for evaluation</span>}
+                                                </p>
+                                            </div>
+
+                                            {/* question content and its options  */}
+                                            <div className='border-2 border-black rounded-lg p-2 w-full'>
+                                                {/* question */}
+                                                {
+                                                    question.question_type === 'text' ?
+                                                        <p className='text-lg'>{question.question}</p>
+                                                    :
+                                                        <Image src={question.question} height={500} width={500} alt="question" className="w-[95%] h-auto" />
+                                                }
+                                                {/* options */}
+                                                {
+                                                    question.question_pattern === 'mcq' && question.options.map( option => (
+                                                        <div key={option.option_name} className='text-lg flex gap-4 items-center'>
+                                                            <p className='text-lg font-bold'>{option.option_name}</p>
+                                                            {
+                                                                option.option_type === 'text' ?
+                                                                    <p className='text-lg'>{option.option}</p>
+                                                                :
+                                                                    <Image src={option.option} height={500} width={500} alt="option" className="w-auto h-auto" />
+                                                            }
+                                                        </div>
+                                                    ))
+                                                }
+                                            </div>
+
+                                            {/* correact option, user selected option and view solution  */}
+                                            <div className='flex justify-between mt-2 '>
+                                                <div className='flex items-center gap-16'>
+                                                    <p className='text-lg'>Your Answer: (<span className='font-bold'>{question.user_selected_option === '' ? 'NA' : question.user_selected_option}</span>)</p>
+                                                    <hr className='h-6 w-1 bg-black/70'/>
+                                                    <p className='text-lg'>Correct Option: (<span className='font-bold'>{question.correct_option === '' ? 'NA' : question.correct_option}</span>)</p>
+                                                </div>
+                                                <button className='text-lg font-semibold text-blue-500 underline underline-offset-4'>View Solution</button>
+                                            </div>
+                                            
+                                            <hr className='w-full h-1 bg-black/50 rounded-full my-5 '/>
+                                        </div>
+                                    ))
+                                }
+                            </div>
+                        ))
+                    }
                 </div>
             }
 
