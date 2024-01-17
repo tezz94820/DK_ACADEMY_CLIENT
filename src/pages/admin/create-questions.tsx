@@ -245,8 +245,6 @@ const CreateQuestions = () => {
     }
   },[form])
   
-  console.log(form);
-
   return (
     <div className='w-full p-3'>
       {/* tabs selection */}

@@ -237,6 +237,14 @@ const TestResult = () => {
         fetchQuestionsData();
     },[testAttemptId])
 
+
+    const handleViewSolution = (questionNumber:string) => {
+        const newTabUrl = `/courses/test-series/test-solution?test_id=${testId}&question_number=${questionNumber}`;
+        window.open(newTabUrl, '_blank');
+    }
+
+
+
     console.log('subjectQuestions',subjectQuestions);
 
   return (
@@ -450,7 +458,9 @@ const TestResult = () => {
                                                     <hr className='h-6 w-1 bg-black/70'/>
                                                     <p className='text-lg'>Correct Option: (<span className='font-bold'>{question.correct_option === '' ? 'NA' : question.correct_option}</span>)</p>
                                                 </div>
-                                                <button className='text-lg font-semibold text-blue-500 underline underline-offset-4'>View Solution</button>
+                                                <button className='text-lg font-semibold text-blue-500 underline underline-offset-4'
+                                                    onClick={ () => handleViewSolution(question.question_number) }
+                                                >View Solution</button>
                                             </div>
                                             
                                             <hr className='w-full h-1 bg-black/50 rounded-full my-5 '/>

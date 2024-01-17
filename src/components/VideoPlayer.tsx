@@ -28,7 +28,7 @@ const VideoPlayer = ({videoLink}:VideoPlayerProps) => {
 
   const errorHandler = () => {
     setError(true);
-    toast.error("Video Cannot be Fetched");
+    toast.error("No Video Found");
 
   }
 
