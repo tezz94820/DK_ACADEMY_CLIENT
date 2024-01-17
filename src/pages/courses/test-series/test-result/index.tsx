@@ -394,7 +394,7 @@ const TestResult = () => {
                                     subjectQuestions[subjectName.replace(' ','_').toLowerCase()].map( (question) => (
                                         <div key={question._id} className=''>
                                             {/* question number, correct answer,user interaction for a particular question  */}
-                                            <div className='flex justify-between'>
+                                            <div className='flex justify-between mb-3'>
                                                 <div  className='flex gap-4'>
                                                     <p className='text-lg font-bold'>Q{question.question_number}</p>
                                                     {   ['answered','marked-answered'].includes(question.user_interaction) &&
