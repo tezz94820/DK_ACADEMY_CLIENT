@@ -59,7 +59,9 @@ type formType = {
     option_type: string,
     option: string | File
   }[],
-  correct_option: string
+  correct_option: string,
+  solution_pdf: File | null,
+  solution_video:File | null
 }
 
 const initialForm:formType = {
@@ -90,7 +92,9 @@ const initialForm:formType = {
       option: ''
     }
   ],
-  correct_option: "-"
+  correct_option: "-",
+  solution_pdf: null,
+  solution_video: null
 } 
 
 
@@ -127,23 +131,6 @@ const CreateQuestions = () => {
    fetchTestDetails();
   },[testId])
 
-  // useEffect( () => {
-  //   const fetchQuestion = async () => {
-  //     if(!testId || !form.question_number) return;
-  //     try {
-  //       const questionResponse = await axiosClient.get(`tests/test/question/${testId}/${form.question_number}`);
-  //       const questionData = questionResponse.data.data;
-  //       // console.log(dataQuestion);
-  //       setForm(questionData);
-  //     } catch (error:any) {
-  //       const errorMessage = error?.response?.data?.message || "An error occurred";
-  //       toast.error(errorMessage);
-  //     }
-  //   }
-
-  //   fetchQuestion();
-  // },[testId,form.question_number])
-
   const handleTabChange = (tab:string,tabIndex:number) => {
     setSelectedTab(tab);
     const questionNumber = tabQuestionLimit[tab][0];
@@ -163,6 +150,16 @@ const CreateQuestions = () => {
   const handleQuestionFileChange = (event:ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] || '';
     setForm({...form, question: file});
+  }
+
+  const handleSolutionPdfChange = (event:ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    setForm({...form, solution_pdf: file as File});
+  }
+
+  const handleSolutionVideoChange = (event:ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    setForm({...form, solution_video: file as File});
   }
   
   const changeSelectedOptionType = (optionName:string,optionType:string) => {
@@ -205,6 +202,8 @@ const CreateQuestions = () => {
     formData.append('question_pattern',form.question_pattern === 'numeric' ? 'numerical' : 'mcq');
     formData.append('question_subject',form.question_subject);
     formData.append('question', form.question);
+    formData.append('solution_pdf', form.solution_pdf as File);
+    formData.append('solution_video', form.solution_video as File);
     form.options.forEach( option => {
       formData.append(`option_${option.option_name}`, option.option); // option_A_option_type: text 
     })
@@ -221,7 +220,7 @@ const CreateQuestions = () => {
           }
         }
       );
-      const otpRes = await toast.promise( responsePromise , {
+      await toast.promise( responsePromise , {
         pending: 'Updating Test Question',
         success: 'Successfully Updated Test Question',
         error: 'Error in Updating Test Question'
@@ -236,7 +235,9 @@ const CreateQuestions = () => {
     const questionUpdated = form.question === '' ? false : true;
     const correctOptionUpdated = form.correct_option === '-' ? false : true;
     const optionsUpdated = form.options.map( option => option.option === '' ? false : true).includes(true);
-    if(questionUpdated || correctOptionUpdated || optionsUpdated) {
+    const solutionVideoUpdated = form.solution_video === null ? false : true;
+    const solutionPdfUpdated = form.solution_pdf === null ? false : true;
+    if(questionUpdated || correctOptionUpdated || optionsUpdated || solutionVideoUpdated || solutionPdfUpdated) {
       setDisableSubmit(false);
     }
     else{
@@ -244,7 +245,7 @@ const CreateQuestions = () => {
     }
   },[form])
   
-  console.log(disableSubmit);
+  console.log(form);
 
   return (
     <div className='w-full p-3'>
@@ -296,7 +297,7 @@ const CreateQuestions = () => {
                 Image
               </button>
             </div>
-            <input type="file" className={`${form.question_type === 'text' ? 'hidden':''} ml-5`} accept="image/*" name="question" 
+            <input type="file" className={`${form.question_type === 'text' ? 'hidden':''} ml-5`} accept=".png" name="question" 
               onChange={handleQuestionFileChange}
             />
           </div>
@@ -355,7 +356,7 @@ const CreateQuestions = () => {
                         </button>
                       </div>
 
-                      <input type="file" className={`${option.option_type === 'text' ? 'hidden':''} ml-5`} accept="image/*" name={'option-'+option.option_name} 
+                      <input type="file" className={`${option.option_type === 'text' ? 'hidden':''} ml-5`} accept=".png" name={'option-'+option.option_name} 
                         onChange={ event => handleOptionFileChange(option.option_name,event)}
                         />
                     </div>
@@ -424,14 +425,25 @@ const CreateQuestions = () => {
                 />
               </div>
           }
-
         </div>
 
-        {/* {
-          !disableSubmit && (
-            <h3>Updated {form.question !== '' && 'Question'}{}</h3>
-          )
-        } */}
+        {/* solution pdf video */}
+        <div className='flex items-center mt-4'>
+          <h1 className={`font-bold text-lg ${form.solution_pdf === null ? 'text-blue-600' : 'text-green-600'}`}>Solution PDF :</h1>
+          <input type="file" 
+            className={`ml-5`} accept=".pdf" name="solution_pdf" 
+            onChange={handleSolutionPdfChange}
+          />
+        </div>
+
+        {/* solution video upload */}
+        <div className='flex items-center mt-4'>
+          <h1 className={`font-bold text-lg ${form.solution_video === null ? 'text-blue-600' : 'text-green-600'}`}>Solution VIDEO :</h1>
+          <input type="file" 
+            className={`ml-5`} accept=".mp4" name="solution_pdf" 
+            onChange={handleSolutionVideoChange}
+          />
+        </div>
 
         {/* submit button */}
         <div className=' w-full flex justify-center items-center mt-5 '>
