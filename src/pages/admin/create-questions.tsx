@@ -197,20 +197,20 @@ const CreateQuestions = () => {
 
 
   const submitHandler = async () => {
-    console.log(form);
     const formData = new FormData();
     formData.append('question_number',form.question_number);
     formData.append('question_pattern',form.question_pattern === 'numeric' ? 'numerical' : 'mcq');
     formData.append('question_subject',form.question_subject);
+    // true is for File type and else the text type
     formData.append('question', form.question instanceof File ? 'true' : form.question);
-    formData.append('solution_pdf', form.solution_pdf as File ?  'true' : 'false');
-    formData.append('solution_video', form.solution_video as File ? 'true' : 'false');
+    formData.append('solution_pdf', form.solution_pdf instanceof File ?  'true' : 'false');
+    formData.append('solution_video', form.solution_video instanceof File ? 'true' : 'false');
     form.options.forEach( option => {
-      formData.append(`option_${option.option_name}`, option.option); // option_A_option_type: text 
+      formData.append(`option_${option.option_name}`, option.option instanceof File ? 'true' : option.option ); // option_A_option_type: text 
     })
     formData.append('correct_option', form.correct_option); 
     
-    formData.forEach( (value,key) => console.log(key+" -> "+value));
+    // formData.forEach( (value,key) => console.log(key+" -> "+value));
 
     try {
       //craeting the promise for setting the details to backend
@@ -230,14 +230,23 @@ const CreateQuestions = () => {
       });
       //getting the presignedUrl data for uploading the file object 
       const presignedUrl = responseData.data.data.presigned_url;
-      // console.log(presignedUrl)
+
       //creating a empty array for collecting all the upload promises
       const uploadPromises = [];
       // checking if the urls exist and if it exists then add it to uploadpromises array
       for( const key in presignedUrl){
         const url = presignedUrl[key];
         if(!url) continue;
-        uploadPromises.push( axiosClient.put(url,form[key] as File) );
+        const contentType = key === 'solution_pdf' ? 'application/pdf' : key === 'solution_video' ? 'video/mp4' : 'image/png'; 
+        let file:File = form[key] as File; // file for question,solution_pdf,solution_video 
+        if(key.startsWith('option_')){ // file for options
+          file = form.options.find( option => option.option_name === key[key.length - 1])?.option as File;
+        }
+        uploadPromises.push( axiosClient.put(url,file,
+          {
+            headers:{ ' Content-Type': contentType }
+          }
+        ));
       }
       // using promise.all to execute all the promises at once
       await Promise.all(uploadPromises);
