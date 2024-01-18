@@ -49,6 +49,7 @@ const tabQuestionLimit:tabQuestionLimitType = {
 }
 
 type formType = {
+  [key:string]: string | File | null | { option_name: string, option_type: string, option: string | File }[]
   question_type: string,
   question_number: string,
   question_pattern: string,
@@ -202,8 +203,8 @@ const CreateQuestions = () => {
     formData.append('question_pattern',form.question_pattern === 'numeric' ? 'numerical' : 'mcq');
     formData.append('question_subject',form.question_subject);
     formData.append('question', form.question);
-    formData.append('solution_pdf', form.solution_pdf as File);
-    formData.append('solution_video', form.solution_video as File);
+    formData.append('solution_pdf', form.solution_pdf as File ?  'true' : 'false');
+    formData.append('solution_video', form.solution_video as File ? 'true' : 'false');
     form.options.forEach( option => {
       formData.append(`option_${option.option_name}`, option.option); // option_A_option_type: text 
     })
@@ -212,6 +213,7 @@ const CreateQuestions = () => {
     formData.forEach( (value,key) => console.log(key+" -> "+value));
 
     try {
+      //craeting the promise for setting the details to backend
       const responsePromise = axiosClient.post(`admin/create-test-questions/${testId}`,formData,
         {
           headers:{
@@ -220,11 +222,25 @@ const CreateQuestions = () => {
           }
         }
       );
-      await toast.promise( responsePromise , {
+      //using the above promise in toast to visualiza it better 
+      const responseData = await toast.promise( responsePromise , {
         pending: 'Updating Test Question',
         success: 'Successfully Updated Test Question',
         error: 'Error in Updating Test Question'
       });
+      //getting the presignedUrl data for uploading the file object 
+      const presignedUrl = responseData.data.data.presigned_url;
+      //creating a empty array for collecting all the upload promises
+      const uploadPromises = [];
+      // checking if the urls exist and if it exists then add it to uploadpromises array
+      for( const key in presignedUrl){
+        const url = presignedUrl[key];
+        if(!url) continue;
+        uploadPromises.push( axiosClient.put(url,form[key] as File) );
+      }
+      // using promise.all to execute all the promises at once
+      await Promise.all(uploadPromises);
+
     } catch (error:any) {
       const errorMessage = error?.response?.data?.message || "An error occurred";
       toast.error(errorMessage);
