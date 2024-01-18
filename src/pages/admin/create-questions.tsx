@@ -202,7 +202,7 @@ const CreateQuestions = () => {
     formData.append('question_number',form.question_number);
     formData.append('question_pattern',form.question_pattern === 'numeric' ? 'numerical' : 'mcq');
     formData.append('question_subject',form.question_subject);
-    formData.append('question', form.question);
+    formData.append('question', form.question instanceof File ? 'true' : form.question);
     formData.append('solution_pdf', form.solution_pdf as File ?  'true' : 'false');
     formData.append('solution_video', form.solution_video as File ? 'true' : 'false');
     form.options.forEach( option => {
@@ -230,6 +230,7 @@ const CreateQuestions = () => {
       });
       //getting the presignedUrl data for uploading the file object 
       const presignedUrl = responseData.data.data.presigned_url;
+      // console.log(presignedUrl)
       //creating a empty array for collecting all the upload promises
       const uploadPromises = [];
       // checking if the urls exist and if it exists then add it to uploadpromises array
