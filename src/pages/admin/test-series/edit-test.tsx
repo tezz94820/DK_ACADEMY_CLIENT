@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 
 
 interface formType {
+    [key:string]:string|null|File;
     title:string;
     type:string;
     start_date:string;
@@ -14,7 +15,6 @@ interface formType {
     duration:string;
     total_marks:string;
     thumbnail:File | null;
-    free:boolean;
   }
   
   const initailForm:formType = {
@@ -27,8 +27,23 @@ interface formType {
     duration: "",
     total_marks: "",
     thumbnail: null,
-    free: true
   }
+
+  type Payload = {
+    title: string;
+    type: string;
+    start_date: string;
+    end_date: string;
+    start_time: string;
+    end_time: string;
+    duration: string;
+    total_marks: string;
+    thumbnail: string;
+    free: string;
+    [key: string]: string; 
+};
+
+
 
   function convertTo12HourFormat(timeString:string) {
     const [hours, minutes] = timeString.split(':');
@@ -68,25 +83,38 @@ const EditTest = () => {
         }
       };
 
-    const handleContentSubmit = async (event:FormEvent<HTMLFormElement>,fieldToChange: keyof formType) => {
+    const handleContentSubmit = async (event:FormEvent<HTMLFormElement>,fieldToChange: string) => {
         event.preventDefault();
-        const formData = new FormData();
+
+        const payload:Payload = {title:'',type:'',start_date:'',end_date:'',start_time:'',end_time:'',duration:'',total_marks:'',thumbnail:'',free:''};
         if(form[fieldToChange] !== null){
             if(fieldToChange === "start_time" || fieldToChange === "end_time"){
-                formData.append(fieldToChange, convertTo12HourFormat(form[fieldToChange]) as string | Blob);
+                payload[fieldToChange] = convertTo12HourFormat(form[fieldToChange]) as string ;
+            }
+            else if(fieldToChange === "thumbnail"){
+                payload[fieldToChange] = "true" ;
             }
             else{
-                formData.append(fieldToChange, form[fieldToChange] as string | Blob);
+                payload[fieldToChange] = form[fieldToChange] as string; 
             }
         }
         
         try {
-            const response = await axiosClient.post(`admin/edit-test/${testId}`, formData, {
+            const response = await axiosClient.post(`admin/edit-test/${testId}`, payload, {
                 headers:{
                     'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                    'Content-Type': 'multipart/form-data'
+                    'Content-Type': 'application/json'
                 }
             })
+            const presignedUrl = response.data.data.presignedUrl;
+            console.log(presignedUrl)
+            if(presignedUrl.thumbnail){
+                await axiosClient.put(presignedUrl.thumbnail, form.thumbnail, {
+                    headers: {
+                        'Content-Type': 'image/png'
+                    }
+                })
+            }
             toast.success(`${fieldToChange} changed successfully`);
         } catch (error:any) {
             const errorMessage = error?.response?.data?.message || "An error occurred";
@@ -340,7 +368,7 @@ const EditTest = () => {
                 <form onSubmit={(event) => handleContentSubmit(event,'thumbnail')} className='w-auto flex gap-2 items-center'>
                     <label className='flex justify-center items-center gap-3 w-3/4 '>
                         <p className='text-blue-600 text-lg cursor-pointer w-1/6 px-2 font-semibold text-center'>New Thumbnail</p>
-                        <input type="file" className='border border-blue-600  h-10 rounded-xl px-4 w-5/6 ' name='thumbnail' required
+                        <input type="file" className='border border-blue-600  h-10 rounded-xl px-4 w-5/6 ' name='thumbnail' required accept="image/png"
                             onChange={(e) => handleThumbnailChange(e)}
                         />
                     </label>

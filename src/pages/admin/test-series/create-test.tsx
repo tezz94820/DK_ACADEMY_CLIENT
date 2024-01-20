@@ -48,31 +48,34 @@ const CreateTest = () => {
 
   const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    //create formdata
-    const formData = new FormData();
-    formData.append('title', form.title);
-    formData.append('type', form.type);
-    formData.append('start_date', form.start_date);
-    formData.append('end_date', form.end_date);
-    formData.append('start_time', convertTo12HourFormat(form.start_time));
-    formData.append('end_time', convertTo12HourFormat(form.end_time));
-    formData.append('duration', form.duration);
-    formData.append('total_marks', form.total_marks);
-    formData.append('free', form.free ? 'true' : 'false');
-    if (form.thumbnail !== null) {
-      formData.append('thumbnail', form.thumbnail, 'thumbnail');
+
+    const payload = {
+      title:form.title,
+      type:form.type,
+      start_date:form.start_date,
+      end_date:form.end_date,
+      start_time:convertTo12HourFormat(form.start_time),
+      end_time:convertTo12HourFormat(form.end_time),
+      duration:form.duration,
+      total_marks:form.total_marks,
+      free:form.free ? 'true' : 'false',
+      thumbnail:form.thumbnail === null ? 'false' : 'true'
     }
 
     try {
-      const response = await axiosClient.post('admin/create-test',formData,{
+      const response = await axiosClient.post('admin/create-test',payload,{
         headers:{
           'Authorization': `Bearer ${localStorage.getItem('token')}`,
-          'Content-Type': 'multipart/form-data'
+          'Content-Type': 'application/json'
         }
       })
-      toast.success('Test created successfully');
+      const presignedurl = response.data.data.presignedUrl;
+      await axiosClient.put(presignedurl.thumbnail, form.thumbnail,{
+        headers:{ ' Content-Type': 'image/png' }
+      });
+      toast.success("Test created Successfully");
     } catch (error:any) {
-      const errorMessage = error.response.data.message || "An error occurred";
+      const errorMessage = error?.response?.data?.message || "An error occurred";
       toast.error(errorMessage);
     }
   }
@@ -169,7 +172,7 @@ const CreateTest = () => {
         {/* Thumbnail*/}
         <label className='flex justify-center items-center gap-3'>
           <p className='text-blue-600 text-xl cursor-pointer w-2/6'>Thumbnail Image</p>
-          <input type="file" className='border border-blue-600 w-4/6  h-10 rounded px-4 text-center align-middle' name='thumbnail' required 
+          <input type="file" className='border border-blue-600 w-4/6  h-10 rounded px-4 text-center align-middle' name='thumbnail' accept=".png" required 
             onChange={(e) => handleThumbnailChange(e)}
           />
         </label>

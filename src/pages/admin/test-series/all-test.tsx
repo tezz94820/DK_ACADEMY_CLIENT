@@ -47,7 +47,7 @@ const AllTest = () => {
 
 
     const handleEditTest = (id:string) => {
-        router.push(`/admin/edit-test?test_id=${id}`);
+        router.push(`/admin/test-series/edit-test?test_id=${id}`);
     }
     
 
@@ -97,7 +97,7 @@ const AllTest = () => {
                     <p>Edit Test</p>
                   </button>
                   <button className='text-center align-middle px-6 py-2 rounded-lg bg-violet-600 flex items-center  justify-center gap-2 text-white w-3/4 text-base'
-                    onClick={() => router.push('/admin/create-questions?test_id=' + test._id)}
+                    onClick={() => router.push('/admin/test-series/create-questions?test_id=' + test._id)}
                   >
                     <p>Create Questions</p>
                   </button>

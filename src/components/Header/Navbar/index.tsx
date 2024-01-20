@@ -5,43 +5,40 @@ import Image from 'next/image';
 import { navLinks } from '../../../../data/navLinks';
 import Sidebar from './Sidebar';
 import { useRouter } from 'next/router';
-import { useSelector } from 'react-redux';
-import { ReduxRootState } from '@/app/store';
+// import { useSelector } from 'react-redux';
+// import { ReduxRootState } from '@/app/store';
 
 function Navbar() {
 
   const [toggle, setToggle] = useState(false);
-  const [profilePicture, setprofilePicture] = useState(true);
   const [profileInitials, setProfileInitials] = useState('');
   const router = useRouter();
-  const isLoggedIn = useSelector((state: ReduxRootState) => state.auth.isLoggedIn);
+  // const isLoggedIn = useSelector((state: ReduxRootState) => state.auth.isLoggedIn);
   
   const toggleHandler = () => {
     setToggle(!toggle);
   }
 
   useEffect(() => {
-    const profile = JSON.parse(localStorage.getItem('profilePicture')?? 'null');
-    setprofilePicture(profile);
-    if(profile){
+    const token:string|null = localStorage.getItem('token');
+    if(token){
       const name = localStorage.getItem('name')?.split(' ');
       if(name && name.length > 0){
-        const initials = name[0][0].toUpperCase() + name[name.length -1][0].toUpperCase();
+        const initials = `${name[0][0]} ${name[name.length -1][0]}`.toUpperCase();
         setProfileInitials(initials);
       }
     }
   }, []);
 
-  useEffect( () => {
-    if(isLoggedIn){
-      setprofilePicture(true);
-      const name = localStorage.getItem('name')?.split(' ');
-      if(name && name.length > 0){
-        const initials = name[0][0].toUpperCase() + name[name.length -1][0].toUpperCase();
-        setProfileInitials(initials);
-      }
-    }
-  },[isLoggedIn])
+  // useEffect( () => {
+  //   if(isLoggedIn){
+  //     const name = localStorage.getItem('name')?.split(' ');
+  //     if(name && name.length > 0){
+  //       const initials = `${name[0][0]} ${name[name.length -1][0]}`.toUpperCase();
+  //       setProfileInitials(initials);
+  //     }
+  //   }
+  // },[isLoggedIn])
 
   const pathName = router.pathname;
   return (
@@ -75,7 +72,7 @@ function Navbar() {
           {/* right */}
           <div className="flex justify-center md:order-2 gap-1 md:gap-4 ">
             {
-              profilePicture ? 
+              profileInitials ? 
                 <div className="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-600 rounded-full mr-2 md:mr-0 cursor-pointer">
                   <span className="font-medium text-gray-600 dark:text-gray-300">{profileInitials}</span>
                 </div>
