@@ -433,7 +433,7 @@ const TestResult = () => {
                                                     question.question_type === 'text' ?
                                                         <p className='text-lg'>{question.question}</p>
                                                     :
-                                                        <Image src={question.question} height={500} width={500} alt="question" className="w-[95%] h-auto" />
+                                                        <img src={question.question} height={500} width={500} alt="question" className="w-[95%] h-auto" />
                                                 }
                                                 {/* options */}
                                                 {
@@ -444,7 +444,7 @@ const TestResult = () => {
                                                                 option.option_type === 'text' ?
                                                                     <p className='text-lg'>{option.option}</p>
                                                                 :
-                                                                    <Image src={option.option} height={500} width={500} alt="option" className="w-auto h-auto" />
+                                                                    <img src={option.option} height={500} width={500} alt="option" className="w-auto h-auto" />
                                                             }
                                                         </div>
                                                     ))

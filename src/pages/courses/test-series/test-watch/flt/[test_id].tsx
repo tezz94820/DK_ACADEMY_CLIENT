@@ -702,7 +702,7 @@ const TestWatch = () => {
                   ?
                   <p className='text-lg font-bold'>{currentQuestion.question}</p>
                   :
-                  <Image src={currentQuestion.question} height={400} width={800} alt="question" className='w-[90%] h-auto'/>
+                  <img src={currentQuestion.question} height={400} width={800} alt="question" className='w-[90%] h-auto'/>
                 }
                 {/* options */}
                 {
@@ -725,7 +725,7 @@ const TestWatch = () => {
                             :
                             <span className='flex gap-2 text-lg font-bold '>
                               {item}&#41;
-                              <Image src={option.option} height={400} width={800} alt={`option${item}`} className='w-auto h-auto'/>
+                              <img src={option.option} height={400} width={800} alt={`option${item}`} className='w-auto h-auto'/>
                             </span>
                           }
                         </label>

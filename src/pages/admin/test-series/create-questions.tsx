@@ -5,6 +5,22 @@ import React, { useEffect, useState,ChangeEvent } from 'react'
 import { toast } from 'react-toastify';
 
 
+interface Payload {
+  question_number: string;
+  question_pattern: string;
+  question_subject: string;
+  question: string;
+  solution_pdf: string;
+  solution_video: string;
+  option_A: string;
+  option_B: string;
+  option_C: string;
+  option_D: string;
+  correct_option: string;
+  [key: string]: string; // This allows any additional properties with string values
+}
+
+
 type testDetailsType = {
   _id: string;
   // title: string;
@@ -197,28 +213,33 @@ const CreateQuestions = () => {
 
 
   const submitHandler = async () => {
-    const formData = new FormData();
-    formData.append('question_number',form.question_number);
-    formData.append('question_pattern',form.question_pattern === 'numeric' ? 'numerical' : 'mcq');
-    formData.append('question_subject',form.question_subject);
-    // true is for File type and else the text type
-    formData.append('question', form.question instanceof File ? 'true' : form.question);
-    formData.append('solution_pdf', form.solution_pdf instanceof File ?  'true' : 'false');
-    formData.append('solution_video', form.solution_video instanceof File ? 'true' : 'false');
+    const payload:Payload = {
+      question_number: form.question_number,
+      question_pattern: form.question_pattern === 'numeric' ? 'numerical' : 'mcq',
+      question_subject: form.question_subject,
+      // true is for File type and else the text type
+      question: form.question instanceof File ? 'true' : form.question,
+      solution_pdf: form.solution_pdf instanceof File ?  'true' : 'false',
+      solution_video: form.solution_video instanceof File ? 'true' : 'false',
+      option_A: '',
+      option_B: '',
+      option_C: '',
+      option_D: '',
+      correct_option: form.correct_option
+    }
     form.options.forEach( option => {
-      formData.append(`option_${option.option_name}`, option.option instanceof File ? 'true' : option.option ); // option_A_option_type: text 
+      payload[`option_${option.option_name}`] = option.option instanceof File ? 'true' : option.option; // option_A_option_type: text 
     })
-    formData.append('correct_option', form.correct_option); 
     
-    // formData.forEach( (value,key) => console.log(key+" -> "+value));
+    // console.log(payload)
 
     try {
       //craeting the promise for setting the details to backend
-      const responsePromise = axiosClient.post(`admin/create-test-questions/${testId}`,formData,
+      const responsePromise = axiosClient.post(`admin/create-test-questions/${testId}`,payload,
         {
           headers:{
             'Authorization': `Bearer ${localStorage.getItem('token')}`,
-            'Content-Type': 'multipart/form-data'
+            'Content-Type': 'application/json'
           }
         }
       );
