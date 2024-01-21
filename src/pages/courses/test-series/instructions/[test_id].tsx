@@ -27,6 +27,15 @@ const Instructions = () => {
     const router = useRouter();
     let testId = router.query.test_id;
 
+    useEffect( () => {
+        if (document.fullscreenElement) {
+            document
+              .exitFullscreen()
+              .then(() => console.log("Document Exited from Full screen mode"))
+              .catch((err) => console.error(err));
+        }
+    },[])
+
     const handleProceed = async (event:FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         let testAttemptId:string; 

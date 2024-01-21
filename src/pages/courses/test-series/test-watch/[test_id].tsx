@@ -528,7 +528,6 @@ const TestWatch = () => {
     useEffect( () => {
       const handleRefreshPage = (event: BeforeUnloadEvent) => {
         const message = 'Are you sure you want to leave? Your changes may not be saved.';
-        event.returnValue = message;
         return message;
       };
       const handleVisibilityChange = () => {

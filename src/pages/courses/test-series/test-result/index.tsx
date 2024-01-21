@@ -174,6 +174,18 @@ const TestResult = () => {
     const [subjectQuestions, setSubjectQuestions] = useState<SubjectQuestionsType>(initialSubjectQuestions);
     
 
+
+    useEffect( () => {
+        if (document.fullscreenElement) {
+            document
+              .exitFullscreen()
+              .then(() => console.log("Document Exited from Full screen mode"))
+              .catch((err) => console.error(err));
+        }
+    },[])
+
+    
+
     useEffect( () => {
         // removing the subjects which are not in testType, default value is chosen for flt , so no change for it
         if(testDetails?.type !== 'flt'){

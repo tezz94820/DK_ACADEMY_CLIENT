@@ -20,48 +20,23 @@ interface Payload {
   [key: string]: string; // This allows any additional properties with string values
 }
 
-
-type testDetailsType = {
-  _id: string;
-  // title: string;
-  // duration: string;
-  type: string;
-}
-const initialTestDetails: testDetailsType = {
-  _id: '',
-  // title: '',
-  // duration: '',
-  type: '',
-}
-
-type TabListType = {
-  [key: string]: string[];
-}
-
-const tabList:TabListType = {
-  flt:['PHYSICS', 'PHYSICS NUMERIC','CHEMISTRY', 'CHEMISTRY NUMERIC', 'MATHEMATICS', 'MATHEMATICS NUMERIC'],
-  mathematics:['MATHEMATICS', 'MATHEMATICS NUMERIC'],
-  physics:['PHYSICS', 'PHYSICS NUMERIC'],
-  chemistry:['CHEMISTRY', 'CHEMISTRY NUMERIC']
-}
-
 type tabQuestionLimitType = {
   [key: string]: string[];
   ['PHYSICS']: string[];
-  ['PHYSICS NUMERIC']: string[];
+  ['PHYSICS NUMERICAL']: string[];
   ['CHEMISTRY']: string[];
-  ['CHEMISTRY NUMERIC']: string[];
+  ['CHEMISTRY NUMERICAL']: string[];
   ['MATHEMATICS']: string[];
-  ['MATHEMATICS NUMERIC']: string[];
+  ['MATHEMATICS NUMERICAL']: string[];
 }
 
 const tabQuestionLimit:tabQuestionLimitType = {
   ['PHYSICS']: Array.from({length: 20}, (_, i) => String(1 + i)),
-  ['PHYSICS NUMERIC']: Array.from({length: 10}, (_, i) => String(21 + i)),
+  ['PHYSICS NUMERICAL']: Array.from({length: 10}, (_, i) => String(21 + i)),
   ['CHEMISTRY']: Array.from({length: 20}, (_, i) => String(31 + i)),
-  ['CHEMISTRY NUMERIC']: Array.from({length: 10}, (_, i) => String(51 + i)),
+  ['CHEMISTRY NUMERICAL']: Array.from({length: 10}, (_, i) => String(51 + i)),
   ['MATHEMATICS']: Array.from({length: 20}, (_, i) => String(61 + i)),
-  ['MATHEMATICS NUMERIC']: Array.from({length: 10}, (_, i) => String(81 + i)),
+  ['MATHEMATICS NUMERICAL']: Array.from({length: 10}, (_, i) => String(81 + i)),
 }
 
 type formType = {
@@ -114,52 +89,47 @@ const initialForm:formType = {
   solution_video: null
 } 
 
+const initialTabs:string[] = ['PHYSICS', 'PHYSICS NUMERICAL','CHEMISTRY', 'CHEMISTRY NUMERICAL', 'MATHEMATICS', 'MATHEMATICS NUMERICAL']
 
 const CreateQuestions = () => {
 
   const router = useRouter();
   const testId = router.query.test_id;
-  const [testDetails, setTestDetails] = useState<testDetailsType>(initialTestDetails);
-  const tabs = tabList[testDetails.type] || tabList.flt;
+  const testType = router.query.test_type;
+  const [tabs,setTabs] = useState<string[]>(initialTabs);
   const [selectedTab, setSelectedTab] = useState<string>(tabs[0]);
   const [disableSubmit, setDisableSubmit] = useState<boolean>(true);
   const [form, setForm] = useState<formType>(initialForm);
 
   //initial Render
   useEffect( () => {
-    setSelectedTab(tabs[0]);
-    setForm({...form, question_subject:tabs[0].split(' ')[0]});
-  },[tabs])//this will run only once when tabs as a const change
+    if(!testType) return;
+    if(testType !== 'flt'){
+      setTabs(prev => prev.filter( item => item.split(' ')[0].toLowerCase() === (testType as string).toLowerCase()));
+      setSelectedTab(tabs[0]);
+      tabQuestionLimit[(testType as string).toUpperCase()] = Array.from({length: 20}, (_, i) => String(1 + i));
+      tabQuestionLimit[(testType as string).toUpperCase() + ' NUMERICAL'] = Array.from({length: 10}, (_, i) => String(21 + i));
+      setForm({...form, question_subject:testType as string});
+    }
+    else{
+      setForm({...form, question_subject:'physics'});
+    }
+  },[testType])
 
-
-  useEffect( () => {
-    const fetchTestDetails = async () => {
-      if(!testId) return;
-      try {
-        const res = await axiosClient.get(`tests/test-details/${testId}`);
-        setTestDetails(res.data.data);
-        // tabs = res.data.data.type;
-      } catch (error:any) {
-        const errorMessage = error?.response?.data?.message || "An error occurred";
-        toast.error(errorMessage);
-      }
-   }
-
-   fetchTestDetails();
-  },[testId])
 
   const handleTabChange = (tab:string,tabIndex:number) => {
     setSelectedTab(tab);
     const questionNumber = tabQuestionLimit[tab][0];
-    const questionPattern = tabIndex % 2 === 0 ? 'mcq' : 'numeric';
+    const questionPattern = tabIndex % 2 === 0 ? 'mcq' : 'numerical';
     const questionSubject = tab.split(' ')[0];
-    setForm({...form, question_number: questionNumber, question_pattern: questionPattern, question_subject:questionSubject });
+    setForm({...initialForm, question_number: questionNumber, question_pattern: questionPattern, question_subject:questionSubject.toLowerCase() });
   }
 
   const handleQuestionNumberChange = (qno:string) => {
-    setForm({...form, question_number: qno })
+    setForm( prev => ({...initialForm, question_number: qno, question_subject: prev.question_subject}))
   }
 
+  // console.log(form);
   const changeSelectedQuestionType = (type:string) => {
     setForm({...form, question_type: type });
   }
@@ -215,7 +185,7 @@ const CreateQuestions = () => {
   const submitHandler = async () => {
     const payload:Payload = {
       question_number: form.question_number,
-      question_pattern: form.question_pattern === 'numeric' ? 'numerical' : 'mcq',
+      question_pattern: form.question_pattern,
       question_subject: form.question_subject,
       // true is for File type and else the text type
       question: form.question instanceof File ? 'true' : form.question,
@@ -231,7 +201,7 @@ const CreateQuestions = () => {
       payload[`option_${option.option_name}`] = option.option instanceof File ? 'true' : option.option; // option_A_option_type: text 
     })
     
-    // console.log(payload)
+    // console.log(payload);
 
     try {
       //craeting the promise for setting the details to backend
