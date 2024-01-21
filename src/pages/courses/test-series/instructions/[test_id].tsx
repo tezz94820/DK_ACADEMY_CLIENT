@@ -39,7 +39,7 @@ const Instructions = () => {
             toast.error(errorMessage);
             return;
         }
-        router.push(`/courses/test-series/test-watch/${testDetails.type}/${testDetails._id}?test_attempt_id=${testAttemptId}`);
+        router.push(`/courses/test-series/test-watch/${testDetails._id}?test_attempt_id=${testAttemptId}&test_type=${testDetails.type}`);
         const element = document.documentElement;
         if(element.requestFullscreen){
             element.requestFullscreen();
@@ -66,6 +66,7 @@ const Instructions = () => {
     const handleGivePermission = async () => {
         try {
             const stream = await navigator.mediaDevices.getUserMedia({video:true,audio:true});
+            stream.getTracks().forEach(track => track.stop());
         } catch (error:any) {
             toast.error(error.message || "An error occurred while accessing camera and microphone");    
         }

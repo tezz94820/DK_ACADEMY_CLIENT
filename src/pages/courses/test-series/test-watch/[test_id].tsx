@@ -12,15 +12,6 @@ type testDetailsType = {
   duration: string;
   type: string;
   total_questions: string;
-  tabDetails:{
-    ['PHYSICS']: string;
-    ['PHYSICS NUMERIC']: string;
-    ['CHEMISTRY']: string;
-    ['CHEMISTRY NUMERIC']: string;
-    ['MATHEMATICS']: string;
-    ['MATHEMATICS NUMERIC']: string;
-    [key: string]: string;
-  }
 }
 const initialTestDetails: testDetailsType = {
   _id: '',
@@ -28,14 +19,6 @@ const initialTestDetails: testDetailsType = {
   duration: '',
   type: '',
   total_questions: '',
-  tabDetails:{
-    ['PHYSICS']: "",
-    ['PHYSICS NUMERIC']: "",
-    ['CHEMISTRY']: "",
-    ['CHEMISTRY NUMERIC']: "",
-    ['MATHEMATICS']: "",
-    ['MATHEMATICS NUMERIC']: ""
-  }
 }
 
 type currentQuestionType = {
@@ -108,8 +91,9 @@ const initialQuestionInteractionAnalysis = {
   "marked": "0",
   "marked-answered": "0",
 }
-const tabs = [ 'PHYSICS', 'PHYSICS NUMERIC','CHEMISTRY', 'CHEMISTRY NUMERIC', 'MATHEMATICS', 'MATHEMATICS NUMERIC'];
-const summaryTabs = [ 'TOTAL', 'PHYSICS', 'PHYSICS NUMERICAL','CHEMISTRY', 'CHEMISTRY NUMERICAL', 'MATHEMATICS', 'MATHEMATICS NUMERICAL'];
+let tabs:string[] = [ 'PHYSICS', 'PHYSICS NUMERICAL','CHEMISTRY', 'CHEMISTRY NUMERICAL', 'MATHEMATICS', 'MATHEMATICS NUMERICAL'];
+let tabDetails:{[key:string]:string} = { 'PHYSICS':'1', 'PHYSICS NUMERICAL':'21','CHEMISTRY':'31', 'CHEMISTRY NUMERICAL':'51', 'MATHEMATICS':'61', 'MATHEMATICS NUMERICAL':'81'};
+let summaryTabs = [ 'TOTAL', 'PHYSICS', 'PHYSICS NUMERICAL','CHEMISTRY', 'CHEMISTRY NUMERICAL', 'MATHEMATICS', 'MATHEMATICS NUMERICAL'];
 
 type TestSummaryDetailsType = {
   total:{
@@ -225,10 +209,9 @@ const initialTestsummaryDetails:TestSummaryDetailsType = {
 const TestWatch = () => {
 
   const router = useRouter();
-  let testId = router.query.test_id;
-  const testAttemptId = router.query.test_attempt_id;
+  const {test_id:testId, test_attempt_id:testAttemptId, test_type:testType} = router?.query;
   const videoRef = useRef<HTMLVideoElement>(null);
-  let duration = 180*60; //in seconds
+  // let duration = 180*60; //in seconds
 
 
 
@@ -237,6 +220,7 @@ const TestWatch = () => {
   const [tabSelected, setTabSelected] = useState<string>(tabs[0]);
   const [currentQuestion, setCurrentQuestion] = useState<currentQuestionType>(initialCurrentQuestion);
   const [questionNumber, setQuestionNumber] = useState('1');
+  const [duration, setDuration] = useState<number>(180*60);
   const [timer, setTimer] = useState<number>(duration);
   const [selectedOption, setSelectedOption] = useState('');
   const [questionsWithUserInteraction, setQuestionsWithUserInteraction] = useState<questionsWithUserInteractionType[]>([]);
@@ -247,6 +231,29 @@ const TestWatch = () => {
   const [summaryTabSelected, setSummaryTabSelected] = useState<string>(summaryTabs[0]);
   const [testSummaryDetails, setTestSummaryDetails] = useState<TestSummaryDetailsType>(initialTestsummaryDetails);
   const [showSubmitModal, setShowSubmitModal] = useState<boolean>(false);
+
+  //setting the structure pecific to testType as flt,ma,ch,ph
+  useEffect( () => {
+    if(!testType) return;
+    if(testType !== 'flt'){
+      // filtering the tabs according to testType and initially setting the tabs[0] as the selected tab
+      tabs = tabs.filter( item => item.split(' ')[0].toLowerCase() === (testType as string).toLowerCase());
+      setTabSelected(tabs[0]);
+      //setting the tabDetails selected testType as 1 and its numerical as 21 and deleting all other
+      for(const tab in tabDetails){
+        if(tab.split(' ')[0].toLowerCase() !== (testType as string).toLowerCase()){
+          delete tabDetails[tab];
+        }
+      }
+      tabDetails[(testType as string).toUpperCase()] = '1';
+      tabDetails[(testType as string).toUpperCase() + ' NUMERICAL'] = '21';
+      //setting summary tabs :- delete all the other than total,flt,flt_numerical
+      summaryTabs = summaryTabs.filter( item => (item === 'TOTAL') || (item.split(' ')[0].toLowerCase() === (testType as string).toLowerCase()) );
+    }
+  },[testType])
+
+
+  // console.log(tabDetails);
   //get test start details
   useEffect( () => {
     const fetchTestStartDetails = async () => {
@@ -254,7 +261,9 @@ const TestWatch = () => {
       try {
         const response = await axiosClient.get(`tests/test-start/${testId}`);
         const data = response.data.data;
-        setTestDetails({_id:data._id,title:data.title,duration:data.duration,type:data.type,total_questions:data.total_questions,tabDetails:data.tabDetails });
+        setTestDetails({_id:data._id,title:data.title,duration:data.duration,type:data.type,total_questions:data.total_questions });
+        setDuration(Number(data.duration)*60);
+        setTimer(Number(data.duration)*60);
       } catch (error:any) {
         const errorMessage = error?.response?.data?.message || "An error occurred";
         toast.error(errorMessage);
@@ -274,21 +283,36 @@ const TestWatch = () => {
       } catch (error:any) {
           console.error('Error accessing camera and microphone:', error);
       }
-  }
-
+    }
     startCamera();
+
+    // Cleanup function to close camera and audio settings on component unmount
+    return () => {
+      const stopCamera = () => {
+        const tracks = (videoRef.current?.srcObject as MediaStream)?.getTracks();
+        if (tracks) {
+          tracks.forEach((track) => track.stop());
+        }
+      };
+  
+      stopCamera();
+    };
+
   },[])
+  
+  
+  // console.log(videoRef.current?.srcObject as MediaStream);
 
   const handleTabClicked = (newTab:string) => {
     // set the new tab selected
     setTabSelected(newTab);
     // set the queestion number according to tab
-    setQuestionNumber(testDetails.tabDetails[newTab]);
+    setQuestionNumber(tabDetails[newTab]);
   }
 
   //timer
   useEffect( () => {
-    if(timer === 0) return;
+    if(timer === 0) handleEntireTestSubmit();
     const interval = setInterval(() => {
       setTimer((prev)  => prev === 0 ? 0 : prev-1);
     }, 1000);
@@ -312,6 +336,7 @@ const TestWatch = () => {
     borderRadius: "50%",
     backgroundImage: `conic-gradient(#0b68a3 0deg,#0b68a3 ${current_degree}deg, white ${current_degree}deg,white 360deg)`
   }
+  console.log('duration=',duration,"timer=",timer,"current_degree=",current_degree);
 
   //option
   const handleOptionChange = (optionName:string) => {
@@ -374,7 +399,7 @@ const TestWatch = () => {
     setQuestionNumber(newQuestionNumber);
     //handle tab switch if necessary
     let tabToSwitchTo:{tab:string,diff:number} = { tab:'', diff:0};
-    for(const [key,value] of Object.entries(testDetails.tabDetails)){
+    for(const [key,value] of Object.entries(tabDetails)){
       const currentDiff = Number(newQuestionNumber) - Number(value);
       if(currentDiff < 0) continue;
       if(tabToSwitchTo.tab === '') {
@@ -492,7 +517,7 @@ const TestWatch = () => {
     //auto scrolling to question button
     useEffect ( () => {
       const scrollContainer : HTMLDivElement|null = scrollContainerRef.current;
-      console.log(scrollContainer?.scrollTop);
+      // console.log(scrollContainer?.scrollTop);
       if(scrollContainer){
         scrollContainer.scrollTop = Number(questionNumber)/4*65;
       }
@@ -555,7 +580,7 @@ const TestWatch = () => {
       setShowSummary(true);
       try {
         const res = await axiosClient.get(`tests/test/test-summary/${testAttemptId}`,{ headers:{'Authorization':"Bearer "+localStorage.getItem("token")} });
-        console.log(res);
+        // console.log(res);
         setTestSummaryDetails(res.data.data.test_summary);
       } catch (error:any) {
         const message = error?.response?.data?.message || "An error occurred";
@@ -588,7 +613,7 @@ const TestWatch = () => {
       router.replace(`/courses/test-series/test-result?test_id=${testId}&test_attempt_id=${testAttemptId}`);
     }
 
-    console.log(summaryTabSelected);
+    // console.log(summaryTabSelected);
 
   return (
     <>
@@ -676,7 +701,7 @@ const TestWatch = () => {
 
           {/* tabs 8*/}
           <div className='w-100 bg-blue-800 h-[8%] flex items-center' >
-            <div className='flex justify-between  w-[75%] px-6 '>
+            <div className={`flex gap-8  w-[75%] px-6 `}>
               {
                 tabs.map( tab => (
                   <div key={tab}>

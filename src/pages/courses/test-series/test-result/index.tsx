@@ -16,7 +16,7 @@ type TestDetailsType = {
 
 const initialTestDetails = {
     title:'',
-    type:'',
+    type:'flt',
     duration:'',
     total_marks:'',
 }
@@ -159,7 +159,7 @@ const initialSubjectQuestions:SubjectQuestionsType = {
 }
 
 
-const subjects = ['Physics', 'Physics Numerical', 'Chemistry', 'Chemistry Numerical', 'Mathematics', 'Mathematics Numerical']
+let subjects = ['Physics', 'Physics Numerical', 'Chemistry', 'Chemistry Numerical', 'Mathematics', 'Mathematics Numerical']
 
 const TestResult = () => {
     
@@ -172,6 +172,16 @@ const TestResult = () => {
     const [resultData, setResultData] = useState<ResultDataType>(initialResultData);
     const [subjectTab, setSubjectTab] = useState<string>('All Subjects');
     const [subjectQuestions, setSubjectQuestions] = useState<SubjectQuestionsType>(initialSubjectQuestions);
+    
+
+    useEffect( () => {
+        // removing the subjects which are not in testType, default value is chosen for flt , so no change for it
+        if(testDetails?.type !== 'flt'){
+            subjects = subjects.filter( item => item.split(' ')[0].toLowerCase() === testDetails.type.toLowerCase())
+        }
+
+    },[testDetails.type])
+
     
     useEffect( () => {
         const fetchTestStartDetails = async () => {
@@ -256,13 +266,12 @@ const TestResult = () => {
                 {/* title */}
                 <div className='flex flex-col gap-2 '>
                     <h1 className='text-2xl font-bold'>{testDetails.title}</h1>
-                    <Link href={`courses/test-series/instructions/${testId}`} className='font-semibold text-lg text-blue-500 underline underline-offset-4 hover:text-blue-900 w-max'>Re-Attempt Test</Link>
+                    <Link href={`/courses/test-series/instructions/${testId}`} className='font-semibold text-lg text-blue-500 underline underline-offset-4 hover:text-blue-900 w-max'>Re-Attempt Test</Link>
                 </div>
                 <div className='flex gap-3'>
                     <h1 className='text-xl'>Total Time: <span className='font-bold text-blue-500'>{testDetails.duration}min</span></h1>
                     <span className='text-xl'>|</span>
                     <h1 className='text-xl'>Total Marks: <span className='font-bold text-blue-500'>{testDetails.total_marks}</span></h1>
-                    
                 </div>
             </div>
         </div>
