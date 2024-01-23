@@ -31,7 +31,7 @@ const Mathematics = () => {
     }
 
     fetchPdfCourses();
-  })
+  },[])
 
   // on switching of the exam_type fetch new courses according to exam_type 
   useEffect( () => {
@@ -101,7 +101,7 @@ const Mathematics = () => {
                         </div>
                         {/* thumbnail */}
                         <div className='w-full h-44'>
-                          <Image src={'/thumb.png'} height={300} width={300} alt="thumbnail" 
+                          <img src={pdf.thumbnail} height={300} width={300} alt="thumbnail" 
                             className='rounded-lg w-full h-full'
                           />
                         </div>
