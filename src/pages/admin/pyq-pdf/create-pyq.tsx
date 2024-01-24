@@ -72,7 +72,6 @@ const CreatePyq = () => {
         }
       })
       const presignedurl = response.data.data.presignedUrl;
-      console.log(presignedurl);
       await axiosClient.put(presignedurl.thumbnail, form.thumbnail,{
         headers:{ ' Content-Type': 'image/png' }
       });
@@ -92,8 +91,6 @@ const CreatePyq = () => {
     }
   };
 
-  console.log(form);
-  
   return (
     <div className='p-5'>
       

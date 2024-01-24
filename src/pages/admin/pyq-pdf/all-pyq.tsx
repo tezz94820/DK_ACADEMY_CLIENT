@@ -166,8 +166,8 @@ const AllPyq = () => {
 
                       {/* buttons */}
                       <div className='grid grid-cols-2 gap-5 justify-between my-3 font-semibold'>
-                        <Link href={`/admin/pyq-pdf/edit-pyq?pdf_id=${pdf._id}`} className='bg-violet-200 text-violet-800  rounded-lg text-center align-middle px-3 py-2 text-sm ' >Edit Course</Link>
-                        <Link href={`/admin/pyq-pdf/edit-pyq?pdf_id=${pdf._id}`} className='bg-violet-700 text-white  rounded-lg  text-center align-middle px-3 py-2 text-sm '> Upload pdf and solutions</Link>
+                        <Link href={`/admin/pyq-pdf/edit-pyq?pdf_id=${pdf._id}`} className='bg-violet-200 text-violet-800  rounded-lg text-center align-middle px-3 py-2 text-sm hover:bg-violet-700 hover:text-white' >Edit Course</Link>
+                        <Link href={`/admin/pyq-pdf/upload-pdf-solutions?pdf_id=${pdf._id}`} className='bg-violet-200 text-violet-800  rounded-lg  text-center align-middle px-3 py-2 text-sm hover:bg-violet-700 hover:text-white'> Upload pdf and solutions</Link>
                       </div>
 
                     </div>

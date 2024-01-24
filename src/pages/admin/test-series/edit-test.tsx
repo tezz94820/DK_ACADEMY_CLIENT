@@ -127,7 +127,7 @@ const EditTest = () => {
     const handleDeleteTest = async (event:FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         //check if user has typed delete in the input box
-        if(event.currentTarget.deleteTest.value !== 'delete'){
+        if(event?.currentTarget?.deleteTest?.value !== 'delete'){
             toast.error(`Please enter "delete" to delete the Test`);
             return;
         }

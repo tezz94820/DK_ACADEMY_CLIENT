@@ -84,9 +84,6 @@ const EditPyq = () => {
             payload[fieldToChange] = form[fieldToChange] as string; 
         }
 
-        console.log(payload);
-        
-        
         try {
             const response = await axiosClient.post(`admin/edit-pyq-pdf/${pdfId}`, payload, {
                 headers:{
@@ -95,7 +92,6 @@ const EditPyq = () => {
                 }
             })
             const presignedUrl = response.data.data.presignedUrl;
-            console.log(presignedUrl)
             if(presignedUrl.thumbnail){
                 await axiosClient.put(presignedUrl.thumbnail, form.thumbnail, {
                     headers: {
@@ -112,29 +108,26 @@ const EditPyq = () => {
     }
 
 
-    const handleDeleteTest = async (event:FormEvent<HTMLFormElement>) => {
+    const handleDeletePyq = async (event:FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         //check if user has typed delete in the input box
-        if(event.currentTarget.deleteTest.value !== 'delete'){
-            toast.error(`Please enter "delete" to delete the Test`);
+        if(event?.currentTarget?.deletepyq?.value !== 'delete'){
+            toast.error(`Please enter "delete" to delete the PYQ PDF`);
             return;
         }
         try {
-            await axiosClient.delete(`admin/delete-test/${pdfId}`,{
+            await axiosClient.delete(`admin/delete-pyq-pdf/${pdfId}`,{
                 headers:{
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }
             });
-            toast.success('Test deleted successfully');
+            toast.success('PYQ PDF deleted successfully');
             router.back();
         } catch (error:any) {
             const errorMessage = error.response.data.message || "An error occurred";
             toast.error(errorMessage);
         }
     }
-
-    // console.log(form);
-
 
   return (
     <div className='p-5 flex flex-col gap-5'>
@@ -418,10 +411,10 @@ const EditPyq = () => {
             </button>
             {/* container */}
             <div className={`mt-5 px-10 ${tabSelected != 'deletepyq' && 'hidden'  } w-auto`}>
-                <form onSubmit={handleDeleteTest} className='w-auto flex gap-2 items-center'>
+                <form onSubmit={handleDeletePyq} className='w-auto flex gap-2 items-center'>
                     <label className='flex justify-center items-center gap-3 w-3/4 '>
-                        <input type="text" className='border border-blue-600  h-10 rounded-xl px-4 w-5/6 ' name='deleteTest' required
-                            placeholder={`Type "delete" to delete the test`}
+                        <input type="text" className='border border-blue-600  h-10 rounded-xl px-4 w-5/6 ' name='deletepyq' required
+                            placeholder={`Type "delete" to delete the PYQ PDF `}
                         />
                     </label>
                     <input type='submit' value={"Delete PYQ"} className='w-1/4 h-10 border-2 border-white text-white rounded-xl text-xl font-semibold hover:bg-blue-500 hover:text-white' />
