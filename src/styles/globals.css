@@ -10,7 +10,7 @@
   }
 
   .scrollbar::-webkit-scrollbar {
-    @apply w-1
+    @apply w-3 cursor-pointer
   }
 
   .scrollbar-horizontal::-webkit-scrollbar {
@@ -42,7 +42,7 @@
 
   .react-pdf__Page__canvas{
     border: 1rem solid transparent !important;
-    border-image: linear-gradient(to right, #6366F1, #9333EA, #EB5286) !important;
+    background: linear-gradient(to right,  #ffbf33, #ffae19, #ff9c00, #ff8c00, #ff9833, #ffad4b);
     border-image-slice: 1 !important;
     border-radius: 1.5rem !important;
     margin-bottom: 1rem !important;

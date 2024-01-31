@@ -118,13 +118,11 @@ function Pdf() {
         file={fileLink}
         onLoadSuccess={onDocumentLoadSuccess}
         error='NO PDF FOUND'
-        // options={{password: 'Tt@123999'}}
       >
         {Array.from(new Array(numPages), (el, index) => (
             <Page
               key={`page_${index + 1}`}
               pageNumber={index + 1}
-              // canvasBackground='#f68fff'
               renderTextLayer={false}
               renderAnnotationLayer={false}
               width={520}
