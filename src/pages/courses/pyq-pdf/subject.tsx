@@ -21,12 +21,12 @@ const Mathematics = () => {
     window.open(`https://wa.me/?text=${message}`, '_blank')
   }
 
-  // for fetching all the courses at the start of page i.e of mains exam_type
+  // for fetching the courses as per the subject 
   useEffect( () => {
 
     const fetchPdfCourses = async () => {
       try {
-        const res = await axiosClient.get(`pyq-pdf/subject/mathematics?exam_type=${examType}`);
+        const res = await axiosClient.get(`pyq-pdf/subject/${subject}?exam_type=${examType}`);
         setPdfModuleswise(res.data.data);
       } catch (error:any) {
         toast.error(error.message);
@@ -34,7 +34,7 @@ const Mathematics = () => {
     }
 
     fetchPdfCourses();
-  },[])
+  },[subject])
 
   // on switching of the exam_type fetch new courses according to exam_type 
   useEffect( () => {
@@ -52,6 +52,11 @@ const Mathematics = () => {
   },[examType])
 
 
+  const handleSubjectChange = (sub:string) => {
+    setSubject(sub);
+  } 
+
+
   return (
     <HeaderLayout>
       <CourseLayout>
@@ -62,18 +67,13 @@ const Mathematics = () => {
             {
               allSubjects.map( sub => (
                 <button key={sub} className={`w-1/3 font-semibold text-3xl tracking-widest rounded-lg border border-blue-800 px-6 py-2 text-blue-800 ${subject === sub ? 'bg-gradient-to-r from-yellow-300 to-orange-400 ': 'bg-white hover:bg-blue-800/20'}`}
-                  onClick={() => setSubject(sub)}
+                  onClick={() => handleSubjectChange(sub)}
                 >
                   {sub}
                 </button>
               ))
             }
           </div>
-          {/* <hr className='border border-purple-700 mt-1 mb-2' /> */}
-          {/* <div className='flex justify-between'> */}
-            {/* subject title */}
-            {/* <h1 className='font-semibold text-3xl '>{subject[0].toLocaleUpperCase() + subject.slice(1)}&nbsp;&#40;2000-2023&#41;</h1> */}
-          {/* </div> */}
           <hr className='border border-blue-800 my-3'/>
           {/* mains or advance switch  */}
           <div className='flex justify-end sticky top-20 md:top-0'>
@@ -97,6 +97,14 @@ const Mathematics = () => {
               </label>
             </div>
           </div>
+          {/* if no courses found */}
+          {
+            pdfModuleswise.length === 0 && 
+              <div className='flex justify-center items-center'>
+                <p className='text-xl font-semibold h-96 text-blue-800'>No Courses Found</p>
+              </div>
+          }
+          {/* if even 1 course exists */}
           <div className='flex flex-col'>
           {
             pdfModuleswise.map( (item:any,moduleIndex) => (
