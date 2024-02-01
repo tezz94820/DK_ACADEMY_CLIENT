@@ -83,7 +83,7 @@ function Pdf() {
   }
 
   const showAnswerPdf = (question:string) => {
-    const newTabUrl = `/courses/pyq-pdf/view/${pdfId}/solution/${question}`;
+    const newTabUrl = `${pdfId}/solution/${question}`;
     window.open(newTabUrl, '_blank');
   }
 

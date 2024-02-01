@@ -11,7 +11,7 @@ export const courseLeftList:courseLeftListType = [
     {
       id: '1',
       name: "PYQ Video courses",
-      href: "/courses/pyq-pdf",
+      href: "/courses/pyq",
       icon: '/document.svg'
     },
     {
@@ -22,12 +22,18 @@ export const courseLeftList:courseLeftListType = [
     },
     {
       id: '3',
-      name: "Practice",
+      name: "Daily Practice Problem (DPP)",
       href: "#",
       icon: '/practice.svg'
     },
     {
       id: '4',
+      name: "Ranker Questions",
+      href: "/courses/test-series",
+      icon: '/test.svg'
+    },
+    {
+      id: '5',
       name: "Test Series",
       href: "/courses/test-series",
       icon: '/test.svg'
