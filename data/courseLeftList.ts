@@ -17,19 +17,19 @@ export const courseLeftList:courseLeftListType = [
     {
       id: '2',
       name: "Theory Video courses",
-      href: "/courses/pyq",
+      href: "/courses/theory",
       icon: '/video.svg'
     },
     {
       id: '3',
       name: "Daily Practice Problem (DPP)",
-      href: "#",
+      href: "/courses/dpp",
       icon: '/practice.svg'
     },
     {
       id: '4',
       name: "Ranker Questions",
-      href: "/courses/test-series",
+      href: "/courses/ranker-questions",
       icon: '/test.svg'
     },
     {

@@ -76,7 +76,7 @@ const Mathematics = () => {
           </div>
           <hr className='border border-blue-800 my-3'/>
           {/* mains or advance switch  */}
-          <div className='flex justify-end sticky top-20 md:top-0'>
+          <div className='flex justify-end sticky top-20 md:top-0 z-20'>
             {/* <SearchBar /> */}
             <div className=' flex w-max border-2 border-blue-800 divide-x-2 divide-blue-800 rounded-lg overflow-hidden bg-white'>
               <label className={`cursor-pointer p-1 text-center  text-xl font-semibold ${examType==="mains"?`bg-blue-800 text-white`:''}`}>
