@@ -30,21 +30,12 @@ function Navbar() {
     }
   }, []);
 
-  // useEffect( () => {
-  //   if(isLoggedIn){
-  //     const name = localStorage.getItem('name')?.split(' ');
-  //     if(name && name.length > 0){
-  //       const initials = `${name[0][0]} ${name[name.length -1][0]}`.toUpperCase();
-  //       setProfileInitials(initials);
-  //     }
-  //   }
-  // },[isLoggedIn])
-
   const pathName = router.pathname;
+  
   return (
     <>
       <nav className="bg-white fixed h-4.3 w-full z-20 top-0 left-0 border-b border-gray-200 shadow-md">
-        <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-3 pr-1 md:p-1 md:px-4">
+        <div className=" w-full flex flex-wrap items-center justify-between  p-3 pr-1 md:p-1 md:px-4 text-lg font-semibold">
          
           {/* left */}
           <Link href="/" className="flex items-center">
@@ -54,15 +45,13 @@ function Navbar() {
 
           {/* mid */}
           <div className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
-            <ul className="flex font-semibold flex-row gap-6">
+            <ul className="flex flex-row gap-6">
               {
                 navLinks.map( link => (
-                  <Link key={link.name} href={link.href} 
-                    className={` ${ pathName.startsWith(link.href) ? 'text-black' : 'text-blue-700'}`}  
+                  <Link key={link.name} href={link.href}
+                    className={` bg-transparent hover:bg-blue-100 hover:rounded py-1 px-2 text-xl  font-semibold ${ pathName.split('/').slice(0,2).join('/') === link.href ? 'text-blue-500' : 'text-black/80'}`}  
                   >
-                    <li className='bg-transparent hover:bg-blue-100 hover:rounded py-1 px-2'>
-                      {link.name}
-                    </li>
+                    {link.name}
                   </Link> 
                 ))
               }

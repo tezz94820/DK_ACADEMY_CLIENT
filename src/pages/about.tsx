@@ -1,8 +1,11 @@
+import HeaderLayout from '@/components/Header/HeaderLayout'
 import React from 'react'
 
 function about() {
   return (
-    <div>about</div>
+    <HeaderLayout>
+      <div>about</div>
+    </HeaderLayout>
   )
 }
 
