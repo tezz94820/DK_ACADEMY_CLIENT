@@ -30,7 +30,7 @@ const PyqCourseCard = ({pyqCourse, showExplore=true}:PyqCourseCardPropsType) => 
 
   return (
     <>
-      <div key={pyqCourse._id} className='border-gray-200 border-2 rounded shadow-lg shadow-blue-800/50 p-2'>
+      <div className='border-gray-200 border-2 rounded shadow-lg shadow-blue-800/50 p-2'>
         {/* top */}
         <div className='flex h-12 w-full pt-1'>
           <h3 className='text-sm w-3/4 font-bold'>{pyqCourse.title}</h3>

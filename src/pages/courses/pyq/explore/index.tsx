@@ -51,7 +51,7 @@ const IndividualCourseDetails:individualPyqCourseType = {
 }
 
 
-function explore() {
+function Explore() {
 
   const [pyqCourseDetails, setPyqCourseDetails] = useState<individualPyqCourseType>(IndividualCourseDetails);
   const router = useRouter();
@@ -108,4 +108,4 @@ function explore() {
   )
 }
 
-export default explore
+export default Explore
