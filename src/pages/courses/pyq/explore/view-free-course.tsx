@@ -10,32 +10,35 @@ import { toast } from 'react-toastify';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
 
-const DynamicPDF = dynamic(() => import('../../../../../components/Pdf'), {
+const DynamicPDF = dynamic(() => import('../../../../components/Pdf'), {
   ssr: false,
 })
 
 
 const View = () => {
 
-  const [pyqCourseLink, setPyqCourseLink] = useState('');
+  const [pyqFreeCourseLink, setPyqFreeCourseLink] = useState('');
   const router = useRouter();
   const pdfId = router.query.pdf_id;
 
 
   useEffect(() => {
-    const getPyqCourseLink = async () => {
+    const getPyqFreeCourseLink = async () => {
       if(!pdfId) return;
       try {
-        const res = await axiosClient.get(`/pyq-pdf/pdf/${pdfId}`, { headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } });
-        setPyqCourseLink(res.data.data.presignedUrl);
+        const res = await axiosClient.get(`pyq-pdf/access-free-pdf/${pdfId}`, { headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } });
+        setPyqFreeCourseLink(res.data.data.presignedUrl.free_pdf);
       } catch (error: any) {
         const errorMessage = error.response.data.message || "An error occurred";
         toast.error(errorMessage);
       }
     }
 
-    getPyqCourseLink();
+    getPyqFreeCourseLink();
   }, [router]);
+
+
+  
 
 
 
@@ -43,7 +46,7 @@ const View = () => {
     <HeaderLayout>
       <CourseLayout>
         <div className={`print-hidden scrollbar w-max h-full overflow-x-scroll md:overflow-y-scroll md:w-5/6 `}>
-          <DynamicPDF courseFileLink={pyqCourseLink} isFree={false}/>
+          <DynamicPDF courseFileLink={pyqFreeCourseLink} isFree={true}/>
         </div>
       </CourseLayout>
     </HeaderLayout>

@@ -13,7 +13,7 @@ export const navLinks:navLinksType = [
   },
   {
     name: "Courses",
-    href: "/courses",
+    href: "/courses/pyq",
     icon: '/courses.svg'
   },
   {

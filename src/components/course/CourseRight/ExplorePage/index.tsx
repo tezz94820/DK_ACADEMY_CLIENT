@@ -8,6 +8,7 @@ import CourseRightLayout from '../CourseRightLayout'
 
 
 
+
 function ExplorePage() {
   const [pageNavLink, setPageNavLink] = useState('1')
   const changePageNavLink = (component:string) => {

@@ -4,6 +4,35 @@ import { useRouter } from 'next/router'
 import axiosClient from '@/axios/axiosClient';
 import { toast } from 'react-toastify';
 import Image from 'next/image';
+import PyqCourseCard from './course/pyq/PyqCourseCard';
+
+
+
+type individualPyqCourseType = {
+  _id:string,
+  title:string,
+  new_launch:boolean,
+  thumbnail:string,
+  class_name:string,
+  free:boolean,
+  old_price:string,
+  price:string,
+  exam_type:string,
+  discount:string,
+}
+
+const IndividualCourseDetails:individualPyqCourseType = {
+  _id: "",
+  title: "",
+  new_launch: true,
+  thumbnail: '',
+  class_name: "",
+  free:false,
+  old_price: "",
+  price: "",
+  exam_type:"",
+  discount:"",
+}
 
 type solutionType = {
   question: string,
@@ -11,8 +40,12 @@ type solutionType = {
   visibility: boolean
 }
 
+type ShowPdfProps = {
+  courseFileLink: string,
+  isFree?: boolean
+}
 
-function Pdf() {
+function Pdf( { courseFileLink, isFree=true } : ShowPdfProps) {
   const [numPages, setNumPages] = useState<number>(1);
   const [pageNumber, setPageNumber] = useState<number>(1);
   const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
@@ -20,37 +53,21 @@ function Pdf() {
   const [solutions, setSolutions] = useState([]);
   const [solutionsClicked, setSolutionsClicked] = useState(false);
   const [allSolutionsClicked, setAllSolutionsClicked ] = useState(false);
+  const [pyqCourseDetails, setPyqCourseDetails] = useState<individualPyqCourseType>(IndividualCourseDetails);
+
   const router = useRouter();
   const pdfId = router.query.pdf_id;
-  const exam_type = router.query.exam_type;
 
   useEffect(() => {
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
     };
 
-    const getFileLink = async () => {
-      try {
-        if(!localStorage.getItem('token')){
-          router.push('/courses/require-auth');
-          return;
-        }
-        const res = await axiosClient.get(`/pyq-pdf/pdf?pdf_id=${pdfId}&exam_type=${exam_type}`,{headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}});
-        setFileLink(res.data.data.presignedUrl);
-      } catch (error:any) {
-        const errorMessage = error.response.data.message || "An error occurred";
-        toast.error(errorMessage);
-      }
-    }
-    
-    if(pdfId) 
-      getFileLink();
-
     window.addEventListener('resize', handleResize);
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, [router,exam_type,pdfId]);
+  }, []);
 
 
   function onDocumentLoadSuccess({ numPages }: { numPages: number }): void {
@@ -69,7 +86,8 @@ function Pdf() {
     try {
       if(solutions.length === 0){
         //get the solutions only once 
-        const res = await axiosClient.get(`pyq-pdf/solution?pdf_id=${pdfId}`, {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}});
+        const fetchUrl = isFree ? `pyq-pdf/free-solution?pdf_id=${pdfId}` : `pyq-pdf/solution?pdf_id=${pdfId}`;
+        const res = await axiosClient.get(fetchUrl, {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}});
         let sols = res.data.data.solutions;
         sols = sols.map( (item:{question: string , answer: string}) => ({...item, visibility:false}) );
         setSolutions(sols);
@@ -83,7 +101,7 @@ function Pdf() {
   }
 
   const showAnswerPdf = (question:string) => {
-    const newTabUrl = `${pdfId}/solution/${question}`;
+    const newTabUrl = `/courses/pyq/view/${pdfId}/solution/${question}`;
     window.open(newTabUrl, '_blank');
   }
 
@@ -110,12 +128,32 @@ function Pdf() {
     toggleShowAllSolutions();
   },[allSolutionsClicked]);
 
-  console.log(exam_type)
+
+  // fetch the course details to show the buy card below pdf 
+  useEffect( () => {
+    const fetchCourseDetails = async () => {
+      if(!isFree) return; // want it to run only for free content
+      if(!pdfId) return;
+      try {
+        const response = await axiosClient(`pyq-pdf/course-details?pdf_id=${pdfId}`);
+        const data = response?.data?.data.pyq_course_details;
+        setPyqCourseDetails(data);
+      } catch (error:any) {
+        const errorMessage = error?.response?.data?.message || "An error occurred";
+        toast.error(errorMessage);
+      }
+    }
+
+    fetchCourseDetails();
+  }, [router] );
+
+
+
 
   return (
     <div className='flex flex-col w-full rounded bg-gradient-to-r mt-2' onContextMenu={disableRightClick}>
       <Document
-        file={fileLink}
+        file={courseFileLink}
         onLoadSuccess={onDocumentLoadSuccess}
         error='NO PDF FOUND'
       >
@@ -131,15 +169,24 @@ function Pdf() {
             />
         ))}
       </Document>
+      
+      {
+        isFree && 
+        <div className='w-full flex items-center justify-center my-5'>
+          <div className='w-1/3 animate-pulse hover:animate-none'>
+            <PyqCourseCard pyqCourse={pyqCourseDetails} showExplore={false}/>
+          </div>
+        </div>
+      }
 
-      {/* back button */}
+      {/* close button */}
       <div className='fixed left-1/6 ml-2 z-10'>
-        <button className='px-2 py-1 flex bg-white rounded w-20 hover:border-2 border-2 border-red-700 hover:bg-red-300' onClick={closeHandler}>Close</button>
+        <button className='px-4 py-2 flex bg-white rounded-lg w-max hover:border-2 border-2 border-blue-800  hover:text-blue-800 hover:bg-blue-100 text-xl font-semibold tracking-wider' onClick={closeHandler}>Close</button>
       </div>
 
       {/* solution button */}
-      <div className='fixed right-2 z-10 '>
-          <button className='px-2 py-1 flex bg-white rounded w-20 border-2 border-green-600 hover:bg-green-600 hover:text-white hover:border-red-600' onClick={solutionsHandler} >Solutions</button>
+      <div className='fixed right-5 z-10 '>
+          <button className='px-4 py-2 flex  rounded-lg w-max border-2 border-blue-800 bg-blue-800 text-white hover:bg-blue-600 hover:text-white hover:border-red-600 text-xl font-semibold tracking-wider' onClick={solutionsHandler} >Solutions</button>
       </div>
 
       {/* solution box */}
@@ -147,16 +194,16 @@ function Pdf() {
         
         {/* closing */}
         <div className='w-12 h-full rounded-l-lg p-0.5'>
-          <Image src={"/arrow_right.svg"} alt="cross" height={30} width={30} className=' h-10 w-12 bg-gradient-to-r from-blue-300 to-blue-500 rounded-lg cursor-pointer p-0.5 hover:bg-gradient-to-r hover:from-red-300 hover:to-red-500' onClick={() => setSolutionsClicked(false)}/>
+          <Image src={"/arrow_right.svg"} alt="cross" height={30} width={30} className=' h-10 w-12 bg-gradient-to-r from-blue-500 to-blue-800 rounded-lg cursor-pointer p-0.5 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-500' onClick={() => setSolutionsClicked(false)}/>
         </div>
         
         {/* main box */}
-        <div className={`w-48  bg-white  overflow-y-scroll scrollbar border-2 border-l-4 text-lg font-bold rounded-l-lg border-blue-700 `}>
+        <div className={`w-48  bg-white  overflow-y-scroll scrollbar border-2 border-l-4 text-lg font-bold rounded-l-lg border-blue-800 `}>
           
           {/* heading */}
           <div className='flex justify-evenly p-1 border-b-2 border-black'>
             <h3 className='text-center text-xl'>Solutions</h3>
-              <div className='tooltip  h-9 w-10 p-0.5 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500'>
+              <div className='tooltip  h-9 w-10 p-0.5 rounded-lg bg-gradient-to-r from-blue-500 to-blue-800'>
                 <Image src="/eye.svg" height={20} width={20} alt="eye" className='h-full w-full cursor-pointer'  onClick={() => setAllSolutionsClicked(prev => !prev)}/>
               </div>
           </div>
@@ -166,8 +213,8 @@ function Pdf() {
             {
               solutions.map( (item: { question: string , answer: string, visibility: boolean}) => (
                 <li key={item.question} className='grid grid-cols-3 h-12  rounded shadow-lg shadow-indigo-500/20 p-1 gap-x-1 border-2 border-gray-200'>
-                  <div className='border-2 border-gray-300 flex justify-center items-center h-full rounded-lg '><p>{item.question}&#41;</p></div>
-                  <div className='flex justify-center items-center h-full w-full bg-gradient-to-r from-cyan-500 to-blue-500 rounded-lg cursor-pointer hover:border-2 hover:border-red-500'>
+                  <div className='border-2 border-gray-300 flex justify-center items-center h-full rounded-lg text-blue-800'><p>{item.question}&#41;</p></div>
+                  <div className='flex justify-center items-center h-full w-full bg-gradient-to-r from-blue-500 to-blue-800 rounded-lg cursor-pointer text-white'>
                     {
                       item.visibility ?
                       item.answer
@@ -175,12 +222,13 @@ function Pdf() {
                         <Image src="/eye.svg" height={20} width={20} alt="eye" className='h-8 w-8' onClick={() => showAnswer(item.question)}/>
                     }
                   </div>
-                  <div className='flex justify-center items-center h-full w-full  rounded-lg cursor-pointer border-2 border-gray-300 hover:border-2 hover:border-red-500' onClick={() => showAnswerPdf(item.question)}>
+                  <div className='flex justify-center items-center h-full w-full  rounded-lg cursor-pointer border-2 border-gray-300 hover:border-2 hover:border-blue-800' onClick={() => showAnswerPdf(item.question)}>
                     <Image src="/arrow_right_long.svg" alt="right arrow " height={20} width={20} className="slide-right-arrow" />
                   </div>
                 </li>
               ))
             }
+            <button className='bg-blue-800 text-white rounded-lg w-full mt-10 animate-bounce hover:bg-blue-700 hover:animate-none'>Buy Now</button>
           </ul>
         </div>
       </div>
