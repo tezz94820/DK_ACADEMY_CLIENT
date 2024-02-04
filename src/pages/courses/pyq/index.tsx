@@ -16,46 +16,37 @@ type individualPyqCourseType = {
   new_launch:boolean,
   thumbnail:string,
   class_name:string,
-  free:boolean,
+  is_purchased:boolean,
   old_price:string,
   price:string,
   exam_type:string,
   discount:string
 }
 
-const Mathematics = () => {
+const PyqCourses = () => {
 
   const router = useRouter();
   const [pdfModuleswise, setPdfModuleswise] = useState([]);
   const [examType, setExamType] = useState<'mains'|'advance'>('mains');
   const [subject,setSubject] = useState(allSubjects[0]);
 
-  const redirectWatsapp = (title:string,courseLink:string):void => {
-    const message = `Hey there! I just discovered an amazing educational video course on www.dkacademy.com . It's title is ${title}. I've been finding it super insightful, and I thought you might be interested too! Check it out here: ${courseLink} #LearningTogether`
-    window.open(`https://wa.me/?text=${message}`, '_blank')
-  }
 
-  // for fetching the courses as per the subject 
-  useEffect( () => {
-
-    const fetchPdfCourses = async () => {
-      try {
-        const res = await axiosClient.get(`pyq-pdf/subject/${subject}?exam_type=${examType}`);
-        setPdfModuleswise(res.data.data);
-      } catch (error:any) {
-        toast.error(error.message);
-      }
-    }
-
-    fetchPdfCourses();
-  },[subject])
-
+  // for fetching the courses as per the subject and 
   // on switching of the exam_type fetch new courses according to exam_type 
   useEffect( () => {
-
     const fetchPdfCourses = async () => {
+      const token = localStorage.getItem('token')
       try {
-        const res = await axiosClient.get(`pyq-pdf/subject/mathematics?exam_type=${examType}`);
+        //send the token if it is available
+        const res = await axiosClient.get(`pyq-pdf/subject/${subject}?exam_type=${examType}`,
+          token ? 
+            {
+              headers:{
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+              }
+            } :
+            {} 
+        );
         setPdfModuleswise(res.data.data);
       } catch (error:any) {
         toast.error(error.message);
@@ -63,13 +54,12 @@ const Mathematics = () => {
     }
 
     fetchPdfCourses();
-  },[examType])
+  },[subject,examType])
 
 
   const handleSubjectChange = (sub:string) => {
     setSubject(sub);
   } 
-
 
   return (
     <HeaderLayout>
@@ -144,4 +134,4 @@ const Mathematics = () => {
   )
 }
 
-export default Mathematics
+export default PyqCourses

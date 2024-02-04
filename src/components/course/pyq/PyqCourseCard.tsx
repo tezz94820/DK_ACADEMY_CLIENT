@@ -1,30 +1,70 @@
+import axiosClient from '@/axios/axiosClient';
+import { loadRazorpayScript } from '@/utils/razorpay';
 import Image from 'next/image'
 import { useRouter } from 'next/router';
 import React from 'react';
+import { toast } from 'react-toastify';
 
 type PyqCourseCardPropsType = {
-  pyqCourse:{
-    _id:string,
-    title:string,
-    new_launch:boolean,
-    thumbnail:string,
-    class_name:string,
-    free:boolean,
-    old_price:string,
-    price:string,
-    exam_type:string,
-    discount:string;
+  pyqCourse: {
+    _id: string,
+    title: string,
+    new_launch: boolean,
+    thumbnail: string,
+    class_name: string,
+    is_purchased: boolean,
+    old_price: string,
+    price: string,
+    exam_type: string,
+    discount: string;
   }
-  showExplore?:boolean
+  showExplore?: boolean
 }
 
-const PyqCourseCard = ({pyqCourse, showExplore=true}:PyqCourseCardPropsType) => {
+const PyqCourseCard = ({ pyqCourse, showExplore = true }: PyqCourseCardPropsType) => {
 
   const router = useRouter();
 
-  const redirectWatsapp = (title:string):void => {
-    const message = `Hey there! I just discovered an amazing educational video course on www.dkacademy.com . It's title is ${title}. I've been finding it super insightful, and I thought you might be interested too! Check it out here: #LearningTogether`
+  const redirectWatsapp = (id:string, title: string): void => {
+    const message = `Hey there! I just discovered an amazing educational video course on www.dkacademy.com . It's title is ${title}. I've been finding it super insightful, and I thought you might be interested too! Check it out here: https://www.dkacademy.co.in/courses/pyq/explore?pdf_id=${id} #LearningTogether`;
     window.open(`https://wa.me/?text=${message}`, '_blank')
+  }
+
+
+  const handleBuyNow = async () => {
+
+    const payload = {
+      type: 'pyq',
+      product_id: pyqCourse._id
+    }
+
+    try {
+      //send the course details to backend
+      const response = await axiosClient.post('payment/create-order', payload, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          'Content-Type': 'application/json',
+        }
+      })
+
+      const options = response.data.data.options;
+      //load the razorpay script
+      const razorpayLoaded = await loadRazorpayScript();
+      if (!razorpayLoaded) {
+        toast.error("Error in Loding Payment Section.");
+        return;
+      }
+
+      // done to avoid typescript error
+      const _window = window as any;
+      const paymentObject = new _window.Razorpay(options);
+      paymentObject.open();
+
+    } catch (error: any) {
+      const errorMessage = error?.response?.data?.message || "An error occurred. Please try again later.";
+      toast.error(errorMessage);
+    }
+
   }
 
 
@@ -39,7 +79,7 @@ const PyqCourseCard = ({pyqCourse, showExplore=true}:PyqCourseCardPropsType) => 
           }
           <Image src='/watsapp.svg' height={10} width={10} alt="watsapp logo"
             className='h-4 w-4 ml-2 mt-0.5 cursor-pointer animate-pulse active:animate-ping'
-            onClick={() => redirectWatsapp(pyqCourse.title)}
+            onClick={() => redirectWatsapp(pyqCourse._id, pyqCourse.title)}
           />
         </div>
         {/* thumbnail */}
@@ -66,7 +106,7 @@ const PyqCourseCard = ({pyqCourse, showExplore=true}:PyqCourseCardPropsType) => 
         {/* separator */}
         <hr className='border border-purple-700 my-1' />
         {
-          pyqCourse.free ?
+          pyqCourse.is_purchased ?
             <div className='flex flex-col'>
               <div className='flex justify-between'>
                 <div className='flex flex-col'>
@@ -84,12 +124,12 @@ const PyqCourseCard = ({pyqCourse, showExplore=true}:PyqCourseCardPropsType) => 
                 </div>
               </div>
               {/* buttons */}
-              <div className=' flex justify-between items-center mt-3 font-semibold'>
+              <div className='mt-3 font-semibold '>
                 <button
-                  className='bg-green-500 text-white hover:animate-pulse rounded-lg text-base w-full p-0.5 font-semibold'
+                  className='bg-green-500 text-white w-full hover:bg-blue-600 rounded-lg py-1.5 text-base font-bold text-center align-middle tracking-widest'
                   onClick={() => router.push(`pyq/view/${pyqCourse._id}?exam_type=${pyqCourse.exam_type}`)}
                 >
-                  Get it for Free
+                  Solve Questions
                 </button>
               </div>
             </div>
@@ -111,17 +151,17 @@ const PyqCourseCard = ({pyqCourse, showExplore=true}:PyqCourseCardPropsType) => 
                 </div>
               </div>
               {/* buttons */}
-                {
-                  showExplore ?  
-                    <div className='grid grid-cols-2 gap-5 justify-between mt-3 font-semibold'>
-                      <button className='bg-blue-200 text-blue-800 hover:bg-blue-300 rounded-lg  py-1.5 text-base font-bold text-center align-middle tracking-widest' onClick={() => router.push(`pyq/explore?pdf_id=${pyqCourse._id}`)}>Free Content</button>
-                      <button className='bg-blue-800 text-white hover:bg-blue-600 rounded-lg py-1.5 text-base font-bold text-center align-middle tracking-widest'>Buy Now</button>
-                    </div>
-                  : 
-                  <div className='mt-3 font-semibold'>
-                    <button className='w-full bg-blue-800 text-white hover:bg-blue-600 rounded-lg py-1.5 text-base font-bold text-center align-middle tracking-widest'>Buy Now</button>
+              {
+                showExplore ?
+                  <div className='grid grid-cols-2 gap-5 justify-between mt-3 font-semibold'>
+                    <button className='bg-blue-200 text-blue-800 hover:bg-blue-300 rounded-lg  py-1.5 text-base font-bold text-center align-middle tracking-widest' onClick={() => router.push(`pyq/explore?pdf_id=${pyqCourse._id}`)}>Free Content</button>
+                    <button className='bg-blue-800 text-white hover:bg-blue-600 rounded-lg py-1.5 text-base font-bold text-center align-middle tracking-widest' onClick={handleBuyNow}>Buy Now</button>
                   </div>
-                }
+                  :
+                  <div className='mt-3 font-semibold'>
+                    <button className='w-full bg-blue-800 text-white hover:bg-blue-600 rounded-lg py-1.5 text-base font-bold text-center align-middle tracking-widest' onClick={handleBuyNow}>Buy Now</button>
+                  </div>
+              }
             </div>
         }
       </div>

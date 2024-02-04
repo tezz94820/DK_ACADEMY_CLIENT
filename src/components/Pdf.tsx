@@ -14,7 +14,7 @@ type individualPyqCourseType = {
   new_launch:boolean,
   thumbnail:string,
   class_name:string,
-  free:boolean,
+  is_purchased:boolean,
   old_price:string,
   price:string,
   exam_type:string,
@@ -27,7 +27,7 @@ const IndividualCourseDetails:individualPyqCourseType = {
   new_launch: true,
   thumbnail: '',
   class_name: "",
-  free:false,
+  is_purchased:false,
   old_price: "",
   price: "",
   exam_type:"",
@@ -228,7 +228,9 @@ function Pdf( { courseFileLink, isFree=true } : ShowPdfProps) {
                 </li>
               ))
             }
-            <button className='bg-blue-800 text-white rounded-lg w-full mt-10 animate-bounce hover:bg-blue-700 hover:animate-none'>Buy Now</button>
+            {
+              isFree && <button className='bg-blue-800 text-white rounded-lg w-full mt-10 animate-bounce hover:bg-blue-700 hover:animate-none'>Buy Now</button>
+            }
           </ul>
         </div>
       </div>
