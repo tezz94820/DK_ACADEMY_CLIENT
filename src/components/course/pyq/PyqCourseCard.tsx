@@ -111,22 +111,15 @@ const PyqCourseCard = ({ pyqCourse, showExplore = true }: PyqCourseCardPropsType
               <div className='flex justify-between'>
                 <div className='flex flex-col'>
                   <div className='flex'>
-                    <p className='text-base font-bold text-violet-900'>Free</p>
-                    <p className='text-sm line-through text-gray-600 ml-1 mt-0.5'>{pyqCourse.old_price}</p>
+                    <p className='text-base font-bold text-violet-900'>Purchased</p>
                   </div>
                   <p className='text-xs'> &#40;For full Course&#41; </p>
-                </div>
-                <div className='h-fit p-1 my-auto rounded-lg bg-green-300 flex items-center '>
-                  <Image src='/discount.svg' width={10} height={10} alt='Discount Icon'
-                    className='w-4 h-4 mr-1 align-middle'
-                  />
-                  <p className='text-xs align-middle'> Discount of 100% applied</p>
                 </div>
               </div>
               {/* buttons */}
               <div className='mt-3 font-semibold '>
                 <button
-                  className='bg-green-500 text-white w-full hover:bg-blue-600 rounded-lg py-1.5 text-base font-bold text-center align-middle tracking-widest'
+                  className='bg-green-500 text-white w-full hover:bg-green-600 rounded-lg py-1.5 text-base font-bold text-center align-middle tracking-widest'
                   onClick={() => router.push(`pyq/view/${pyqCourse._id}?exam_type=${pyqCourse.exam_type}`)}
                 >
                   Solve Questions
