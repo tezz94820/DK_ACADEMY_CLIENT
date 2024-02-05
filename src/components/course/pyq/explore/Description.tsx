@@ -11,7 +11,7 @@ const Description = ({description}:DescriptionPropsType) => {
                 <h2 className='text-2xl text-blue-800 font-bold mb-3 ml-3 tracking-widest'>Description</h2>
                 <ul>
                     {
-                        description.map((item) => (
+                        description?.map((item) => (
                             <li key={item} className='flex p-2' >
                                 <Image src='/star.svg' alt="star" width={20} height={20}
                                     className='h-5 w-5 md:h-6 md:w-6 md:my-auto mr-2 '

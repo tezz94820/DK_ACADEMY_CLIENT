@@ -1,9 +1,7 @@
-import axiosClient from '@/axios/axiosClient';
-import { loadRazorpayScript } from '@/utils/razorpay';
+import { handleBuyProduct } from '@/utils/razorpay';
 import Image from 'next/image'
 import { useRouter } from 'next/router';
 import React from 'react';
-import { toast } from 'react-toastify';
 
 type PyqCourseCardPropsType = {
   pyqCourse: {
@@ -30,42 +28,6 @@ const PyqCourseCard = ({ pyqCourse, showExplore = true }: PyqCourseCardPropsType
     window.open(`https://wa.me/?text=${message}`, '_blank')
   }
 
-
-  const handleBuyNow = async () => {
-
-    const payload = {
-      type: 'pyq',
-      product_id: pyqCourse._id
-    }
-
-    try {
-      //send the course details to backend
-      const response = await axiosClient.post('payment/create-order', payload, {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
-          'Content-Type': 'application/json',
-        }
-      })
-
-      const options = response.data.data.options;
-      //load the razorpay script
-      const razorpayLoaded = await loadRazorpayScript();
-      if (!razorpayLoaded) {
-        toast.error("Error in Loding Payment Section.");
-        return;
-      }
-
-      // done to avoid typescript error
-      const _window = window as any;
-      const paymentObject = new _window.Razorpay(options);
-      paymentObject.open();
-
-    } catch (error: any) {
-      const errorMessage = error?.response?.data?.message || "An error occurred. Please try again later.";
-      toast.error(errorMessage);
-    }
-
-  }
 
 
   return (
@@ -148,11 +110,11 @@ const PyqCourseCard = ({ pyqCourse, showExplore = true }: PyqCourseCardPropsType
                 showExplore ?
                   <div className='grid grid-cols-2 gap-5 justify-between mt-3 font-semibold'>
                     <button className='bg-blue-200 text-blue-800 hover:bg-blue-300 rounded-lg  py-1.5 text-base font-bold text-center align-middle tracking-widest' onClick={() => router.push(`pyq/explore?pdf_id=${pyqCourse._id}`)}>Free Content</button>
-                    <button className='bg-blue-800 text-white hover:bg-blue-600 rounded-lg py-1.5 text-base font-bold text-center align-middle tracking-widest' onClick={handleBuyNow}>Buy Now</button>
+                    <button className='bg-blue-800 text-white hover:bg-blue-600 rounded-lg py-1.5 text-base font-bold text-center align-middle tracking-widest' onClick={() => handleBuyProduct('pyq', pyqCourse._id)}>Buy Now</button>
                   </div>
                   :
                   <div className='mt-3 font-semibold'>
-                    <button className='w-full bg-blue-800 text-white hover:bg-blue-600 rounded-lg py-1.5 text-base font-bold text-center align-middle tracking-widest' onClick={handleBuyNow}>Buy Now</button>
+                    <button className='w-full bg-blue-800 text-white hover:bg-blue-600 rounded-lg py-1.5 text-base font-bold text-center align-middle tracking-widest' onClick={() => handleBuyProduct('pyq', pyqCourse._id)}>Buy Now</button>
                   </div>
               }
             </div>

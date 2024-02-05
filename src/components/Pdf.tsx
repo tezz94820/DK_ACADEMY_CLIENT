@@ -5,6 +5,7 @@ import axiosClient from '@/axios/axiosClient';
 import { toast } from 'react-toastify';
 import Image from 'next/image';
 import PyqCourseCard from './course/pyq/PyqCourseCard';
+import { handleBuyProduct } from '@/utils/razorpay';
 
 
 
@@ -229,7 +230,7 @@ function Pdf( { courseFileLink, isFree=true } : ShowPdfProps) {
               ))
             }
             {
-              isFree && <button className='bg-blue-800 text-white rounded-lg w-full mt-10 animate-bounce hover:bg-blue-700 hover:animate-none'>Buy Now</button>
+              isFree && <button className='bg-blue-800 text-white rounded-lg w-full mt-10 animate-bounce hover:bg-blue-700 hover:animate-none' onClick={() => handleBuyProduct('pyq', pyqCourseDetails._id)}>Buy Now</button>
             }
           </ul>
         </div>

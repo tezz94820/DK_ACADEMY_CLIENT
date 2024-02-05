@@ -20,7 +20,7 @@ function Teachers({ teachers }: TeachersProps) {
             </div>
             <div className={`overflow-x-scroll rounded-sm p-1 mt-4 ${styles.hide_scrollbar} `}>
                 {
-                    teachers.map((item) => (
+                    teachers?.map((item) => (
                         <div key={item.name} className='w-36 border p-1 flex flex-col shadow-md shadow-black/50'>
                             <div className='relative h-40 w-32 bg-gray-100 mx-auto'>
                                 <Image src={item.image || '/teacher-profile.svg'} alt="teacher" height={300} width={300} className='h-full w-full' />
