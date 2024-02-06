@@ -34,7 +34,7 @@ const VideoPlayer = ({videoLink}:VideoPlayerProps) => {
 
   return (
     <div onContextMenu={disableRightClick} className='flex justify-center items-center h-fit'>
-      <div className='rounded-3xl p-2 bg-gradient-to-r from-indigo-600 via-purple-600 to-rose-500'>
+      <div className='rounded-3xl p-2 bg-gradient-to-r from-yellow-400 via-orange-500 to-orange-600'>
         {
           error 
           ? 

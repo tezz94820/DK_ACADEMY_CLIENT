@@ -29,6 +29,7 @@ const PyqCourses = () => {
   const [pdfModuleswise, setPdfModuleswise] = useState([]);
   const [examType, setExamType] = useState<'mains'|'advance'>('mains');
   const [subject,setSubject] = useState(allSubjects[0]);
+  const [loading,setLoading]  = useState<boolean>(true);
 
 
   // for fetching the courses as per the subject and 
@@ -48,6 +49,7 @@ const PyqCourses = () => {
             {} 
         );
         setPdfModuleswise(res.data.data);
+        setLoading(false);
       } catch (error:any) {
         toast.error(error.message);
       }
@@ -59,7 +61,13 @@ const PyqCourses = () => {
 
   const handleSubjectChange = (sub:string) => {
     setSubject(sub);
+    setLoading(true);
   } 
+
+  const handleExamTypeChange = (exam:string) => {
+    setExamType(exam as 'mains'|'advance');
+    setLoading(true);
+  }
 
   return (
     <HeaderLayout>
@@ -88,7 +96,7 @@ const PyqCourses = () => {
                 <input type="radio" name="examType" value="mains" 
                   checked={examType === 'mains'}
                   className='hidden' 
-                  onChange={ (e) => setExamType(e.target.value as 'mains') }
+                  onChange={ (e) => handleExamTypeChange('mains') }
                 />
               </label>
               <label className={`cursor-pointer p-1 text-center text-xl font-semibold ${examType==="advance"?`bg-blue-800 text-white`:'text-blue-800'}`}>
@@ -96,21 +104,28 @@ const PyqCourses = () => {
                 <input type="radio" name="examType" value="advance" 
                 checked={examType === 'advance'}
                   className='hidden' 
-                  onChange={ (e) => setExamType(e.target.value as 'advance') }
+                  onChange={ (e) => handleExamTypeChange('advance') }
                 />
               </label>
             </div>
           </div>
+          {/* when the courses are loading */}
+          {
+            loading && 
+              <div className='mt-32 flex justify-center items-center'> 
+                <span className='loading loading-spinner bg-blue-800 h-10 w-10 '></span> 
+              </div>
+          } 
           {/* if no courses found */}
           {
-            pdfModuleswise.length === 0 && 
+            (pdfModuleswise.length === 0 && !loading) && 
               <div className='flex justify-center items-center'>
                 <p className='text-xl font-semibold h-96 text-blue-800'>No Courses Found</p>
               </div>
           }
           {/* if even 1 course exists */}
           <div className='flex flex-col'>
-          {
+          { 
             pdfModuleswise.map( (item:any,moduleIndex) => (
               <div key={item.module} className='flex flex-col'>
                 <h1 className='font-semibold text-blue-800 text-3xl mb-4 text-center align-middle'>{item.module}</h1>

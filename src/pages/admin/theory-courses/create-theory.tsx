@@ -10,9 +10,7 @@ interface formType {
   price:string;
   discounted_price:string;
   language:string;
-  exam_type:string;
   thumbnail:File | null;
-  free:boolean;
 }
 
 const initailForm:formType = {
@@ -23,9 +21,7 @@ const initailForm:formType = {
   price:"",
   discounted_price:"",
   language:"",
-  exam_type:"",
   thumbnail: null,
-  free: true
 }
 
 
@@ -44,7 +40,7 @@ function convertTo12HourFormat(timeString:string) {
 
 
 
-const CreatePyq = () => {
+const CreateTheory = () => {
 
   const [form,setForm] = useState<formType>(initailForm); 
 
@@ -59,13 +55,11 @@ const CreatePyq = () => {
       old_price:form.price,
       price:form.discounted_price,
       language:form.language,
-      exam_type:form.exam_type,
-      free:form.free ? 'true' : 'false',
       thumbnail:form.thumbnail === null ? 'false' : 'true'
     }
 
     try {
-      const response = await axiosClient.post('admin/create-pyq-pdf',payload,{
+      const response = await axiosClient.post('admin/create-theory',payload,{
         headers:{
           'Authorization': `Bearer ${localStorage.getItem('token')}`,
           'Content-Type': 'application/json'
@@ -75,7 +69,7 @@ const CreatePyq = () => {
       await axiosClient.put(presignedurl.thumbnail, form.thumbnail,{
         headers:{ ' Content-Type': 'image/png' }
       });
-      toast.success("PYQ Course Created Successfully");
+      toast.success("Theory Course Created Successfully");
     } catch (error:any) {
       const errorMessage = error?.response?.data?.message || "An error occurred";
       toast.error(errorMessage);
@@ -95,7 +89,7 @@ const CreatePyq = () => {
     <div className='p-5'>
       
       {/* heading */}
-      <h1 className='text-xl font-bold text-center text-blue-600'>Create New PYQ COURSE</h1>
+      <h1 className='text-xl font-bold text-center text-blue-600'>Create New Theory Course</h1>
       
       {/* form */}
       <form className='w-1/2 border-2 border-blue-600 flex flex-col gap-4 p-3 mx-auto mt-4' onSubmit={ event => handleFormSubmit(event)}>
@@ -147,7 +141,7 @@ const CreatePyq = () => {
             onChange={(e) => setForm({...form, price: e.target.value})}
           />
         </label>
-        {/* Price*/}
+        {/* Discounted Price*/}
         <label className='flex justify-center items-center gap-3'>
           <p className='text-blue-600 text-xl cursor-pointer w-2/6'> Discounted Price</p>
           <input type="number" className='border border-blue-600 w-4/6 h-10 rounded px-4' name='discounted_price' required placeholder=" &#8377; 450"
@@ -164,20 +158,8 @@ const CreatePyq = () => {
           >
             <option value="" disabled defaultValue="">Select Language</option>
             <option value="english">English</option>
-            <option value={"hindi"}>Hindi</option>
-            <option value={"hinglish"}>Hinglish</option>
-          </select>
-        </label>
-        {/* Exam Type :- mains / advance */}
-        <label className='flex justify-center items-center gap-3'>
-          <p className='text-blue-600 text-xl cursor-pointer w-2/6'>Exam Type</p>
-          <select className='border border-blue-600 rounded p-2 w-4/6' name="exam_type" required
-            value={form.exam_type}
-            onChange={(e) => setForm({...form, exam_type: e.target.value})}
-          >
-            <option value="" disabled defaultValue="">Select Exam Type</option>
-            <option value="mains">Mains</option>
-            <option value={"advance"}>Advance</option>
+            <option value="hindi">Hindi</option>
+            <option value="hinglish">Hinglish</option>
           </select>
         </label>
         {/* Thumbnail*/}
@@ -187,22 +169,12 @@ const CreatePyq = () => {
             onChange={(e) => handleThumbnailChange(e)}
           />
         </label>
-        {/* Free*/}
-        <label className='flex justify-center items-center gap-3'>
-          <p className='text-blue-600 text-xl cursor-pointer w-2/6'>Free</p>
-          <input type="checkbox" className='border border-blue-600 w-4/6  h-10 rounded px-4' name='free'
-            checked={form.free}
-            onChange={(e) => setForm({...form, free: e.target.checked})}
-          />
-        </label>
-
-
 
         {/* submit button */}
-        <input type="submit" value="Create PYQ Course" className='px-4 py-2 text-blue-600 border border-blue-600 rounded-full hover:bg-blue-600 hover:text-white shadow shadow-blue-600 w-1/2 mx-auto text-center align-middle text-xl font-bold cursor-pointer'/>
+        <input type="submit" value="Create Theory Course" className='px-4 py-2 text-blue-600 border border-blue-600 rounded-full hover:bg-blue-600 hover:text-white shadow shadow-blue-600 w-1/2 mx-auto text-center align-middle text-xl font-bold cursor-pointer'/>
       </form>
     </div>
   )
 }
 
-export default CreatePyq
+export default CreateTheory
