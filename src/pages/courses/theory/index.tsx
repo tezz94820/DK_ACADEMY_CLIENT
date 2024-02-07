@@ -103,7 +103,7 @@ const TheoryCourse = () => {
                 <div className='grid grid-cols-1 md:grid-cols-3 gap-2'>
                   {
                     item.courses.map( (theoryCourse:individualTheoryCourseType) => (
-                      <TheoryCourseCard key={theoryCourse._id} theoryCourse={theoryCourse} showExplore={true}/> 
+                      <TheoryCourseCard key={theoryCourse._id} theoryCourse={theoryCourse} showFreeContent={true}/> 
                     ))
                   } 
                 </div>

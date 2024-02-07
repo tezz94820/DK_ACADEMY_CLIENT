@@ -1,14 +1,14 @@
 import axiosClient from '@/axios/axiosClient'
 import HeaderLayout from '@/components/Header/HeaderLayout'
 import CourseLayout from '@/components/course/CourseLayout'
-import PyqCourseCard from '@/components/course/pyq/PyqCourseCard'
 import Description from '@/components/course/pyq/explore/Description'
 import Teachers from '@/components/course/pyq/explore/Teachers'
+import TheoryCourseCard from '@/components/course/theory/TheoryCourseCard'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
-type individualPyqCourseType = {
+type individualTheoryCourseType = {
   _id:string,
   title:string,
   new_launch:boolean,
@@ -17,7 +17,6 @@ type individualPyqCourseType = {
   is_purchased:boolean,
   old_price:string,
   price:string,
-  exam_type:string,
   discount:string,
   teachers:{
     name:string,
@@ -28,7 +27,7 @@ type individualPyqCourseType = {
   description:string[]
 }
 
-const IndividualCourseDetails:individualPyqCourseType = {
+const IndividualCourseDetails:individualTheoryCourseType = {
   _id: "",
   title: "",
   new_launch: true,
@@ -37,7 +36,6 @@ const IndividualCourseDetails:individualPyqCourseType = {
   is_purchased:false,
   old_price: "",
   price: "",
-  exam_type:"",
   discount:"",
   description:[],
   teachers: [
@@ -51,23 +49,23 @@ const IndividualCourseDetails:individualPyqCourseType = {
 }
 
 
-function Explore() {
+function ExploreTheoryCourse() {
 
-  const [pyqCourseDetails, setPyqCourseDetails] = useState<individualPyqCourseType>(IndividualCourseDetails);
+  const [theoryCourseDetails, setTheoryCourseDetails] = useState<individualTheoryCourseType>(IndividualCourseDetails);
   const router = useRouter();
-  const pdfId = router?.query?.pdf_id as string;
+  const courseId = router?.query?.course_id as string;
 
   useEffect( () => {
     const fetchCourseDetails = async () => {
-      if(!pdfId) return;
+      if(!courseId) return;
       try {
-        const response = await axiosClient(`pyq-pdf/course-details?pdf_id=${pdfId}`,{
+        const response = await axiosClient(`theory/course-details?course_id=${courseId}`,{
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`
           }
         });
-        const data = response?.data?.data.pyq_course_details;
-        setPyqCourseDetails(data);
+        const data = response?.data?.data.theory_course_details;
+        setTheoryCourseDetails(data);
       } catch (error:any) {
         const errorMessage = error?.response?.data?.message || "An error occurred";
         toast.error(errorMessage);
@@ -84,25 +82,25 @@ function Explore() {
         <div className={`scrollbar w-full h-full md:overflow-y-scroll md:w-5/6 p-2 md:py-4 md:px-6`}>
           {/* title */}
           <div className=' py-6 shadow-lg shadow-indigo-500/50 bg-blue-800 rounded-t-3xl flex items-center'>
-            <p className='text-xl md:text-3xl font-bold text-white ml-5'>{pyqCourseDetails.title}</p>
+            <p className='text-xl md:text-3xl font-bold text-white ml-5'>{theoryCourseDetails.title}</p>
           </div>
           {/* free content */}
           <div className='w-full h-max my-4 flex items-center justify-center animate-pulse hover:animate-none'>
             <button className='w-1/3 text-2xl text-blue-800 bg-gradient-to-r from-green-300 to-green-500 hover:text-white font-bold tracking-widest shadow-lg shadow-blue-800/50 p-1 md:px-5 md:py-3 border-gray-200 border-2 rounded-2xl'
-              onClick={() => router.push(`explore/view-free-course?pdf_id=${pyqCourseDetails._id}`)}
+              onClick={() => router.push(`explore/view-free-course?pdf_id=${theoryCourseDetails._id}`)}
             >
-              Access Free Videos
+              Access Free Lectures
             </button>
           </div>
           <div className='md:grid md:grid-cols-7 flex flex-col mt-5'>
           {/* left */}
           <div className='md:col-span-4'>
-            <Description description={pyqCourseDetails.description}/>
-            <Teachers teachers={pyqCourseDetails.teachers}/> 
+            <Description description={theoryCourseDetails.description}/>
+            <Teachers teachers={theoryCourseDetails.teachers}/> 
           </div>
           {/* right */}
           <div className='md:col-span-3 px-5 mt-5 sticky top-0 h-80'>
-            <PyqCourseCard pyqCourse={pyqCourseDetails} showFreeContent={false}/>
+            <TheoryCourseCard theoryCourse={theoryCourseDetails} showFreeContent={false}/>
           </div>
         </div>  
 
@@ -112,4 +110,4 @@ function Explore() {
   )
 }
 
-export default Explore
+export default ExploreTheoryCourse

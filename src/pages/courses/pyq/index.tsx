@@ -132,7 +132,7 @@ const PyqCourses = () => {
                 <div className='grid grid-cols-1 md:grid-cols-3 gap-2'>
                   {
                     item.pdfs.map( (pdf:individualPyqCourseType) => (
-                      <PyqCourseCard key={pdf._id} pyqCourse={pdf} showExplore={true}/> 
+                      <PyqCourseCard key={pdf._id} pyqCourse={pdf} showFreeContent={true}/> 
                     ))
                   } 
                 </div>

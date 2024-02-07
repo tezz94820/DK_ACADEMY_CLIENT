@@ -16,10 +16,10 @@ type PyqCourseCardPropsType = {
     exam_type: string,
     discount: string;
   }
-  showExplore?: boolean
+  showFreeContent?: boolean
 }
 
-const PyqCourseCard = ({ pyqCourse, showExplore = true }: PyqCourseCardPropsType) => {
+const PyqCourseCard = ({ pyqCourse, showFreeContent = true }: PyqCourseCardPropsType) => {
 
   const router = useRouter();
 
@@ -28,13 +28,16 @@ const PyqCourseCard = ({ pyqCourse, showExplore = true }: PyqCourseCardPropsType
     window.open(`https://wa.me/?text=${message}`, '_blank')
   }
 
-
-
+  
+  const handleNavigateToDescription = () => {
+    router.push(`/courses/pyq/explore?pdf_id=${pyqCourse._id}`);
+  }
+  
   return (
     <>
-      <div className='border-gray-200 border-2 rounded shadow-lg shadow-blue-800/50 p-2'>
+      <div className='border-gray-200 border-2 rounded shadow-lg shadow-blue-800/50 p-2 hover:scale-105 hover:cursor-pointer'>
         {/* top */}
-        <div className='flex h-12 w-full pt-1'>
+        <div className='flex h-12 w-full pt-1' onClick={handleNavigateToDescription}>
           <h3 className='text-sm w-3/4 font-bold'>{pyqCourse.title}</h3>
           {
             pyqCourse.new_launch && <p className='bg-yellow-300 w-8 text-center h-5 rounded-md p-0.5 text-xs ml-4 '>New</p>
@@ -45,13 +48,13 @@ const PyqCourseCard = ({ pyqCourse, showExplore = true }: PyqCourseCardPropsType
           />
         </div>
         {/* thumbnail */}
-        <div className='w-full h-44'>
+        <div className='w-full h-44' onClick={handleNavigateToDescription}>
           <img src={pyqCourse.thumbnail} height={300} width={300} alt="thumbnail"
             className='rounded-lg w-full h-full'
           />
         </div>
         {/* Description */}
-        <div className='flex flex-col'>
+        <div className='flex flex-col' onClick={handleNavigateToDescription}>
           <div className='flex h-6 w-full'>
             <Image src='/student.svg' width={3} height={3} alt='Student icon'
               className='w-4 h-4 mt-2.5'
@@ -70,7 +73,7 @@ const PyqCourseCard = ({ pyqCourse, showExplore = true }: PyqCourseCardPropsType
         {
           pyqCourse.is_purchased ?
             <div className='flex flex-col'>
-              <div className='flex justify-between'>
+              <div className='flex justify-between' onClick={handleNavigateToDescription}>
                 <div className='flex flex-col'>
                   <div className='flex'>
                     <p className='text-base font-bold text-violet-900'>Purchased</p>
@@ -89,8 +92,8 @@ const PyqCourseCard = ({ pyqCourse, showExplore = true }: PyqCourseCardPropsType
               </div>
             </div>
             :
-            <div className='flex flex-col'>
-              <div className='flex justify-between'>
+            <div className='flex flex-col' >
+              <div className='flex justify-between' onClick={handleNavigateToDescription}>
                 <div className='flex flex-col'>
                   <div className='flex'>
                     <p className='text-base font-bold text-violet-900'>&#x20B9;{pyqCourse.price}</p>
@@ -107,9 +110,9 @@ const PyqCourseCard = ({ pyqCourse, showExplore = true }: PyqCourseCardPropsType
               </div>
               {/* buttons */}
               {
-                showExplore ?
+                showFreeContent ?
                   <div className='grid grid-cols-2 gap-5 justify-between mt-3 font-semibold'>
-                    <button className='bg-blue-200 text-blue-800 hover:bg-blue-300 rounded-lg  py-1.5 text-base font-bold text-center align-middle tracking-widest' onClick={() => router.push(`pyq/explore?pdf_id=${pyqCourse._id}`)}>Free Content</button>
+                    <button className='bg-blue-200 text-blue-800 hover:bg-blue-300 rounded-lg  py-1.5 text-base font-bold text-center align-middle tracking-widest' onClick={() => router.push(`/courses/pyq/explore/view-free-course?pdf_id=${pyqCourse._id}`)}>Free Content</button>
                     <button className='bg-blue-800 text-white hover:bg-blue-600 rounded-lg py-1.5 text-base font-bold text-center align-middle tracking-widest' onClick={() => handleBuyProduct('pyq', pyqCourse._id)}>Buy Now</button>
                   </div>
                   :

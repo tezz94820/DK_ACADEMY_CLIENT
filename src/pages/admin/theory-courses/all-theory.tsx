@@ -115,8 +115,8 @@ const AllTheoryCourses = () => {
 
                       {/* buttons */}
                       <div className='grid grid-cols-2 gap-5 justify-between my-3 font-semibold'>
-                        <Link href={`/admin/theory-courses/edit-theory?pdf_id=${theoryCourse._id}`} className='bg-violet-200 text-violet-800  rounded-lg text-center align-middle px-3 py-2 text-sm hover:bg-violet-700 hover:text-white' >Edit Course</Link>
-                        <Link href={`/admin/theory-courses/upload-lectures?pdf_id=${theoryCourse._id}`} className='bg-violet-200 text-violet-800  rounded-lg  text-center align-middle px-3 py-2 text-sm hover:bg-violet-700 hover:text-white'> Upload Lectures</Link>
+                        <Link href={`/admin/theory-courses/edit-theory?course_id=${theoryCourse._id}`} className='bg-violet-200 text-violet-800  rounded-lg text-center align-middle px-3 py-2 text-sm hover:bg-violet-700 hover:text-white' >Edit Course</Link>
+                        <Link href={`/admin/theory-courses/upload-lectures?course_id=${theoryCourse._id}`} className='bg-violet-200 text-violet-800  rounded-lg  text-center align-middle px-3 py-2 text-sm hover:bg-violet-700 hover:text-white'> Upload Lectures</Link>
                       </div>
 
                     </div>

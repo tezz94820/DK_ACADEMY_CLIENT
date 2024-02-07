@@ -15,10 +15,10 @@ type TheoryCourseCardPropsType = {
         price: string,
         discount: string;
     }
-    showExplore?: boolean
+    showFreeContent?: boolean
 }
 
-const TheoryCourseCard = ({ theoryCourse, showExplore = true }: TheoryCourseCardPropsType) => {
+const TheoryCourseCard = ({ theoryCourse, showFreeContent = true }: TheoryCourseCardPropsType) => {
 
   const router = useRouter();
 
@@ -27,13 +27,15 @@ const TheoryCourseCard = ({ theoryCourse, showExplore = true }: TheoryCourseCard
     window.open(`https://wa.me/?text=${message}`, '_blank')
   }
 
-
+  const handleNavigateToDescription = () => {
+    router.push(`/courses/theory/explore?course_id=${theoryCourse._id}`);
+  }
 
   return (
     <>
-      <div className='border-gray-200 border-2 rounded shadow-lg shadow-blue-800/50 p-2'>
+      <div className='border-gray-200 border-2 rounded shadow-lg shadow-blue-800/50 p-2 hover:scale-105 hover:cursor-pointer'>
         {/* top */}
-        <div className='flex h-12 w-full pt-1'>
+        <div className='flex h-12 w-full pt-1' onClick={handleNavigateToDescription}>
           <h3 className='text-sm w-3/4 font-bold'>{theoryCourse.title}</h3>
           {
             theoryCourse.new_launch && <p className='bg-yellow-300 w-8 text-center h-5 rounded-md p-0.5 text-xs ml-4 '>New</p>
@@ -44,13 +46,13 @@ const TheoryCourseCard = ({ theoryCourse, showExplore = true }: TheoryCourseCard
           />
         </div>
         {/* thumbnail */}
-        <div className='w-full h-44'>
+        <div className='w-full h-44' onClick={handleNavigateToDescription}>
           <img src={theoryCourse.thumbnail} height={300} width={300} alt="thumbnail"
             className='rounded-lg w-full h-full'
           />
         </div>
         {/* Description */}
-        <div className='flex flex-col'>
+        <div className='flex flex-col' onClick={handleNavigateToDescription}>
           <div className='flex h-6 w-full'>
             <Image src='/student.svg' width={3} height={3} alt='Student icon'
               className='w-4 h-4 mt-2.5'
@@ -69,7 +71,7 @@ const TheoryCourseCard = ({ theoryCourse, showExplore = true }: TheoryCourseCard
         {
           theoryCourse.is_purchased ?
             <div className='flex flex-col'>
-              <div className='flex justify-between'>
+              <div className='flex justify-between' onClick={handleNavigateToDescription}>
                 <div className='flex flex-col'>
                   <div className='flex'>
                     <p className='text-base font-bold text-violet-900'>Purchased</p>
@@ -89,7 +91,7 @@ const TheoryCourseCard = ({ theoryCourse, showExplore = true }: TheoryCourseCard
             </div>
             :
             <div className='flex flex-col'>
-              <div className='flex justify-between'>
+              <div className='flex justify-between' onClick={handleNavigateToDescription}>
                 <div className='flex flex-col'>
                   <div className='flex'>
                     <p className='text-base font-bold text-violet-900'>&#x20B9;{theoryCourse.price}</p>
@@ -106,10 +108,10 @@ const TheoryCourseCard = ({ theoryCourse, showExplore = true }: TheoryCourseCard
               </div>
               {/* buttons */}
               {
-                showExplore ?
+                showFreeContent ?
                   <div className='grid grid-cols-2 gap-5 justify-between mt-3 font-semibold'>
-                    <button className='bg-blue-200 text-blue-800 hover:bg-blue-300 rounded-lg  py-1.5 text-base font-bold text-center align-middle tracking-widest' onClick={() => router.push(`pyq/explore?pdf_id=${theoryCourse._id}`)}>Free Content</button>
-                    <button className='bg-blue-800 text-white hover:bg-blue-600 rounded-lg py-1.5 text-base font-bold text-center align-middle tracking-widest' onClick={() => handleBuyProduct('pyq', theoryCourse._id)}>Buy Now</button>
+                    <button className='bg-blue-200 text-blue-800 hover:bg-blue-300 rounded-lg  py-1.5 text-base font-bold text-center align-middle tracking-widest' onClick={() => router.push(`theory/explore?course_id=${theoryCourse._id}`)}>Free Content</button>
+                    <button className='bg-blue-800 text-white hover:bg-blue-600 rounded-lg py-1.5 text-base font-bold text-center align-middle tracking-widest' onClick={() => handleBuyProduct('theory', theoryCourse._id)}>Buy Now</button>
                   </div>
                   :
                   <div className='mt-3 font-semibold'>
