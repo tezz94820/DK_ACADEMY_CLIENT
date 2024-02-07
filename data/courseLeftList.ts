@@ -22,20 +22,20 @@ export const courseLeftList:courseLeftListType = [
     },
     {
       id: '3',
+      name: "Test Series",
+      href: "/courses/test-series",
+      icon: '/test.svg'
+    },
+    {
+      id: '4',
       name: "Daily Practice Problem (DPP)",
       href: "/courses/dpp",
       icon: '/practice.svg'
     },
     {
-      id: '4',
+      id: '5',
       name: "Ranker Questions",
       href: "/courses/ranker-questions",
-      icon: '/test.svg'
-    },
-    {
-      id: '5',
-      name: "Test Series",
-      href: "/courses/test-series",
       icon: '/test.svg'
     },
   ];

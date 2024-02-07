@@ -30,7 +30,9 @@ function Navbar() {
     }
   }, []);
 
+  
   const pathName = router.pathname;
+  console.log(pathName.split('/').slice(0,2).join('/'));
   
   return (
     <>
@@ -49,7 +51,7 @@ function Navbar() {
               {
                 navLinks.map( link => (
                   <Link key={link.name} href={link.href}
-                    className={` bg-transparent hover:bg-blue-100 hover:rounded py-1 px-2 text-xl  font-semibold ${ pathName.split('/').slice(0,2).join('/') === link.href ? 'text-blue-500' : 'text-black/80'}`}  
+                    className={` bg-transparent hover:bg-blue-100 hover:rounded py-1 px-2 text-xl  font-semibold ${ pathName.split('/').slice(0,2).join('/') === link.href.split('/').slice(0,2).join('/') ? 'text-blue-500' : 'text-black/80'}`}  
                   >
                     {link.name}
                   </Link> 

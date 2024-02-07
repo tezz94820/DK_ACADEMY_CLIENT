@@ -87,10 +87,10 @@ const Instructions = () => {
         <HeaderLayout>
             <CourseLayout>
             <div className='scrollbar w-full h-full md:overflow-y-scroll md:w-5/6 p-2 md:px-4 md:pb-8'>
-                <h1 className='text-center text-2xl font-bold text-blue-700'>Please read the instructions carefully</h1>
+                <h1 className='text-center text-2xl font-bold text-blue-800'>Please read the instructions carefully</h1>
                 {/* general instructions */}
                 <div className='mt-4 '>
-                    <h2 className='text-xl font-semibold underline text-blue-700'>General Instructions:</h2>
+                    <h2 className='text-xl font-semibold underline text-blue-800'>General Instructions:</h2>
                     <ol className='list-decimal list-outside pl-10 pt-3'>
                         <li>Total duration of {testDetails.title} is {testDetails.duration} min.</li>
                         <li>The clock will be set at the server. The countdown timer in the top right corner of screen will display the remaining time available for you to complete the examination. When the timer reaches zero, the examination will end by itself. You will not be required to end or submit your examination.</li>
@@ -135,7 +135,7 @@ const Instructions = () => {
                 </div>
                 {/* Navigating to a Question: */}
                 <div className='mt-4 '>
-                    <h2 className='text-xl font-semibold underline text-blue-700'>Navigating to a Question:</h2>
+                    <h2 className='text-xl font-semibold underline text-blue-800'>Navigating to a Question:</h2>
                     <ol className='list-decimal list-outside pl-10 pt-3'>
                         <li>To answer a question, do the following:
                             <ol className='list-decimal list-outside pl-10 pt-3'>
@@ -182,8 +182,8 @@ const Instructions = () => {
                         I have read and understood the instructions. All computer hardware allotted to me are in proper working condition. I declare that I am not in possession of / not wearing / not carrying any prohibited gadget like mobile phone, bluetooth devices etc. /any prohibited material with me into the Examination Hall.I agree that in case of not adhering to the instructions, I shall be liable to be debarred from this Test and/or to disciplinary action, which may include ban from future Tests / Examinations
                     </label><br/>
                     <div className='flex justify-center gap-5'>
-                        <button type="button" className='mt-10 px-10 py-2 rounded-lg bg-green-500 text-white text-xl' onClick={handleGivePermission}>Give Permissions</button>
-                        <button type="submit" className={`mt-10 px-10 py-2 rounded-lg  text-white text-xl ${proceedDisabled ? 'bg-gray-500 cursor-not-allowed' : 'bg-green-500 cursor-pointer'} `} disabled={proceedDisabled}>Proceed</button>
+                        <button type="button" className='mt-10 px-10 py-2 rounded-lg bg-blue-800 text-white text-xl hover:bg-blue-700' onClick={handleGivePermission}>Give Permissions</button>
+                        <button type="submit" className={`mt-10 px-10 py-2 rounded-lg  text-white text-xl ${proceedDisabled ? 'bg-gray-500 cursor-not-allowed' : 'bg-blue-800 cursor-pointer hover:bg-blue-700'} `} disabled={proceedDisabled}>Proceed</button>
                     </div>
                 </form>
             </div>
