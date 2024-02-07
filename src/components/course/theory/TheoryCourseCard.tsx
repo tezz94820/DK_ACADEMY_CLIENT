@@ -83,9 +83,9 @@ const TheoryCourseCard = ({ theoryCourse, showFreeContent = true }: TheoryCourse
               <div className='mt-3 font-semibold '>
                 <button
                   className='bg-green-500 text-white w-full hover:bg-green-600 rounded-lg py-1.5 text-base font-bold text-center align-middle tracking-widest'
-                  
+                  onClick={ () => router.push(`theory/view/${theoryCourse._id}`)}
                 >
-                  Solve Questions
+                  Watch Lectures
                 </button>
               </div>
             </div>
@@ -110,7 +110,7 @@ const TheoryCourseCard = ({ theoryCourse, showFreeContent = true }: TheoryCourse
               {
                 showFreeContent ?
                   <div className='grid grid-cols-2 gap-5 justify-between mt-3 font-semibold'>
-                    <button className='bg-blue-200 text-blue-800 hover:bg-blue-300 rounded-lg  py-1.5 text-base font-bold text-center align-middle tracking-widest' onClick={() => router.push(`theory/explore?course_id=${theoryCourse._id}`)}>Free Content</button>
+                    <button className='bg-blue-200 text-blue-800 hover:bg-blue-300 rounded-lg  py-1.5 text-base font-bold text-center align-middle tracking-widest' onClick={() => router.push(`theory/explore/view-free-course?course_id=${theoryCourse._id}`)}>Free Content</button>
                     <button className='bg-blue-800 text-white hover:bg-blue-600 rounded-lg py-1.5 text-base font-bold text-center align-middle tracking-widest' onClick={() => handleBuyProduct('theory', theoryCourse._id)}>Buy Now</button>
                   </div>
                   :

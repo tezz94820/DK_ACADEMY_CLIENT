@@ -100,7 +100,7 @@ const TheoryCourse = () => {
             coursesModuleswise.map( (item:any,moduleIndex) => (
               <div key={item.module} className='flex flex-col'>
                 <h1 className='font-semibold text-blue-800 text-3xl mb-4 text-center align-middle'>{item.module}</h1>
-                <div className='grid grid-cols-1 md:grid-cols-3 gap-2'>
+                <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
                   {
                     item.courses.map( (theoryCourse:individualTheoryCourseType) => (
                       <TheoryCourseCard key={theoryCourse._id} theoryCourse={theoryCourse} showFreeContent={true}/> 
