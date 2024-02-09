@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export type authStateType = {
+export interface authStateType  {
     isLoggedIn: boolean
 }
 const initialState:authStateType = {

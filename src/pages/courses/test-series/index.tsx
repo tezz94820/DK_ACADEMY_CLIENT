@@ -3,7 +3,6 @@ import CourseLayout from '@/components/course/CourseLayout'
 import React, { useEffect, useState } from 'react'
 import axiosClient from '@/axios/axiosClient'
 import { toast } from 'react-toastify'
-import { useRouter } from 'next/router'
 import TestCard from '@/components/TestSeries/IntroPage/TestCard'
 
 type individualTest = {

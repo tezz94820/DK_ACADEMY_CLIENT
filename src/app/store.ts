@@ -1,16 +1,17 @@
 import {configureStore} from '@reduxjs/toolkit';
-import authReducer from './features/authSlice';
+import authReducer, { authStateType } from './features/authSlice';
+import testWatchSlice, { TestWatchType } from './features/testWatchSlice';
 
 
 export interface ReduxRootState {
-  auth: {
-    isLoggedIn: boolean;
-  };
+    auth: authStateType,
+    testWatch: TestWatchType
 }
 
 const store = configureStore({
     reducer:{
         auth: authReducer,
+        testWatch: testWatchSlice
     }
 })
 
