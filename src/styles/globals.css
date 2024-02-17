@@ -10,7 +10,7 @@
   }
 
   .scrollbar::-webkit-scrollbar {
-    @apply w-3 cursor-pointer
+    @apply w-2 md:w-3 cursor-pointer
   }
 
   .scrollbar-horizontal::-webkit-scrollbar {
