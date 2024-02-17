@@ -35,10 +35,10 @@ const PyqCourseCard = ({ pyqCourse, showFreeContent = true }: PyqCourseCardProps
   
   return (
     <>
-      <div className='border-gray-200 border-2 rounded shadow-lg shadow-blue-800/50 p-2 hover:scale-105 hover:cursor-pointer'>
+      <div className='border-gray-200 border-2 rounded shadow-lg shadow-blue-800/50 p-2 hover:md:scale-105 hover:cursor-pointer'>
         {/* top */}
         <div className='flex h-12 w-full pt-1' onClick={handleNavigateToDescription}>
-          <h3 className='text-sm w-3/4 font-bold'>{pyqCourse.title}</h3>
+          <h3 className='text-base md:text-sm w-3/4 font-extrabold md:font-bold'>{pyqCourse.title}</h3>
           {
             pyqCourse.new_launch && <p className='bg-yellow-300 w-8 text-center h-5 rounded-md p-0.5 text-xs ml-4 '>New</p>
           }
