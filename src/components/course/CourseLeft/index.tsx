@@ -22,18 +22,18 @@ function CourseLeft() {
 
   return (
     <>
-        <div className={`${styles.scrollbar} hidden w-1/6 bg-gradient-to-r from-yellow-300 to-orange-500 md:flex items-center`} >
-          <ul className='h-max w-full flex flex-col gap-5 my-auto'>
+        <div className={`${styles.scrollbar} hidden w-1/6  md:flex items-center border-r-4 border-blue-800`} >
+          <ul className='h-full w-full flex flex-col justify-evenly my-auto'>
             {
               courseLeftList.map( item => (
-                <li key={item.id} className='text-center font-bold h-14 w-full flex items-center px-2 '>
+                <li key={item.id} className='text-start font-bold h-14 w-full flex items-center px-2 '>
                   <Link 
                     href={item.href}
-                    className={`flex gap-2 w-full rounded-lg shadow-sm shadow-indigo-500/50  ${selectedTab==item.id ? 'bg-blue-800 text-white ' : 'bg-white hover:bg-blue-200'} `}
+                    className={`flex gap-2 w-full rounded-lg shadow-lg shadow-blue-800/50 border border-blue-800  ${selectedTab==item.id ? 'bg-blue-800 text-white ' : 'bg-white hover:bg-blue-800/20'} `}
                     onClick={() => handleTabChange(item.id)}
                   >
                     <Image src={item.icon} alt="icon" height={5} width={5} className='h-8 w-8 my-1 ml-1'/>
-                    <p className='text-xs my-auto'>{item.name}</p>
+                    <p className='text-xs my-auto '>{item.name}</p>
                   </Link>
                 </li>
               ))

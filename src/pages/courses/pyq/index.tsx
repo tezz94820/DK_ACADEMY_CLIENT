@@ -72,13 +72,13 @@ const PyqCourses = () => {
   return (
     <HeaderLayout>
       <CourseLayout>
-        <div className={`scrollbar w-full h-full overflow-y-scroll p-2 relative`} >
+        <div className={`scrollbar w-full h-full overflow-y-scroll md:w-5/6 p-2 md:px-4 md:pb-8 relative`} >
             {/* subject selection toggle */}
-            <div className='flex px-2 md:px-5 gap-2 md:gap-5 w-full'>
+            <div className='flex px-2 lg:px-5 gap-2 lg:gap-5 w-full'>
             {/* subject title */}
             {
               allSubjects.map( sub => (
-                <button key={sub} className={`w-1/3 font-semibold text-base md:text-3xl tracking-widest rounded-lg border border-blue-800  md:px-6 py-2 text-blue-800 text-center align-middle ${subject === sub ? 'bg-gradient-to-r from-yellow-300 to-orange-400 ': 'bg-white hover:bg-blue-800/20'}`}
+                <button key={sub} className={`w-1/3 font-semibold text-base sm:text-xl lg:text-3xl tracking-widest rounded-lg border border-blue-800  lg:px-6 py-2 text-blue-800 text-center align-middle ${subject === sub ? 'bg-gradient-to-r from-yellow-300 to-orange-400 ': 'bg-white hover:bg-blue-800/20'}`}
                   onClick={() => handleSubjectChange(sub)}
                 >
                   {sub}
@@ -99,7 +99,7 @@ const PyqCourses = () => {
                   onChange={ (e) => handleExamTypeChange('mains') }
                 />
               </label>
-              <label className={`cursor-pointer p-1 text-center text-xl font-semibold ${examType==="advance"?`bg-blue-800 text-white`:'text-blue-800'}`}>
+              <label className={`cursor-pointer p-1  text-center text-xl font-semibold ${examType==="advance"?`bg-blue-800 text-white`:'text-blue-800'}`}>
                 Advance
                 <input type="radio" name="examType" value="advance" 
                 checked={examType === 'advance'}
@@ -129,7 +129,7 @@ const PyqCourses = () => {
             pdfModuleswise.map( (item:any,moduleIndex) => (
               <div key={item.module} className='flex flex-col'>
                 <h1 className='font-semibold text-blue-800 text-3xl mb-4 text-center align-middle'>{item.module}</h1>
-                <div className='grid grid-cols-1 md:grid-cols-3 gap-4 p-1'>
+                <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-1'>
                   {
                     item.pdfs.map( (pdf:individualPyqCourseType) => (
                       <PyqCourseCard key={pdf._id} pyqCourse={pdf} showFreeContent={true}/> 
