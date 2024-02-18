@@ -95,17 +95,16 @@ function Explore() {
             </button>
           </div>
           <div className='md:grid md:grid-cols-6 lg:grid-cols-7 flex flex-col mt-5'>
-          {/* left */}
-          <div className='md:col-span-3 lg:col-span-4'>
-            <Description description={pyqCourseDetails.description}/>
-            <Teachers teachers={pyqCourseDetails.teachers}/> 
-          </div>
-          {/* right */}
-          <div className='md:col-span-3 lg:col-span-3 px-5 mt-5 sticky top-0 h-80'>
-            <PyqCourseCard pyqCourse={pyqCourseDetails} showFreeContent={false}/>
-          </div>
-        </div>  
-
+            {/* left */}
+            <div className='md:col-span-3 lg:col-span-4'>
+              <Description description={pyqCourseDetails.description}/>
+              <Teachers teachers={pyqCourseDetails.teachers}/> 
+            </div>
+            {/* right */}
+            <div className='md:col-span-3 lg:col-span-3 px-5 my-5 sticky top-0 h-80'>
+              <PyqCourseCard pyqCourse={pyqCourseDetails} showFreeContent={false}/>
+            </div>
+          </div>  
         </div>
       </CourseLayout> 
     </HeaderLayout>

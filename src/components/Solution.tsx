@@ -27,7 +27,7 @@ const Solution = ({pdfLink}:SolutionProps) => {
 
 
   return (
-    <div className='flex flex-col w-full rounded  mt-2' onContextMenu={disableRightClick}>
+    <div className='flex flex-col w-full rounded mt-4' onContextMenu={disableRightClick}>
       <Document
         file={pdfLink}
         onLoadSuccess={onDocumentLoadSuccess}

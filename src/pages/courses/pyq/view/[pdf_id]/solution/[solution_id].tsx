@@ -59,7 +59,7 @@ const Solution = () => {
                     <DynamicPDF pdfLink={pdfLink}/>
                     {/* back button */}
                     <div className='fixed right-4 top-20 z-30'>
-                        <button className='px-2 py-1 flex bg-white rounded w-20 hover:border-2 border-2 border-red-700 hover:bg-red-300' onClick={closeHandler}>Close</button>
+                        <button className='px-2 py-1 flex bg-white rounded w-20 hover:border-2 border-2 border-blue-800 hover:bg-blue-200' onClick={closeHandler}>Close</button>
                     </div>
                 </div>
             </CourseLayout>

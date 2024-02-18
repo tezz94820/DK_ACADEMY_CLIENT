@@ -33,25 +33,26 @@ const VideoPlayer = ({videoLink}:VideoPlayerProps) => {
   }
 
   return (
-    <div onContextMenu={disableRightClick} className='flex justify-center items-center h-fit'>
-      <div className='rounded-3xl p-2 bg-gradient-to-r from-yellow-400 via-orange-500 to-orange-600'>
+    <div onContextMenu={disableRightClick} className='flex justify-center items-center my-2 mx-2'>
+      <div className='rounded-2xl p-2  bg-gradient-to-r from-yellow-400 via-orange-500 to-orange-600'>
         {
           error 
           ? 
           <div className='text-white font-bold'>No Video Found</div> 
           :
-          <div>
+          <div >
             <ReactPlayer 
+            width={"100%"}
+            height={"100%"}
             url={videoLink} 
             controls
             config={playerConfig}
-            onError={errorHandler} 
-            className="mt-0"
+            onError={errorHandler}
+            
             />
           </div>
         }
       </div>
-      
     </div>
   )
 }
