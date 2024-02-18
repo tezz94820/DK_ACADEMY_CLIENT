@@ -174,7 +174,7 @@ function Pdf( { courseFileLink, isFree=true } : ShowPdfProps) {
       {
         isFree && 
         <div className='w-full flex items-center justify-center my-5'>
-          <div className='w-1/3 animate-pulse hover:animate-none'>
+          <div className='w-full sm:w-2/3 lg:w-1/3 m-3 sm:m-0 sm:animate-pulse hover:animate-none '>
             <PyqCourseCard pyqCourse={pyqCourseDetails} showFreeContent={false}/>
           </div>
         </div>
@@ -182,12 +182,12 @@ function Pdf( { courseFileLink, isFree=true } : ShowPdfProps) {
 
       {/* close button */}
       <div className='fixed left-1/6 ml-2 z-10'>
-        <button className='px-4 py-2 flex bg-white rounded-lg w-max hover:border-2 border-2 border-blue-800  hover:text-blue-800 hover:bg-blue-100 text-xl font-semibold tracking-wider' onClick={closeHandler}>Close</button>
+        <button className='px-3 py-1 flex bg-white rounded-lg w-max hover:border-2 border-2 border-blue-800  hover:text-blue-800 hover:bg-blue-100 text-xl font-semibold tracking-wider' onClick={closeHandler}>Close</button>
       </div>
 
       {/* solution button */}
       <div className='fixed right-5 z-10 '>
-          <button className='px-4 py-2 flex  rounded-lg w-max border-2 border-blue-800 bg-blue-800 text-white hover:bg-blue-600 hover:text-white hover:border-red-600 text-xl font-semibold tracking-wider' onClick={solutionsHandler} >Solutions</button>
+          <button className='px-3 py-1 flex  rounded-lg w-max border-2 border-blue-800 bg-blue-800 text-white hover:bg-blue-600 hover:text-white hover:border-red-600 text-xl font-semibold tracking-wider' onClick={solutionsHandler} >Solutions</button>
       </div>
 
       {/* solution box */}

@@ -37,11 +37,6 @@ const View = () => {
     getPyqFreeCourseLink();
   }, [router]);
 
-
-  
-
-
-
   return (
     <HeaderLayout>
       <CourseLayout>

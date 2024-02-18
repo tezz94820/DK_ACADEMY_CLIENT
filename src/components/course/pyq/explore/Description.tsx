@@ -17,7 +17,7 @@ const Description = ({description}:DescriptionPropsType) => {
                                     className='h-5 w-5 md:h-6 md:w-6 md:my-auto mr-2 '
                                 />
                                 <div className='flex '>
-                                    <p className='text-lg align-middle'>{item}</p>
+                                    <p className='md:text-base lg:text-lg align-middle'>{item}</p>
                                 </div>
                             </li>
                         ))

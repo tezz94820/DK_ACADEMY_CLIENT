@@ -81,27 +81,27 @@ function Explore() {
   return (
     <HeaderLayout>
       <CourseLayout>
-        <div className={`scrollbar w-full h-full md:overflow-y-scroll md:w-5/6 p-2 md:py-4 md:px-6`}>
+        <div className={`scrollbar w-full h-full overflow-y-scroll md:w-5/6 p-2 md:py-4 md:px-6`}>
           {/* title */}
           <div className=' py-6 shadow-lg shadow-indigo-500/50 bg-blue-800 rounded-t-3xl flex items-center'>
             <p className='text-xl md:text-3xl font-bold text-white ml-5'>{pyqCourseDetails.title}</p>
           </div>
           {/* free content */}
           <div className='w-full h-max my-4 flex items-center justify-center animate-pulse hover:animate-none'>
-            <button className='w-1/3 text-2xl text-blue-800 bg-gradient-to-r from-green-300 to-green-500 hover:text-white font-bold tracking-widest shadow-lg shadow-blue-800/50 p-1 md:px-5 md:py-3 border-gray-200 border-2 rounded-2xl'
+            <button className=' text-2xl text-blue-800 bg-gradient-to-r from-green-300 to-green-500 hover:text-white font-bold tracking-widest shadow-lg shadow-blue-800/50 p-1 md:px-5 md:py-2 border-gray-200 border-2 rounded-2xl'
               onClick={() => router.push(`explore/view-free-course?pdf_id=${pyqCourseDetails._id}`)}
             >
               Access Free Videos
             </button>
           </div>
-          <div className='md:grid md:grid-cols-7 flex flex-col mt-5'>
+          <div className='md:grid md:grid-cols-6 lg:grid-cols-7 flex flex-col mt-5'>
           {/* left */}
-          <div className='md:col-span-4'>
+          <div className='md:col-span-3 lg:col-span-4'>
             <Description description={pyqCourseDetails.description}/>
             <Teachers teachers={pyqCourseDetails.teachers}/> 
           </div>
           {/* right */}
-          <div className='md:col-span-3 px-5 mt-5 sticky top-0 h-80'>
+          <div className='md:col-span-3 lg:col-span-3 px-5 mt-5 sticky top-0 h-80'>
             <PyqCourseCard pyqCourse={pyqCourseDetails} showFreeContent={false}/>
           </div>
         </div>  
