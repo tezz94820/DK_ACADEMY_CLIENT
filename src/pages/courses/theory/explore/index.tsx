@@ -86,20 +86,20 @@ function ExploreTheoryCourse() {
           </div>
           {/* free content */}
           <div className='w-full h-max my-4 flex items-center justify-center animate-pulse hover:animate-none'>
-            <button className='w-1/3 text-2xl text-blue-800 bg-gradient-to-r from-green-300 to-green-500 hover:text-white font-bold tracking-widest shadow-lg shadow-blue-800/50 p-1 md:px-5 md:py-3 border-gray-200 border-2 rounded-2xl'
-              onClick={() => router.push(`explore/view-free-course?pdf_id=${theoryCourseDetails._id}`)}
+            <button className='text-2xl text-blue-800 bg-gradient-to-r from-green-300 to-green-500 hover:text-white font-bold tracking-widest shadow-lg shadow-blue-800/50 p-1 md:px-5 md:py-2 border-gray-200 border-2 rounded-2xl'
+              onClick={() => router.push(`explore/view-free-course?course_id=${theoryCourseDetails._id}`)}
             >
               Access Free Lectures
             </button>
           </div>
-          <div className='md:grid md:grid-cols-7 flex flex-col mt-5'>
+          <div className='md:grid md:grid-cols-6 lg:grid-cols-7 flex flex-col mt-5'>
           {/* left */}
-          <div className='md:col-span-4'>
+          <div className='md:col-span-3 lg:col-span-4'>
             <Description description={theoryCourseDetails.description}/>
             <Teachers teachers={theoryCourseDetails.teachers}/> 
           </div>
           {/* right */}
-          <div className='md:col-span-3 px-5 mt-5 sticky top-0 h-80'>
+          <div className='md:col-span-3 lg:col-span-3 px-5 my-5 sticky top-0 h-80'>
             <TheoryCourseCard theoryCourse={theoryCourseDetails} showFreeContent={false}/>
           </div>
         </div>  

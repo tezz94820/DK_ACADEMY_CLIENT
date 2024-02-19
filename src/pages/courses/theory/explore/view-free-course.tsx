@@ -109,7 +109,7 @@ const FreeTheoryCourse = () => {
     <HeaderLayout>
       <CourseLayout>
         <div className={`print-hidden scrollbar w-max h-full overflow-x-scroll md:overflow-y-scroll md:w-5/6 `}>
-            <div className='flex flex-col gap-4 mx-10 py-5'>
+            <div className='flex flex-col gap-4 mx-1 sm:mx-5 lg:mx-10 py-5 '>
                 {
                     lectures.map( lecture => (
                         <IndividualLecture key={lecture._id} courseId={courseId} details={lecture}/>
@@ -117,8 +117,8 @@ const FreeTheoryCourse = () => {
                 }
             </div>
             
-            <div className='flex items-center justify-center'>
-                <div className='my-5 w-1/3 '>
+            <div className='w-full flex items-center justify-center my-5'>
+                <div className='w-full sm:w-2/3 lg:w-1/3 m-3 sm:m-0 sm:animate-pulse hover:animate-none '>
                     <TheoryCourseCard theoryCourse={theoryCourseDetails} showFreeContent={false}/>
                 </div>
             </div>
