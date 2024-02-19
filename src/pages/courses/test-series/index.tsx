@@ -47,11 +47,11 @@ const TestSeries = () => {
             <CourseLayout>
               <div className='scrollbar w-full h-full md:overflow-y-scroll md:w-5/6 p-2 md:px-4 md:pb-8'>
                 {/* tabs */}
-                <div className='hidden md:flex justify-evenly shadow-blue-800/50 shadow-lg bg-slate-100 rounded-lg  p-2 mb-4'>
+                <div className=' scrollbar flex gap-1 sm:gap-0.5 sm:justify-evenly overflow-x-scroll sm:overflow-x-visible shadow-blue-800/50 shadow-lg bg-slate-100 rounded-lg  p-2 mb-4'>
                   {
                     tabsList.map( tab => {
                       return (
-                          <div key={tab} className={`px-4 py-1 rounded-t-lg text-center cursor-pointer text-xl shadow-inner shadow-violet-500/50 border border-blue-800 text-blue-800 rounded-lg  ${selectedTab === tab ? 'bg-gradient-to-r from-yellow-300 to-orange-400 ' : 'bg-white hover:bg-blue-800/20'}`} onClick={() => setSelectedTab(tab)}>
+                          <div key={tab} className={` px-2 lg:px-4 py-1 rounded-t-lg text-center cursor-pointer text-lg leading-tight lg:text-xl shadow-inner shadow-violet-500/50 border border-blue-800 text-blue-800 rounded-lg whitespace-nowrap sm:whitespace-normal ${selectedTab === tab ? 'bg-gradient-to-r from-yellow-300 to-orange-400 ' : 'bg-white hover:bg-blue-800/20'}`} onClick={() => setSelectedTab(tab)}>
                           <span>{tab}</span>
                         </div>
                       )
@@ -60,7 +60,7 @@ const TestSeries = () => {
                 </div>
                 
                 {/* tests */}
-                <div className=' p-2 rounded-lg '>
+                <div className='sm:p-2 rounded-lg '>
                   { (tests && tests.length != 0 ) ?
                     tests.map( test => (
                       <TestCard key={test._id} testDetails={test}/>
