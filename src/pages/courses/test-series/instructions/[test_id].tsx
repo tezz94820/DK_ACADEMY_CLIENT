@@ -181,10 +181,11 @@ const Instructions = () => {
                         />
                         I have read and understood the instructions. All computer hardware allotted to me are in proper working condition. I declare that I am not in possession of / not wearing / not carrying any prohibited gadget like mobile phone, bluetooth devices etc. /any prohibited material with me into the Examination Hall.I agree that in case of not adhering to the instructions, I shall be liable to be debarred from this Test and/or to disciplinary action, which may include ban from future Tests / Examinations
                     </label><br/>
-                    <div className='flex justify-center gap-5'>
-                        <button type="button" className='mt-10 px-10 py-2 rounded-lg bg-blue-800 text-white text-xl hover:bg-blue-700' onClick={handleGivePermission}>Give Permissions</button>
-                        <button type="submit" className={`mt-10 px-10 py-2 rounded-lg  text-white text-xl ${proceedDisabled ? 'bg-gray-500 cursor-not-allowed' : 'bg-blue-800 cursor-pointer hover:bg-blue-700'} `} disabled={proceedDisabled}>Proceed</button>
+                    <div className='flex justify-center gap-5 '>
+                        <button type="button" className='mt-10 px-3 sm:px-10 py-2 rounded-lg bg-blue-800 text-white text-lg sm:text-xl hover:bg-blue-700' onClick={handleGivePermission}>Give Permissions</button>
+                        <button type="submit" className={`mt-10 px-3 sm:px-10 py-2 rounded-lg  text-white text-lg sm:text-xl ${proceedDisabled ? 'bg-gray-500 cursor-not-allowed' : 'bg-blue-800 cursor-pointer hover:bg-blue-700'} `} disabled={proceedDisabled}>Proceed</button>
                     </div>
+                    <div className='h-0.5 mt-2'></div>
                 </form>
             </div>
             </CourseLayout>
