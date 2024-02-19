@@ -22,7 +22,10 @@ const config: Config = {
       },
       colors: {
         'marked': '#7C599F',
-      }
+      },
+      screens: {
+        'xs': '405px',
+      },
     },
   },
   plugins: [require("daisyui")],

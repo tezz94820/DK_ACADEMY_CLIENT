@@ -91,7 +91,7 @@ const PaidTheoryCourse = () => {
     <HeaderLayout>
       <CourseLayout>
         <div className={`print-hidden scrollbar w-max h-full overflow-x-scroll md:overflow-y-scroll md:w-5/6 `}>
-            <div className='flex flex-col gap-4 mx-10 py-5'>
+            <div className='flex flex-col gap-4 mx-1 sm:mx-5 lg:mx-10 py-5'>
                 {
                     lectures.map( lecture => (
                         <IndividualLecture key={lecture._id} courseId={courseId} details={lecture}/>
