@@ -18,7 +18,7 @@
   }
 
   .scrollbar::-webkit-scrollbar-thumb,.scrollbar-horizontal::-webkit-scrollbar-thumb {
-    @apply bg-gradient-to-b from-sky-500 to-violet-800 rounded
+    @apply bg-blue-800 rounded
   }
 
   .scrollbar::-webkit-scrollbar-track,.scrollbar-horizontal::-webkit-scrollbar-track {
