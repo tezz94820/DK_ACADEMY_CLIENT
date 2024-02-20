@@ -114,9 +114,9 @@ const QuestionActionButtons = () => {
         <>
             <div className='w-full h-[15%] flex flex-col sm:flex-row justify-evenly sm:justify-between items-center px-1 sm:px-5'>
                 <div className='flex gap-3'>
-                    <button className={`px-5 py-1 text-xs sm:text-base font-bold border-2 border-red-500 text-red-500 hover:bg-red-500 hover:text-white rounded-lg h-max ${selectedOption === '' ? 'cursor-not-allowed opacity-30' : 'cursor-pointer'}`} disabled={selectedOption === ''} onClick={handleSaveAndNext}>Save & Next</button>
+                    <button className={`px-5 py-1 text-xs sm:text-base font-bold border-2 border-red-500 text-red-500 rounded-lg h-max ${selectedOption === '' ? 'cursor-not-allowed opacity-30' : 'cursor-pointer hover:bg-red-500 hover:text-white'}`} disabled={selectedOption === ''} onClick={handleSaveAndNext}>Save & Next</button>
                     <button className='px-5 py-1 text-xs sm:text-base font-bold border-2 border-purple-500 text-purple-500 rounded-lg h-max hover:bg-purple-500 hover:text-white' onClick={handleReviewLater}>Review Later</button>
-                    <button className={`px-5 py-1 text-xs sm:text-base font-bold border-2 border-blue-800 text-blue-800 hover:bg-blue-800 hover:text-white rounded-lg h-max ${selectedOption === '' ? 'cursor-not-allowed opacity-30' : 'cursor-pointer'}`} disabled={selectedOption === ''} onClick={handleClearSelection}>Clear Selection</button>
+                    <button className={`px-5 py-1 text-xs sm:text-base font-bold border-2 border-blue-800 text-blue-800 rounded-lg h-max ${selectedOption === '' ? 'cursor-not-allowed opacity-30' : 'cursor-pointer hover:bg-blue-800 hover:text-white'}`} disabled={selectedOption === ''} onClick={handleClearSelection}>Clear Selection</button>
                 </div>
                 <div className='flex gap-3'>
                     <button className='px-5 py-1 text-xs sm:text-base font-bold border-2 border-blue-500 text-blue-500 rounded-lg h-max hover:bg-blue-500 hover:text-white' onClick={handleBackQuestionButton}>&larr; Back</button>

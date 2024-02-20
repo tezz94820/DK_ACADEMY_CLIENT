@@ -120,16 +120,23 @@ const TestPage = ({ handleEntireTestSubmit, handleFullScreenEnabled }: TestPageP
     return (
         <>
             <div className='w-screen h-screen overflow-hidden select-none'>
-                {/* test header 13*/}
-                <div className='flex justify-between items-center px-6  h-[13%]'>
-                    <h2 className='text-2xl font-bold  '>{testDetails.title}</h2>
-                    <button className={`border border-green-800 bg-green-700 px-4 py-2 text-white font-bold text-xl rounded-lg animate-pulse ${fullScreenEnabled ? 'hidden' : 'block'} hover:text-green-700 hover:bg-white hover:animate-none`} onClick={handleFullScreenEnabled}>Enable FullScreen Mode</button>
-                    <div className='flex items-center gap-2 h-full'>
-                        <Timer handleEntireTestSubmit={handleEntireTestSubmit} />
-                        <Video />
-                        {/* submit test button */}
-                        <div className='hidden sm:flex justify-center items-center'>
-                            <button className='border-2 border-red-500 px-5 py-1  rounded-lg h-max text-red-500 hover:bg-red-500 hover:text-white font-bold' onClick={handleTestSubmitToSummary}>Submit Test</button>
+                <div className='h-[13%] relative w-full'>
+                    {
+                        !fullScreenEnabled && 
+                            <div className='flex justify-center items-center px-6 h-full w-full z-10 absolute bg-red-500 '>
+                                <button className={`border border-green-800 bg-green-700 px-4 py-2 text-white font-bold text-xl rounded-lg animate-pulse hover:text-green-700 hover:bg-white hover:animate-none`} onClick={handleFullScreenEnabled}>Enable FullScreen Mode</button>
+                            </div>
+                    }
+                    {/* test header 13*/}
+                    <div className='flex justify-between items-center px-6 h-full w-full '>
+                        <h2 className='text-2xl font-bold  '>{testDetails.title}</h2>
+                        <div className='flex items-center gap-2 h-full'>
+                            <Timer handleEntireTestSubmit={handleEntireTestSubmit} />
+                            <Video />
+                            {/* submit test button */}
+                            <div className='hidden sm:flex justify-center items-center'>
+                                <button className='border-2 border-red-500 px-5 py-1  rounded-lg h-max text-red-500 hover:bg-red-500 hover:text-white font-bold' onClick={handleTestSubmitToSummary}>Submit Test</button>
+                            </div>
                         </div>
                     </div>
                 </div>
