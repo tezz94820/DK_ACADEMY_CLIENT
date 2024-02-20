@@ -90,7 +90,7 @@ const NavigationByQuestionSection = ({ tabDetails }: NavigationByQuestionSection
 
     return (
         <>
-            <div className='h-[52%] hidden sm:block overflow-y-auto border-2 border-blue-600' ref={scrollContainerRef}>
+            <div className='h-[52%] overflow-y-auto border-2 border-blue-600' ref={scrollContainerRef}>
                 <div className=' grid grid-cols-4 p-4 gap-4' >
                     {
                         questionsWithUserInteraction.map(item => (

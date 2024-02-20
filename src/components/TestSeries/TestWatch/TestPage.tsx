@@ -160,9 +160,9 @@ const TestPage = ({ handleEntireTestSubmit, handleFullScreenEnabled }: TestPageP
                             {
                                 currentQuestion.question_type === 'text'
                                     ?
-                                    <p className='text-lg font-bold'>{currentQuestion.question}</p>
+                                    <p className='text-xl'>{currentQuestion.question}</p>
                                     :
-                                    <img src={currentQuestion.question} height={400} width={800} alt="question" className='w-[90%] h-auto' />
+                                    <img src={currentQuestion.question} height={400} width={800} alt="question" className='w-full h-auto' />
                             }
                             {/* options */}
                             {
@@ -173,20 +173,20 @@ const TestPage = ({ handleEntireTestSubmit, handleFullScreenEnabled }: TestPageP
                                             ['A', 'B', 'C', 'D'].map(item => {
                                                 const option = currentQuestion.options.filter(opt => opt.option_name === item)[0];
                                                 return (
-                                                    <label key={item} className={`flex cursor-pointer w-full p-2 ${selectedOption === item ? 'bg-green-100' : ''} `}>
+                                                    <label key={item} className={`flex items-center cursor-pointer w-full p-2 ${selectedOption === item ? 'bg-green-100' : ''} `}>
                                                         <input type="radio" name="selectedOption" value={item} className='mr-2 h-5 w-5 my-auto'
                                                             onChange={() => handleOptionChange(item)}
                                                             checked={selectedOption === item}
                                                         />
+                                                        <span className='font-bold mr-3'>{item}&#41;</span>
                                                         {
                                                             option.option_type === 'text'
                                                                 ?
-                                                                <span className='text-lg font-bold'> {item}&#41; {option.option} </span>
+                                                                <span className='text-xl flex items-center justify-center '>{option.option}</span>
                                                                 :
-                                                                <span className='flex gap-2 text-lg font-bold '>
-                                                                    {item}&#41;
+                                                                <div className='flex items-center justify-center'>
                                                                     <img src={option.option} height={400} width={800} alt={`option${item}`} className='w-auto h-auto' />
-                                                                </span>
+                                                                </div>
                                                         }
                                                     </label>
                                                 )
@@ -218,7 +218,7 @@ const TestPage = ({ handleEntireTestSubmit, handleFullScreenEnabled }: TestPageP
                     </div>
 
                     {/* right question button section */}
-                    <div className='w-[25%]'>
+                    <div className='hidden sm:block w-[25%]'>
                         {/* question information section */}
                         <SolutionsCountWithColor />
                         {/* Question buttons */}
