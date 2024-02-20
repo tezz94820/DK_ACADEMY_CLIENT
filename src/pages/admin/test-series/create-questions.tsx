@@ -126,7 +126,8 @@ const CreateQuestions = () => {
   }
 
   const handleQuestionNumberChange = (qno:string) => {
-    setForm( prev => ({...initialForm, question_number: qno, question_subject: prev.question_subject}))
+    const pattern = ((Number(qno) > 20) && (Number(qno) <=30)) || ((Number(qno) > 50) && (Number(qno) <=60)) || ((Number(qno) > 80) && (Number(qno) <=90)) ? 'numerical' : 'mcq';
+    setForm( prev => ({...initialForm, question_number: qno, question_subject: prev.question_subject, question_pattern: pattern }));
   }
 
   // console.log(form);

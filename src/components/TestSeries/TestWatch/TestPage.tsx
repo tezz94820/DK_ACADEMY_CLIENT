@@ -31,6 +31,7 @@ const TestPage = ({ handleEntireTestSubmit, handleFullScreenEnabled }: TestPageP
     const questionNumber = useSelector((state: ReduxRootState) => state.testWatch.questionNumber);
     const selectedOption = useSelector((state: ReduxRootState) => state.testWatch.selectedOption);
     const fullScreenEnabled = useSelector((state: ReduxRootState) => state.testWatch.fullScreenEnabled);
+    const mobileToggle = useSelector((state: ReduxRootState) => state.testWatch.mobileToggle);
 
 
     //get test start details
@@ -117,19 +118,23 @@ const TestPage = ({ handleEntireTestSubmit, handleFullScreenEnabled }: TestPageP
         }
     }
 
+    const toggleHandler = () => {
+
+    }
+
     return (
         <>
             <div className='w-screen h-screen overflow-hidden select-none'>
                 <div className='h-[13%] relative w-full'>
                     {
-                        !fullScreenEnabled && 
-                            <div className='flex justify-center items-center px-6 h-full w-full z-10 absolute bg-red-500 '>
-                                <button className={`border border-green-800 bg-green-700 px-4 py-2 text-white font-bold text-xl rounded-lg animate-pulse hover:text-green-700 hover:bg-white hover:animate-none`} onClick={handleFullScreenEnabled}>Enable FullScreen Mode</button>
-                            </div>
+                        // !fullScreenEnabled && 
+                        //     <div className='flex justify-center items-center px-6 h-full w-full z-10 absolute bg-red-500 '>
+                        //         <button className={`border border-green-800 bg-green-700 px-4 py-2 text-white font-bold text-xl rounded-lg animate-pulse hover:text-green-700 hover:bg-white hover:animate-none`} onClick={handleFullScreenEnabled}>Enable FullScreen Mode</button>
+                        //     </div>
                     }
                     {/* test header 13*/}
-                    <div className='flex justify-between items-center px-6 h-full w-full '>
-                        <h2 className='text-2xl font-bold  '>{testDetails.title}</h2>
+                    <div className='flex justify-between items-center px-2 sm:px-4 lg:px-6 h-full w-full '>
+                        <h2 className='text-base sm:text-lg lg:text-2xl font-bold pr-0.5'>{testDetails.title}</h2>
                         <div className='flex items-center gap-2 h-full'>
                             <Timer handleEntireTestSubmit={handleEntireTestSubmit} />
                             <Video />
@@ -139,6 +144,17 @@ const TestPage = ({ handleEntireTestSubmit, handleFullScreenEnabled }: TestPageP
                             </div>
                         </div>
                     </div>
+                    <button onClick={toggleHandler} type="button" className="bg-red-600 inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 outline-none ring-2 ring-gray-200 z-10" aria-controls="navbar-sticky" aria-expanded="false">
+                        { mobileToggle ? 
+                            <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                            :
+                            <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h15M1 7h15M1 13h15"/>
+                            </svg>
+                        }
+                    </button>
                 </div>
 
                 {/* tabs 8*/}

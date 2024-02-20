@@ -224,7 +224,8 @@ const initialTestsummaryDetails: TestSummaryDetailsType = {
     showSummary: boolean,
     summaryTabSelected: string,
     testSummaryDetails: TestSummaryDetailsType,
-    showSubmitModal: boolean
+    showSubmitModal: boolean,
+    mobileToggle: boolean
 }
 
 
@@ -243,7 +244,8 @@ const initialState: TestWatchType = {
     showSummary: false,
     summaryTabSelected: summaryTabs[0],
     testSummaryDetails: initialTestsummaryDetails,
-    showSubmitModal: false
+    showSubmitModal: false,
+    mobileToggle: false
 }
 
 
@@ -294,6 +296,9 @@ const TestWatchSlice = createSlice({
         setShowSubmitModal: (state, action: PayloadAction<boolean>) => {
             state.showSubmitModal = action.payload;
         },
+        setMobileToggle: (state, action: PayloadAction<boolean>) => {
+            state.mobileToggle = action.payload;
+        },
         incrementQuestionNumber: (state) => {
             const { questionNumber } = state;
             if(questionNumber !== state.testDetails.total_questions){
@@ -310,6 +315,7 @@ const TestWatchSlice = createSlice({
             const { timer } = state;
             state.timer = timer === 0 ? 0 : timer-1;
         },
+
         
 
     }
@@ -332,6 +338,7 @@ export const {
     setSummaryTabSelected,
     setTestSummaryDetails,
     setShowSubmitModal,
+    setMobileToggle,
     incrementQuestionNumber,
     decrementQuestionNumber,
     decrementTimer,
