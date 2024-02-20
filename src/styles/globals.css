@@ -110,3 +110,17 @@
 .focus-question{
   @apply border-2 border-blue-800 text-blue-800 rounded
 }
+
+
+/* white scrollbar */
+.scrollbar-white::-webkit-scrollbar {
+  @apply w-2 h-2 md:w-3 cursor-pointer
+}
+
+.scrollbar-white::-webkit-scrollbar-thumb,.scrollbar-horizontal::-webkit-scrollbar-thumb {
+  @apply bg-white rounded
+}
+
+.scrollbar-white::-webkit-scrollbar-track,.scrollbar-horizontal::-webkit-scrollbar-track {
+  @apply bg-transparent
+}

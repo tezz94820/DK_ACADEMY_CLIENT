@@ -34,7 +34,7 @@ const Video = () => {
 
     return (
         <>
-            <video ref={videoRef} autoPlay playsInline height={100} width={100} className='rounded border border-black shadow shadow-black h-[95%] w-auto my-auto' muted={true} />
+            <video ref={videoRef} autoPlay playsInline height={100} width={100} className='hidden sm:block rounded border border-black shadow shadow-black h-[95%] w-auto my-auto' muted={true} />
         </>
     )
 }

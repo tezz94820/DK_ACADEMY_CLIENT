@@ -128,19 +128,19 @@ const TestPage = ({ handleEntireTestSubmit, handleFullScreenEnabled }: TestPageP
                         <Timer handleEntireTestSubmit={handleEntireTestSubmit} />
                         <Video />
                         {/* submit test button */}
-                        <div className='flex justify-center items-center'>
+                        <div className='hidden sm:flex justify-center items-center'>
                             <button className='border-2 border-red-500 px-5 py-1  rounded-lg h-max text-red-500 hover:bg-red-500 hover:text-white font-bold' onClick={handleTestSubmitToSummary}>Submit Test</button>
                         </div>
                     </div>
                 </div>
 
                 {/* tabs 8*/}
-                <div className='w-100 bg-blue-800 h-[8%] flex items-center' >
-                    <div className={`flex gap-8  w-[75%] px-6 `}>
+                <div className='w-full bg-blue-800 h-[8%] flex items-center scrollbar-white overflow-x-scroll' >
+                    <div className={` flex gap-6 w-full sm:w-[75%] px-2 sm:px-6 `}>
                         {
                             tabs.map(tab => (
                                 <div key={tab}>
-                                    <h3 className={`text-base text-white cursor-pointer font-semibold ${tabSelected === tab ? 'underline underline-offset-8' : ''}`} onClick={() => handleTabClicked(tab)}>{tab}</h3>
+                                    <h3 className={`text-base text-white cursor-pointer font-semibold whitespace-nowrap ${tabSelected === tab ? 'underline underline-offset-8' : ''}`} onClick={() => handleTabClicked(tab)}>{tab}</h3>
                                 </div>
                             ))
                         }
@@ -151,7 +151,7 @@ const TestPage = ({ handleEntireTestSubmit, handleFullScreenEnabled }: TestPageP
                 <div className='w-full flex h-[79%]'>
 
                     {/* test section */}
-                    <div className='w-[75%]'>
+                    <div className='w-full sm:w-[75%]'>
                         {/* test questions and answers */}
                         <div className='w-full h-[85%] border-2 border-y-blue-600 p-2 overflow-auto'>
                             {/* question number */}

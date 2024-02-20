@@ -9,7 +9,7 @@ const SolutionsCountWithColor = () => {
     
     return (
         <>
-            <div className='h-[45%] flex flex-col justify-evenly px-3 border-2 border-l-blue-600'>
+            <div className=' hidden sm:flex h-[45%] flex-col justify-evenly px-3 border-2 border-l-blue-600'>
                 <div className='flex items-center justify-start gap-2'>
                     <p className='bg-[url("/trial/answered.svg")] h-8 w-8 bg-no-repeat flex items-center justify-center text-base text-white'>{questionInteractionAnalysis['answered']}</p>
                     <p>Answered</p>
