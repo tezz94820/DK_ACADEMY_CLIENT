@@ -4,12 +4,14 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import Timer from './Timer';
 import Video from './Video';
-import { setCurrentQuestion, setDuration, setQuestionNumber, setSelectedOption, setShowSummary, setTabSelected, setTestDetails, setTestSummaryDetails, setTimer } from '@/app/features/testWatchSlice';
+import { setCurrentQuestion, setDuration, setMobileToggle, setQuestionNumber, setSelectedOption, setShowSummary, setTabSelected, setTestDetails, setTestSummaryDetails, setTimer } from '@/app/features/testWatchSlice';
 import axiosClient from '@/axios/axiosClient';
 import { toast } from 'react-toastify';
 import SolutionsCountWithColor from './SolutionsCountWithColor';
 import NavigationByQuestionSection from './NavigationByQuestionSection';
 import QuestionActionButtons from './QuestionActionButtons';
+import Image from 'next/image';
+import VideoPlayer from '@/components/VideoPlayer';
 
 let tabs: string[] = ['PHYSICS', 'PHYSICS NUMERICAL', 'CHEMISTRY', 'CHEMISTRY NUMERICAL', 'MATHEMATICS', 'MATHEMATICS NUMERICAL'];
 let tabDetails: { [key: string]: string } = { 'PHYSICS': '1', 'PHYSICS NUMERICAL': '21', 'CHEMISTRY': '31', 'CHEMISTRY NUMERICAL': '51', 'MATHEMATICS': '61', 'MATHEMATICS NUMERICAL': '81' };
@@ -23,7 +25,7 @@ const TestPage = ({ handleEntireTestSubmit, handleFullScreenEnabled }: TestPageP
     const router = useRouter();
     const dispatch = useDispatch();
     const { test_id: testId, test_attempt_id: testAttemptId, test_type: testType } = router?.query;
-        
+
     //states
     const testDetails = useSelector((state: ReduxRootState) => state.testWatch.testDetails);
     const tabSelected = useSelector((state: ReduxRootState) => state.testWatch.tabSelected);
@@ -118,17 +120,42 @@ const TestPage = ({ handleEntireTestSubmit, handleFullScreenEnabled }: TestPageP
         }
     }
 
-    const toggleHandler = () => {
-
+    const handleMobileToggle = () => {
+        dispatch(setMobileToggle(!mobileToggle));
     }
 
     return (
         <>
-            <div className='w-screen h-screen overflow-hidden select-none'>
+            <div className='w-screen h-screen overflow-hidden select-none relative'>
+                {
+                    mobileToggle &&
+                        // <div className='h-screen w-screen'>
+                            <div className='sm:hidden fixed top-0 right-0 bg-white z-10 my-2 py-2 border-4 border-blue-800 border-r-0 h-[calc(100vh-1rem)] flex flex-col gap-2 justify-evenly w-[60%] transition-transform duration-500 transform translate-x-0'>
+                                <div className='flex flex-col items-center justify-center '>
+                                    <div className=' flex items-center justify-center h-32 w-auto my-auto'>
+                                        <Video />
+                                    </div>
+                                        <p>Video is Monitored</p>
+                                </div>
+                                {/* question information section */}
+                                <div className='px-3 py-2 border-t-2 border-blue-800'>
+                                    <SolutionsCountWithColor />
+                                </div>
+                                {/* Question buttons  */}
+                                <div className='h-[50%] overflow-y-scroll border-y-2 border-blue-800'>
+                                    <NavigationByQuestionSection tabDetails={tabDetails} />
+                                </div>
+                                {/* submit test button  */}
+                                <div className='flex justify-center items-center'>
+                                    <button className='border-2 border-red-500 px-5 py-1  rounded-lg h-max text-red-500 hover:bg-red-500 hover:text-white font-bold' onClick={handleTestSubmitToSummary}>Submit Test</button>
+                                </div>
+                            </div>
+                        // </div>
+                }
                 <div className='h-[13%] relative w-full'>
                     {
                         // !fullScreenEnabled && 
-                        //     <div className='flex justify-center items-center px-6 h-full w-full z-10 absolute bg-red-500 '>
+                        //     <div className='flex justify-center items-center px-6 h-full w-full z-20 absolute bg-red-500 '>
                         //         <button className={`border border-green-800 bg-green-700 px-4 py-2 text-white font-bold text-xl rounded-lg animate-pulse hover:text-green-700 hover:bg-white hover:animate-none`} onClick={handleFullScreenEnabled}>Enable FullScreen Mode</button>
                         //     </div>
                     }
@@ -137,23 +164,14 @@ const TestPage = ({ handleEntireTestSubmit, handleFullScreenEnabled }: TestPageP
                         <h2 className='text-base sm:text-lg lg:text-2xl font-bold pr-0.5'>{testDetails.title}</h2>
                         <div className='flex items-center gap-2 h-full'>
                             <Timer handleEntireTestSubmit={handleEntireTestSubmit} />
-                            <Video />
+                            <div className='hidden sm:block h-[95%] w-auto my-auto'>
+                                <Video />
+                            </div>
                             {/* submit test button */}
                             <div className='hidden sm:flex justify-center items-center'>
                                 <button className='border-2 border-red-500 px-5 py-1  rounded-lg h-max text-red-500 hover:bg-red-500 hover:text-white font-bold' onClick={handleTestSubmitToSummary}>Submit Test</button>
                             </div>
                         </div>
-                        <button onClick={toggleHandler} type="button" className="inline-flex items-center ml-2 p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 outline-none ring-2 ring-gray-200 z-10" aria-controls="navbar-sticky" aria-expanded="false">
-                            { mobileToggle ? 
-                                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-                                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M6 18L18 6M6 6l12 12" />
-                                </svg>
-                                :
-                                <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-                                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h15M1 7h15M1 13h15"/>
-                                </svg>
-                            }
-                        </button>
                     </div>
                 </div>
 
@@ -176,7 +194,7 @@ const TestPage = ({ handleEntireTestSubmit, handleFullScreenEnabled }: TestPageP
                     {/* test section */}
                     <div className='w-full sm:w-[75%]'>
                         {/* test questions and answers */}
-                        <div className='w-full h-[85%] border-2 border-y-blue-600 p-2 overflow-auto'>
+                        <div className='w-full h-[85%] border-2 border-y-blue-600 p-2 overflow-auto relative '>
                             {/* question number */}
                             <p className='text-blue-800 font-bold tracking-widest'>Q{currentQuestion.question_number}</p>
                             {/* question */}
@@ -235,6 +253,15 @@ const TestPage = ({ handleEntireTestSubmit, handleFullScreenEnabled }: TestPageP
                                     </div>
 
                             }
+                            {/* mobile toggle button */}
+                            <div className={`flex sm:hidden h-10 items-center justify-center aspect-square absolute bottom-2 right-1 rounded-full bg-blue-800 p-0.5 ${mobileToggle ? 'translate-x-[-60vw]' : ''}`} onClick={handleMobileToggle}>
+                                {
+                                    mobileToggle ? 
+                                        <Image height={30} width={30} alt="toggle" src="/arrow_right.svg" className='h-full w-full' />
+                                    :
+                                        <Image height={30} width={30} alt="toggle" src="/arrow_left.svg" className='h-full w-full' />
+                                }
+                            </div>
                         </div>
                         {/* test question selection buttons  */}
                         <QuestionActionButtons />
@@ -243,9 +270,13 @@ const TestPage = ({ handleEntireTestSubmit, handleFullScreenEnabled }: TestPageP
                     {/* right question button section */}
                     <div className='hidden sm:block w-[25%]'>
                         {/* question information section */}
-                        <SolutionsCountWithColor />
+                        <div className='h-[45%] px-3 border-2 border-l-blue-600'>
+                            <SolutionsCountWithColor />
+                        </div>
                         {/* Question buttons */}
-                        <NavigationByQuestionSection tabDetails={tabDetails} />
+                        <div className='h-[54%] overflow-y-scroll border-2 border-blue-600'>
+                            <NavigationByQuestionSection tabDetails={tabDetails} />
+                        </div>
                     </div>
 
                 </div>

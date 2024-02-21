@@ -90,8 +90,8 @@ const NavigationByQuestionSection = ({ tabDetails }: NavigationByQuestionSection
 
     return (
         <>
-            <div className='h-[52%] overflow-y-auto border-2 border-blue-600' ref={scrollContainerRef}>
-                <div className=' grid grid-cols-4 p-4 gap-4' >
+            <div ref={scrollContainerRef}>
+                <div className=' grid grid-cols-4 p-4 sm:p-2 lg:p-4 gap-4 sm:gap-2 lg:gap-4' >
                     {
                         questionsWithUserInteraction.map(item => (
                             <button key={item.question_number} className={item.question_number === questionNumber ? 'focus-question' : item.user_interaction} onClick={() => handleQuestionBoxClicked(item.question_number)}>Q{item.question_number}</button>
