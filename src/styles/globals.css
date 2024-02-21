@@ -124,3 +124,17 @@
 .scrollbar-white::-webkit-scrollbar-track,.scrollbar-horizontal::-webkit-scrollbar-track {
   @apply bg-transparent
 }
+
+/* scrollbar-blue-2  */
+
+.scrollbar-blue-2::-webkit-scrollbar {
+  @apply w-2 h-2 md:w-3 cursor-pointer
+}
+
+.scrollbar-blue-2::-webkit-scrollbar-thumb,.scrollbar-horizontal::-webkit-scrollbar-thumb {
+  @apply bg-blue-800 rounded
+}
+
+.scrollbar-blue-2::-webkit-scrollbar-track,.scrollbar-horizontal::-webkit-scrollbar-track {
+  @apply bg-transparent
+}
