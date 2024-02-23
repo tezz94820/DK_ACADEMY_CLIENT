@@ -128,27 +128,6 @@ type SubjectQuestionsType = {
     mathematics_numerical: IndividualSubjectType[];
 }
 
-// const individualSubject:IndividualSubjectType = {
-//     _id: "1",
-//     question_type: "text",
-//     question: "lorem",
-//     question_pattern: "mcq",
-//     question_number: "1",
-//     question_subject: "physics",
-//     correct_option: "A",
-//     user_interaction: "answered",
-//     user_selected_option: "A",
-//     user_answer_is_correct: true,
-//     options: [
-//         {
-//             option_name: "A",
-//             option_type: "text",
-//             option: "Lorem",
-//             _id: "1"
-//         }
-//     ]
-// }
-
 const initialSubjectQuestions: SubjectQuestionsType = {
     physics: [],
     physics_numerical: [],
@@ -266,8 +245,7 @@ const TestResult = () => {
     }
 
 
-
-    console.log('subjectQuestions', subjectQuestions);
+    console.log(subjectQuestions)
 
     return (
         <div className='pb-10 bg-gray-100'>
@@ -279,29 +257,29 @@ const TestResult = () => {
                     <div className='w-full flex justify-between'>
                         {/* title */}
                         <div className='flex flex-col gap-2 '>
-                            <h1 className='text-lg sm:text-xl lg:text-2xl font-bold'>{testDetails.title}</h1>
-                            <Link href={`/courses/test-series/instructions/${testId}`} className='font-semibold text-lg text-blue-500 underline underline-offset-4 hover:text-blue-900 w-max'>Re-Attempt Test</Link>
+                            <h1 className='text-sm sm:text-xl lg:text-2xl font-bold'>{testDetails.title}</h1>
+                            <Link href={`/courses/test-series/instructions/${testId}`} className='font-semibold text-sm text-blue-500 underline underline-offset-4 hover:text-blue-900 w-max'>Re-Attempt Test</Link>
                         </div>
                         <div className='flex flex-col lg:flex-row gap-2 lg:gap-3'>
-                            <h1 className='text-lg sm:text-xl'>Total Time: <span className='font-bold text-blue-500'>{testDetails.duration}min</span></h1>
+                            <h1 className='text-sm sm:text-xl'>Total Time: <span className='font-bold text-blue-500'>{testDetails.duration}min</span></h1>
                             <span className='hidden lg:block text-xl'>|</span>
-                            <h1 className='text-lg sm:text-xl'>Total Marks: <span className='font-bold text-blue-500'>{testDetails.total_marks}</span></h1>
+                            <h1 className='text-sm sm:text-xl'>Total Marks: <span className='font-bold text-blue-500'>{testDetails.total_marks}</span></h1>
                         </div>
                     </div>
                 </div>
 
                 {/* performance and answers tab toggle */}
                 <div className='w-max mx-auto mt-5  bg-white flex border-2 border-gray-500/50 divide-x-4 rounded-lg overflow-hidden'>
-                    <button className={`px-5 py-2 w-max text-base sm:text-lg font-bold whitespace-nowrap ${currentTab === 'performance' ? 'bg-blue-500 text-white' : ''} `} onClick={() => handleChangeTab('performance')}>Your Performance</button>
-                    <button className={`px-5 py-2 w-max text-base sm:text-lg font-bold whitespace-nowrap ${currentTab === 'answers' ? 'bg-blue-500 text-white' : ''} `} onClick={() => handleChangeTab('answers')}>Your Answers</button>
+                    <button className={`px-5 py-2 w-max text-xs sm:text-lg font-bold whitespace-nowrap ${currentTab === 'performance' ? 'bg-blue-500 text-white' : ''} `} onClick={() => handleChangeTab('performance')}>Your Performance</button>
+                    <button className={`px-5 py-2 w-max text-xs sm:text-lg font-bold whitespace-nowrap ${currentTab === 'answers' ? 'bg-blue-500 text-white' : ''} `} onClick={() => handleChangeTab('answers')}>Your Answers</button>
                 </div>
 
                 {/* As Per subject filter */}
 
                 {
                     currentTab === 'answers' &&
-                    <div className='mx-auto w-[75%] my-10'>
-                        <select className='py-1 px-4 text-lg sm:text-xl font-bold border-2 border-gray-500/50 rounded-lg cursor-pointer'
+                    <div className='mx-4 sm:mx-auto  w-[95%] lg:w-[75%] my-4 sm:my-10'>
+                        <select className='py-1 px-4 text-sm sm:text-xl font-bold border-2 border-gray-500/50 rounded-lg cursor-pointer'
                             onChange={(e) => setSubjectTab(e.target.value)}
                         >
                             {
@@ -314,7 +292,7 @@ const TestResult = () => {
                 }
 
                 {/* tab content  */}
-                <div className='mt-10 mx-4 sm:mx-auto w-[95%] lg:w-[75%] lg-max:px-2 bg-white pt-10'>
+                <div className='mt-5 sm:mt-10 mx-4 sm:mx-auto w-[95%] lg:w-[75%] lg-max:px-2 bg-white pt-10'>
                     {
                         currentTab === 'performance' ?
                             <div>
@@ -480,16 +458,15 @@ const TestResult = () => {
 
                                                         {/* correact option, user selected option and view solution  */}
                                                         <div className='flex justify-between mt-2 '>
-                                                            <div className='flex items-center gap-16'>
-                                                                <p className='text-lg'>Your Answer: (<span className='font-bold'>{question.user_selected_option === '' ? 'NA' : question.user_selected_option}</span>)</p>
-                                                                <hr className='h-6 w-1 bg-black/70' />
-                                                                <p className='text-lg'>Correct Option: (<span className='font-bold'>{question.correct_option === '' ? 'NA' : question.correct_option}</span>)</p>
+                                                            <div className='flex flex-col sm:flex-row items-center sm:gap-6 lg:gap-16'>
+                                                                <p className='text-sm sm:text-xl lg:text-2xl'>Your Answer: (<span className='font-bold'>{question.user_selected_option === '' ? 'NA' : question.user_selected_option}</span>)</p>
+                                                                <hr className='h-6 hidden sm:block sm:w-1 bg-black/70' />
+                                                                <p className='text-sm sm:text-xl lg:text-2xl'>Correct Option: (<span className='font-bold'>{question.correct_option === '' ? 'NA' : question.correct_option}</span>)</p>
                                                             </div>
-                                                            <button className='text-lg font-semibold text-blue-500 underline underline-offset-4'
+                                                            <button className='text-sm sm:text-xl lg:text-2xl font-semibold text-blue-500 underline underline-offset-4'
                                                                 onClick={() => handleViewSolution(question.question_number)}
                                                             >View Solution</button>
                                                         </div>
-
                                                         <hr className='w-full h-1 bg-black/50 rounded-full my-5 ' />
                                                     </div>
                                                 ))
