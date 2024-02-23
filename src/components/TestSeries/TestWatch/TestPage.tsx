@@ -113,7 +113,6 @@ const TestPage = ({ handleEntireTestSubmit, handleFullScreenEnabled }: TestPageP
         dispatch(setShowSummary(true));
         try {
             const res = await axiosClient.get(`tests/test/test-summary/${testAttemptId}`, { headers: { 'Authorization': "Bearer " + localStorage.getItem("token") } });
-            // console.log(res);
             dispatch(setTestSummaryDetails(res.data.data.test_summary));
         } catch (error: any) {
             const message = error?.response?.data?.message || "An error occurred";
