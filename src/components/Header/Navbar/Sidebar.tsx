@@ -22,7 +22,7 @@ function Sidebar({toggleHandler} : SidebarProps) {
 
   return (
     <motion.div
-      className='h-screen w-screen absolute top-0 right-0'
+      className='h-[100svh] w-screen absolute top-0 right-0'
       initial={{ x: 300 }} 
       animate={{x:0}} 
       transition={{ ease: "easeInOut", duration: 0.1 }}
