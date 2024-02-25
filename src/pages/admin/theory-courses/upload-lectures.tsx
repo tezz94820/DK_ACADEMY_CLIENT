@@ -91,7 +91,6 @@ const UploadLectures = () => {
         const videoFile:File|null = event.currentTarget.video.files[0];
         
         const payload = {lecture_id:lectureId, title, video:videoFile ? "true" : "false", notes:notesFile ? "true" : "false"}
-        console.log(payload);
         try {
             const response = await axiosClient.post(`admin/upload-lecture-content/${courseId}`, payload, {
                 headers:{
@@ -102,7 +101,6 @@ const UploadLectures = () => {
 
             const presignedUrl = response.data.data.presignedUrl;
             //upload pdf / video whichever is asked for using presigned url
-            console.log(presignedUrl);
             const uploadPromises = [];
             if(presignedUrl.notes){
                 const notesPromise = axiosClient.put(presignedUrl.notes, notesFile, {

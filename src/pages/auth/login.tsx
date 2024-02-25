@@ -20,14 +20,12 @@ function Login() {
 
     const formSubmitHandler = async (evt : FormEvent<HTMLFormElement>) : Promise<void> => {
         evt.preventDefault();
-        console.log(formData);
         try {
             const res = await axiosClient.post('/auth/login', formData)
-            console.log(res.data);
             const { token, user_id, name, phone} = res.data.data;
             dispatch(login({token, user_id, name, phone}));
             toast.success("Login successful");
-            router.replace('/courses');
+            router.replace('/courses/pyq');
         } catch (error:any) {
             const errorMessage = error.response?.data?.message || "An error occurred";
             toast.error(errorMessage);

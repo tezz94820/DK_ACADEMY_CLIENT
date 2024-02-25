@@ -7,7 +7,7 @@ const RankerQuestionsPage = () => {
     <HeaderLayout>
         <CourseLayout>
             <div className={`scrollbar w-full h-full md:overflow-y-scroll md:w-5/6 p-2 md:px-4 md:pb-8 relative`} >
-                RankerQuestionsPage
+              <div className='text-xl text-center'>Coming soon ...</div>
             </div>
         </CourseLayout>
     </HeaderLayout>

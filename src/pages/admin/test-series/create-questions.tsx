@@ -130,7 +130,6 @@ const CreateQuestions = () => {
     setForm( prev => ({...initialForm, question_number: qno, question_subject: prev.question_subject, question_pattern: pattern }));
   }
 
-  // console.log(form);
   const changeSelectedQuestionType = (type:string) => {
     setForm({...form, question_type: type });
   }
@@ -202,8 +201,6 @@ const CreateQuestions = () => {
       payload[`option_${option.option_name}`] = option.option instanceof File ? 'true' : option.option; // option_A_option_type: text 
     })
     
-    // console.log(payload);
-
     try {
       //craeting the promise for setting the details to backend
       const responsePromise = axiosClient.post(`admin/create-test-questions/${testId}`,payload,

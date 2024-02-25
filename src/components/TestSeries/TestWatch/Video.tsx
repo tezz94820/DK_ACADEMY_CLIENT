@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react'
+import { toast } from 'react-toastify';
 
 const Video = () => {
 
@@ -13,7 +14,8 @@ const Video = () => {
                     videoRef.current.srcObject = stream;
                 }
             } catch (error: any) {
-                console.error('Error accessing camera and microphone:', error);
+                const errorMessage = error.message || "An error occurred while accessing the camera and microphone.";
+                toast.error(errorMessage);
             }
         }
         startCamera();

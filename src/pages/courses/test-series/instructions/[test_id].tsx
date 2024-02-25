@@ -28,13 +28,17 @@ const Instructions = () => {
     let testId = router.query.test_id;
 
     useEffect( () => {
-        if (document.fullscreenElement) {
-            document
-              .exitFullscreen()
-              .then(() => console.log("Document Exited from Full screen mode"))
-              .catch((err) => console.error(err));
-        }
-    },[])
+        const exitFullscreen = async () => {
+            try {
+                const res = await document.exitFullscreen();
+            } catch (error:any) {
+                const errorMessage = error?.response?.data?.message || "An error occurred";
+                toast.error(errorMessage);
+            }
+        } 
+        
+        if (document.fullscreenElement) exitFullscreen();
+    },[]);
 
     const handleProceed = async (event:FormEvent<HTMLFormElement>) => {
         event.preventDefault();

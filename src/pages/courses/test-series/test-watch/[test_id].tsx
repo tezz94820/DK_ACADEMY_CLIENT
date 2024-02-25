@@ -85,7 +85,6 @@ const TestWatch = () => {
     router.replace(`/courses/test-series/test-result?test_id=${testId}&test_attempt_id=${testAttemptId}`);
   }
 
-  // console.log(typeof document !== 'undefined' && document.fullscreenElement)
 
 
   return (

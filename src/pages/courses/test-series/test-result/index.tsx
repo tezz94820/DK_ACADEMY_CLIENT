@@ -154,14 +154,18 @@ const TestResult = () => {
 
 
 
-    useEffect(() => {
-        if (document.fullscreenElement) {
-            document
-                .exitFullscreen()
-                .then(() => console.log("Document Exited from Full screen mode"))
-                .catch((err) => console.error(err));
-        }
-    }, [])
+    useEffect( () => {
+        const exitFullscreen = async () => {
+            try {
+                const res = await document.exitFullscreen();
+            } catch (error:any) {
+                const errorMessage = error?.response?.data?.message || "An error occurred";
+                toast.error(errorMessage);
+            }
+        } 
+        
+        if (document.fullscreenElement) exitFullscreen();
+    },[]);
 
 
 
@@ -245,7 +249,6 @@ const TestResult = () => {
     }
 
 
-    console.log(subjectQuestions)
 
     return (
         <div className='pb-10 bg-gray-100'>

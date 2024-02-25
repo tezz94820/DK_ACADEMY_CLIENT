@@ -61,7 +61,6 @@ const TestSolution = () => {
     }
   },[router,testId,questionNumber])
 
-  console.log(solution);
 
 
   return (

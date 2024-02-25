@@ -31,7 +31,6 @@ const SummaryPage = ({ handleEntireTestSubmit, handleFullScreenEnabled }: Summar
         dispatch(setSummaryTabSelected(newTab));
     }
 
-    console.log(testSummaryDetails);
 
     return (
         <>

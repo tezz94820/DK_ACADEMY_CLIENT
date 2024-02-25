@@ -11,8 +11,6 @@ type SolutionProps = {
 }
 const Solution = ({pdfLink}:SolutionProps) => {
 
-  console.log(pdfLink);
-
     //states
     const [numPages, setNumPages] = useState<number>(1);
     const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);

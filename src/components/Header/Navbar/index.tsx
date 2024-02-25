@@ -32,11 +32,10 @@ function Navbar() {
 
   
   const pathName = router.pathname;
-  console.log(pathName.split('/').slice(0,2).join('/'));
   
   return (
     <>
-      <nav className="bg-white fixed h-4.3 w-full z-20 top-0 left-0 border-b border-gray-200 shadow-md">
+      <nav className="bg-white fixed h-4.3 w-full z-50 top-0 left-0 border-b border-gray-200 shadow-md">
         <div className=" w-full flex flex-wrap items-center justify-between  p-3 pr-1 md:p-1 md:px-4 text-lg font-semibold">
          
           {/* left */}
@@ -73,7 +72,7 @@ function Navbar() {
                   <button onClick={() => router.push('/auth/register')} type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center hidden md:block">Register</button>
                 </> 
             }
-            <button onClick={toggleHandler} type="button" className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 outline-none ring-2 ring-gray-200 z-10" aria-controls="navbar-sticky" aria-expanded="false">
+            <button onClick={toggleHandler} type="button" className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 outline-none ring-2 ring-gray-200 z-10 bg-white" aria-controls="navbar-sticky" aria-expanded="false">
               { toggle ? 
                   <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
                     <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M6 18L18 6M6 6l12 12" />

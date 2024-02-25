@@ -107,7 +107,6 @@ const EditTest = () => {
                 }
             })
             const presignedUrl = response.data.data.presignedUrl;
-            console.log(presignedUrl)
             if(presignedUrl.thumbnail){
                 await axiosClient.put(presignedUrl.thumbnail, form.thumbnail, {
                     headers: {

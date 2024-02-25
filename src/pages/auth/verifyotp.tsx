@@ -39,7 +39,6 @@ function VerifyOtp() {
     
     try {
       const res = await axiosClient.post('auth/otp/verify',reqBody)
-      console.log(res);
       const {otp_verified, name, token, phone, user_id} = res.data.data;
       if(otp_verified){
         dispatch(login({token, user_id, name, phone}));
@@ -47,7 +46,6 @@ function VerifyOtp() {
         router.replace('/courses');
       }
     } catch (error:any) {
-      console.log(error)
       //toast error message
       const errorMessage = error.response.data.message || "An error occurred";
       toast.error(errorMessage);
@@ -64,7 +62,6 @@ function VerifyOtp() {
     const phone = sessionStorage.getItem('phone');
     try {
       const otpRes = await axiosClient.post('/auth/otp/phone', {phone});
-      console.log(otpRes.data);
       const { verification_code } = otpRes.data.data;
       sessionStorage.setItem('verification_code', verification_code);
       setOtp(otpInitialState);

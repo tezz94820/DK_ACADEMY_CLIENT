@@ -22,11 +22,9 @@ function Register() {
 
   const formSubmitHandler = async (evt : FormEvent<HTMLFormElement>) : Promise<void> => {
     evt.preventDefault();
-    console.log(formData);
     try {
         //registration api
         const regRes = await axiosClient.post('/auth/register', formData)
-        console.log(regRes.data); 
         const { phone } = regRes.data.data;
         sessionStorage.setItem('phone', phone);
 
@@ -36,7 +34,6 @@ function Register() {
             success: 'OTP Sent Successfully',
             error: 'Error Sending OTP'
         });
-        console.log(otpRes.data);
         const { verification_code } = otpRes.data.data;
         sessionStorage.setItem('verification_code', verification_code);
         

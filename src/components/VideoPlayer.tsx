@@ -10,7 +10,6 @@ type VideoPlayerProps = {
 }
 
 const VideoPlayer = ({videoLink}:VideoPlayerProps) => {
-  console.log(videoLink);
 
   const [error, setError] = useState<boolean>(false);
 

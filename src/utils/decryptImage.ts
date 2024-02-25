@@ -29,7 +29,6 @@ function generateKey(password:string, salt:Buffer, iterations:number, keyLength:
   
     // Decrypt the image data
     const decryptedData = Buffer.concat([decipher.update(encryptedData), decipher.final()]);
-    console.log("image decrypted successfully");
     return decryptedData;
   }
 
