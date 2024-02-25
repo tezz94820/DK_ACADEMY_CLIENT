@@ -191,7 +191,7 @@ function Pdf( { courseFileLink, isFree=true } : ShowPdfProps) {
       </div>
 
       {/* solution box */}
-      <div className={`h-[calc(100vh-4.8rem)] fixed top-4.6 w-56 right-1 z-20  flex rounded-l-lg ${!solutionsClicked && 'hidden' }`} >
+      <div className={`h-[calc(100dvh-4.8rem)] fixed top-4.6 w-56 right-1 z-20  flex rounded-l-lg ${!solutionsClicked && 'hidden' }`} >
         
         {/* closing */}
         <div className='w-12 h-full rounded-l-lg p-0.5'>
