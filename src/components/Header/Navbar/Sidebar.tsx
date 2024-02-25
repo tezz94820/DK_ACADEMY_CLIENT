@@ -28,10 +28,10 @@ function Sidebar({toggleHandler} : SidebarProps) {
       transition={{ ease: "easeInOut", duration: 0.1 }}
     >
       {/* left to sidebar like modal */}
-      <div onClick={toggleHandler} className='w-screen h-full absolute top-0 right-60' />
+      <div onClick={toggleHandler} className='w-screen h-full absolute top-0 right-80' />
       
       {/* mainSidebar */}
-      <div className='w-80 h-full bg-white absolute top-0 right-0 flex flex-col justify-between rounded-l-lg border-2 border-blue-800 '>
+      <div className='w-76 h-full bg-white absolute top-0 right-0 flex flex-col justify-between rounded-l-lg border-2 border-blue-800 '>
         <div className='h-[7.5%] flex gap-1 border-b-2 border-gray-200 px-4 py-3.5 ' onClick={() => router.push("/")}>
           <Image src="/logo.png" className="h-10 w-16 md:h-14 mr-3" alt="DK Academy Logo" width={75} height={100} />
           <span className="self-center text-1xl text-blue-800 font-semibold whitespace-nowrap relative right-3" >DK Academy</span>
