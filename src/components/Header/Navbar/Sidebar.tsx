@@ -36,7 +36,7 @@ function Sidebar({toggleHandler} : SidebarProps) {
           <Image src="/logo.png" className="h-10 w-16 md:h-14 mr-3" alt="DK Academy Logo" width={75} height={100} />
           <span className="self-center text-1xl text-blue-800 font-semibold whitespace-nowrap relative right-3" >DK Academy</span>
         </div>
-        <ul className={`${isAuthenticated? 'h-[92.5%] gap-5' : 'h-[83.5%] gap-3 pt-3'} flex flex-col font-medium  px-2 bg-blue-600`}>
+        <ul className={`${isAuthenticated? 'h-[92.5%] gap-5' : 'h-[83.5%] gap-3'} flex flex-col font-medium  px-2 bg-blue-600 pt-3`}>
           {mobileNavLinks.map((link) => (
             <Link key={link.name} href={link.href} onClick={toggleHandler} className={`w-full p-4 m-1 border border-white text-white bg-blue-800  hover:bg-blue-600 rounded-lg hover:text-sky-500 flex flex-row gap-3 ${router.pathname === link.href ? 'bg-gradient-to-r from-yellow-400 to-orange-400' : ''}`}>
               <Image src={link.icon} className="h-6 w-6" alt={link.name} width={75} height={100} />
