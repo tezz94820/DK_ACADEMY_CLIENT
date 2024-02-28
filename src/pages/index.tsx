@@ -5,19 +5,19 @@ import CourseCard from '@/components/HomePage/CourseCard';
 const coursalImages = ['/homepage/coursal/1.png','/homepage/coursal/1.png','/homepage/coursal/1.png','/homepage/coursal/1.png']
 const courseCardDetails = [
   {
-    teacherImage: '/homepage/DKSIR.png',
+    teacherImage: '/homepage/dksir.png',
     heading: 'PYQ Course',
     topics: ['PDF Solution','Video Solution','Chapter Wise'],
     courseLink: '/courses/pyq'
   },
   {
-    teacherImage: '/homepage/DKSIR.png',
+    teacherImage: '/homepage/dksir.png',
     heading: 'Theory Courses',
     topics: ['Imp Questions','Short Tricks'],
     courseLink: '/courses/theory'
   },
   {
-    teacherImage: '/homepage/DKSIR.png',
+    teacherImage: '/homepage/dksir.png',
     heading: 'Test Series',
     topics: ['Test Practice','Test Experience'],
     courseLink: '/courses/test-series'
