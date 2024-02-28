@@ -21,7 +21,7 @@ const CourseCard = ({ details }: CourseCardType) => {
         <div className='mt-4 flex flex-col gap-2 flex-wrap  '>
           {
             details.topics.map((item, index) => (
-              <span className='border w-max text-orange-400 border-black rounded-lg px-1 py-0.5 text-lg whitespace-nowrap bg-white hover:bg-orange-400 hover:text-white font-semibold'>{item}</span>
+              <span key={details.courseLink} className='border w-max text-orange-400 border-black rounded-lg px-1 py-0.5 text-lg whitespace-nowrap bg-white hover:bg-orange-400 hover:text-white font-semibold'>{item}</span>
             ))
           }
         </div>
