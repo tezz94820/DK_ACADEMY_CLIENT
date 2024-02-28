@@ -41,16 +41,16 @@ function Navbar() {
           {/* left */}
           <Link href="/" className="flex items-center">
               <Image src="/logo.png" className="h-10 w-16 md:h-14 mr-3" alt="Flowbite Logo" width={75} height={100} />
-              <span className="self-center text-black text-1xl md:text-2xl font-semibold whitespace-nowrap" >DK Academy</span>
+              <span className="self-center text-black text-xl lg:text-2xl font-semibold whitespace-nowrap" >DK Academy</span>
           </Link>
 
           {/* mid */}
           <div className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
-            <ul className="flex flex-row gap-6">
+            <ul className="flex flex-row lg:gap-6 gap-1">
               {
                 navLinks.map( link => (
                   <Link key={link.name} href={link.href}
-                    className={` bg-transparent hover:bg-blue-100 hover:rounded py-1 px-2 text-xl  font-semibold ${ pathName.split('/').slice(0,2).join('/') === link.href.split('/').slice(0,2).join('/') ? 'text-blue-500' : 'text-black/80'}`}  
+                    className={` bg-transparent hover:bg-blue-100 hover:rounded py-1 px-2 text-lg lg:text-xl font-semibold ${ pathName.split('/').slice(0,2).join('/') === link.href.split('/').slice(0,2).join('/') ? 'text-blue-500' : 'text-black/80'}`}  
                   >
                     {link.name}
                   </Link> 
@@ -60,7 +60,7 @@ function Navbar() {
           </div>
 
           {/* right */}
-          <div className="flex justify-center md:order-2 gap-1 md:gap-4 ">
+          <div className="flex justify-center md:order-2 gap-1 md:gap-2 lg:gap-4 ">
             {
               profileInitials ? 
                 <div className="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-600 rounded-full mr-2 md:mr-0 cursor-pointer">
