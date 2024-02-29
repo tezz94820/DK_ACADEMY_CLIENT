@@ -10,7 +10,7 @@ type MobileToggleProps = {
 
 const MobileToggle = ( {tabDetails, handleTestSubmitToSummary} : MobileToggleProps ) => {
     return (
-        <div className='sm:hidden fixed top-0 right-0 bg-white z-10 my-2 py-2 border-4 border-blue-800 border-r-0 h-[calc(d100vh-1rem)] flex flex-col gap-2 justify-evenly w-[60%] transition-transform duration-500 transform translate-x-0'>
+        <div className='sm:hidden fixed top-0 right-0 bg-white z-10 my-2 py-2 border-4 border-blue-800 border-r-0 h-[calc(100dvh-1rem)] flex flex-col gap-2 justify-evenly w-[60%] transition-transform duration-500 transform translate-x-0'>
             <div className='flex flex-col items-center justify-center '>
                 <div className=' flex items-center justify-center h-32 w-auto my-auto'>
                     <Video />
