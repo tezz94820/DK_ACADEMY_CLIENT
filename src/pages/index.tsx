@@ -2,7 +2,7 @@ import Navbar from '@/components/Header/Navbar';
 import Coursal from '@/components/HomePage/Coursal';
 import CourseCard from '@/components/HomePage/CourseCard';
 
-const coursalImages = ['/homepage/coursal/1.png','/homepage/coursal/1.png','/homepage/coursal/1.png','/homepage/coursal/1.png']
+const coursalImages = ['/homepage/coursal/1.png','/homepage/coursal/2.png','/homepage/coursal/1.png','/homepage/coursal/2.png']
 const courseCardDetails = [
   {
     teacherImage: '/homepage/dksir.png',

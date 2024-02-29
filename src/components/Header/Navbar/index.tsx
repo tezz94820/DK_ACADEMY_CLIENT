@@ -40,7 +40,7 @@ function Navbar() {
          
           {/* left */}
           <Link href="/" className="flex items-center">
-              <Image src="/logo.png" className="h-10 w-16 md:h-14 mr-3" alt="Flowbite Logo" width={75} height={100} />
+              <Image src="/logo.png" className="h-10 w-16 md:h-14 mr-3" alt="DK Academy Logo" width={75} height={100} />
               <span className="self-center text-black text-xl lg:text-2xl font-semibold whitespace-nowrap" >DK Academy</span>
           </Link>
 
