@@ -22,7 +22,7 @@ const Testimonial = ({profilePhoto,parent,name,video,videoPoster,textContent}:Te
         <video controls className='h-36 aspect-auto rounded-xl mt-4 mx-auto' poster={videoPoster} >
           <source src={video} type="video/mp4" />
         </video>
-        <p className='mt-4 text-justify text-base font-serif'>DK Academy, a game-changer in my JEE prep. Under the guidance of DK Sir, I conquered exam fears, identified weaknesses, and gained time-saving strategies. His friendly approach and holistic support boosted my confidence. The key mantra: stay humble with success, resilient with setbacks. Highly recommend DK Academy for transformative learning!</p>
+        <p className='mt-4 text-justify text-base font-serif'>{textContent}</p>
 
     </div>
   )
