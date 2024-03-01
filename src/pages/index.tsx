@@ -1,53 +1,73 @@
 import Navbar from '@/components/Header/Navbar';
 import Coursal from '@/components/HomePage/Coursal';
 import CourseCard from '@/components/HomePage/CourseCard';
+import Testimonial from '@/components/HomePage/Testimonial';
+import Head from 'next/head';
+import { testimonialContent } from '../../data/testimonialContent';
 
-const coursalImages = ['/homepage/coursal/1.png','/homepage/coursal/2.png','/homepage/coursal/3.png', '/homepage/coursal/2.png'];
+
+const coursalImages = ['/homepage/coursal/1.png', '/homepage/coursal/2.png', '/homepage/coursal/3.png', '/homepage/coursal/2.png'];
 const courseCardDetails = [
   {
     teacherImage: '/homepage/dksir.png',
     heading: 'PYQ Course',
-    topics: ['PDF Solution','Video Solution','Chapter Wise'],
+    topics: ['PDF Solution', 'Video Solution', 'Chapter Wise'],
     courseLink: '/courses/pyq'
   },
   {
     teacherImage: '/homepage/dksir.png',
     heading: 'Theory Courses',
-    topics: ['Imp Questions','Short Tricks'],
+    topics: ['Lecture Video','Lecture Notes','Imp Questions', 'Short Tricks'],
     courseLink: '/courses/theory'
   },
   {
     teacherImage: '/homepage/dksir.png',
     heading: 'Test Series',
-    topics: ['Test Practice','Test Experience'],
+    topics: ['Test Practice', 'Test Experience'],
     courseLink: '/courses/test-series'
   }
 ]
 export default function Home() {
   return (
     <div className='m-0 px-2 md:px-5'>
-
       <Navbar />
 
       {/* coursal */}
       <section className='h-[16rem] md:h-[26rem] w-full mt-20 '>
-        <Coursal images={coursalImages}/>
+        <Coursal images={coursalImages} />
       </section>
 
       {/* courses section */}
-      <section className='w-full my-10'>
+      <section className='w-full my-20'>
         <h3 className='font-bold text-xl sm:text-2xl lg:text-4xl'>Explore Courses</h3>
-        <div className='flex flex-col md:flex-row max-md:gap-6 md:justify-evenly  mt-5 w-full'>
+        <div className='flex flex-col md:flex-row max-md:gap-6 md:justify-evenly  mt-10 w-full'>
           {
             courseCardDetails.map((item, index) => (
-             <CourseCard key={index} details={item} />
+              <CourseCard key={index} details={item} />
             ))
           }
         </div>
       </section>
-      <section>
-        <h1>Testimonials</h1>
+      {/* Testimonials section */}
+      <section className='w-full my-20'>
+        <h3 className=' text-center font-bold text-xl sm:text-2xl lg:text-4xl'>What some of our Students and Parents are saying</h3>
+        {/* <div className='flex mt-5'>
+          <video controls className='h-[16rem] md:h-[26rem] aspect-auto rounded-3xl' poster='/homepage/testimonials/student_poster.png' >
+            <source src="/homepage/testimonials/student.mp4" type="video/mp4" />
+          </video>
+          <div>
+          </div>
+        </div>  */}
+        <div className='mt-10'>
+          <div className='flex flex-col max-md:gap-4 items-center md:flex-row md:justify-evenly'>
+            {
+              testimonialContent.map( item => (
+                <Testimonial key={item.name} name={item.name} parent={item.parent} profilePhoto={item.profilePhoto} video={item.video} videoPoster={item.videoPoster} textContent={item.textContent}/>
+              ))
+            }
+          </div>
+        </div>
       </section>
-      </div>
+    </div>
   )
 }
