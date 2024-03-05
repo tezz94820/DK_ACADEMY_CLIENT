@@ -48,9 +48,7 @@ type ShowPdfProps = {
 
 function Pdf( { courseFileLink, isFree=true } : ShowPdfProps) {
   const [numPages, setNumPages] = useState<number>(1);
-  const [pageNumber, setPageNumber] = useState<number>(1);
   const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
-  const [fileLink, setFileLink] = useState('');
   const [solutions, setSolutions] = useState([]);
   const [solutionsClicked, setSolutionsClicked] = useState(false);
   const [allSolutionsClicked, setAllSolutionsClicked ] = useState(false);
@@ -191,7 +189,7 @@ function Pdf( { courseFileLink, isFree=true } : ShowPdfProps) {
       </div>
 
       {/* solution box */}
-      <div className={`h-[calc(100dvh-4.8rem)] fixed top-4.6 w-56 right-1 z-20  flex rounded-l-lg ${!solutionsClicked && 'hidden' }`} >
+      <div className={`h-[calc(100vh-4.8rem)] fixed top-4.6 w-56 right-1 z-20  flex rounded-l-lg ${!solutionsClicked && 'hidden' }`} >
         
         {/* closing */}
         <div className='w-12 h-full rounded-l-lg p-0.5'>
