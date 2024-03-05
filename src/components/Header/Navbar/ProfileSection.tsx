@@ -21,7 +21,7 @@ const ProfileSection = ({profileData}:ProfileSectionProps) => {
 
     return (
         <div className='border border-black overflow-hidden  w-[15rem] h-content absolute top-16 right-2 rounded-l-lg'>
-            <div className='bg-black/90 py-3  flex flex-col justify-center items-center'>
+            <div className='bg-black/95 py-3  flex flex-col justify-center items-center'>
                 <div className='rounded-full bg-white p-0.5 h-10 w-10'>
                     <Image src="/logo.png" className="h-full w-full" height={300} width={300} alt="DK Academy logo" />
                 </div>
@@ -30,7 +30,7 @@ const ProfileSection = ({profileData}:ProfileSectionProps) => {
                     <p className='text-sm'>{profileData.email}</p>
                 </div>
             </div>
-            <div className='flex flex-col p-2 bg-gray-800/90'>
+            <div className='flex flex-col p-2 bg-gray-800/95'>
                 <button className='text-start text-white hover:underline font-semibold'
                     onClick={handleLogOut}
                 >Log Out</button>
