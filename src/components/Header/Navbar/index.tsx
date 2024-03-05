@@ -53,7 +53,10 @@ function Navbar() {
           toast.error(errorMessage);     
       }
     }
-    fetchProfileData();
+    const token: string | null = localStorage.getItem('token');
+    if(token){
+      fetchProfileData();
+    }
   }, [])
 
   const toggleProfileSection = () => {
