@@ -1,8 +1,5 @@
-import axiosClient from '@/axios/axiosClient'
-import { profile } from 'console'
 import Image from 'next/image'
-import React, { useEffect } from 'react'
-import { toast } from 'react-toastify'
+import React from 'react'
 
 interface ProfileSectionProps {
     profileData: {

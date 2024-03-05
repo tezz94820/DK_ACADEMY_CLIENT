@@ -65,7 +65,6 @@ function Navbar() {
 
 
   const pathName = router.pathname;
-  console.log(showProfileSection);
 
   return (
     <>
