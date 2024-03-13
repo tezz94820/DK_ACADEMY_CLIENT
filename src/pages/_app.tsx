@@ -15,7 +15,6 @@ export default function App({ Component, pageProps }: AppProps) {
         <title>DK Academy</title>
         <link rel="shortcut icon" href="/favicon.ICO" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
-        
       </Head>
       <Provider store={store}>
         <Component {...pageProps} />

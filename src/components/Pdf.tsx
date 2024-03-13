@@ -211,7 +211,7 @@ function Pdf( { courseFileLink, isFree=true } : ShowPdfProps) {
           <ul className='p-2 flex flex-col gap-2'> 
             {
               solutions.map( (item: { question: string , answer: string, visibility: boolean}) => (
-                <li key={item.question} className='grid grid-cols-3 h-15  rounded shadow-lg shadow-indigo-500/20 p-1 gap-x-1 border-2 border-gray-200'>
+                <li key={item.question} className='grid grid-cols-3 h-[3.5rem]  rounded shadow-lg shadow-indigo-500/20 p-1 gap-x-1 border-2 border-gray-200'>
                   <div className='border-2 border-gray-300 flex justify-center items-center h-full rounded-lg text-blue-800'><p>{item.question}&#41;</p></div>
                   <div className='flex justify-center items-center h-full w-full bg-gradient-to-r from-blue-500 to-blue-800 rounded-lg cursor-pointer text-white'>
                     {
