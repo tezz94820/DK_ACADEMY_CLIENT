@@ -189,7 +189,7 @@ function Pdf( { courseFileLink, isFree=true } : ShowPdfProps) {
       </div>
 
       {/* solution box */}
-      <div className={`h-[calc(100vh-4.8rem)] fixed top-4.6 w-56 right-1 z-20  flex rounded-l-lg ${!solutionsClicked && 'hidden' }`} >
+      <div className={`h-[calc(100vh-4.8rem)] fixed top-4.6 w-56 right-1 z-20 flex rounded-l-lg ${!solutionsClicked && 'hidden' }`} >
         
         {/* closing */}
         <div className='w-12 h-full rounded-l-lg p-0.5'>
@@ -197,7 +197,7 @@ function Pdf( { courseFileLink, isFree=true } : ShowPdfProps) {
         </div>
         
         {/* main box */}
-        <div className={`w-48  bg-white  overflow-y-scroll scrollbar border-2 border-l-4 text-lg font-bold rounded-l-lg border-blue-800 `}>
+        <div className={`w-48 bg-white overflow-y-scroll scrollbar border-2 border-l-4 text-lg font-bold rounded-l-lg border-blue-800 `}>
           
           {/* heading */}
           <div className='flex justify-evenly p-1 border-b-2 border-black'>
