@@ -4,6 +4,7 @@ import CourseCard from '@/components/HomePage/CourseCard';
 import Testimonial from '@/components/HomePage/Testimonial';
 import Head from 'next/head';
 import { testimonialContent } from '../../data/testimonialContent';
+import Footer from '@/components/HomePage/Footer';
 
 
 const coursalImages = ['/homepage/coursal/1.png', '/homepage/coursal/2.png', '/homepage/coursal/3.png', '/homepage/coursal/2.png'];
@@ -51,13 +52,6 @@ export default function Home() {
       {/* Testimonials section */}
       <section className='w-full my-20'>
         <h3 className=' text-center font-bold text-xl sm:text-2xl lg:text-4xl'>What some of our Students and Parents are saying</h3>
-        {/* <div className='flex mt-5'>
-          <video controls className='h-[16rem] md:h-[26rem] aspect-auto rounded-3xl' poster='/homepage/testimonials/student_poster.png' >
-            <source src="/homepage/testimonials/student.mp4" type="video/mp4" />
-          </video>
-          <div>
-          </div>
-        </div>  */}
         <div className='mt-10'>
           <div className='flex flex-col max-md:gap-4 items-center md:flex-row md:justify-evenly'>
             {
@@ -67,6 +61,11 @@ export default function Home() {
             }
           </div>
         </div>
+      </section>
+
+      {/* Footer Section section */}
+      <section className='w-full mt-5'>
+            <Footer />
       </section>
     </div>
   )
