@@ -42,7 +42,7 @@ const Footer = () => {
                 </div>
             </section>
 
-            <section className='flex flex-col justify-center items-center mt-5'>
+            <section className='flex flex-col justify-center items-center max-sm:mt-5'>
                 <Image src="/logo.png" className="h-10 w-16 md:h-14 " alt="DK Academy Logo" width={75} height={100} />
                 <p className='mt-2 text-center'>Copyright © D.K Academy 2024</p>
                 <p className='mb-2 text-center'>Privacy Policy | Payments Terms | Refund & Cancellation</p>

@@ -124,7 +124,7 @@ function Navbar() {
         {
           toggle && <Sidebar toggleHandler={toggleHandler} />
         }
-
+        {/* profile section */}
         {
           showProfileSection && <ProfileSection profileData={profileData as profileDataType} />
         }

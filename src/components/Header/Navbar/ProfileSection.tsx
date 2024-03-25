@@ -5,11 +5,11 @@ interface ProfileSectionProps {
     profileData: {
         first_name: string,
         last_name: string,
-        email:string
+        email: string
     }
 }
 
-const ProfileSection = ({profileData}:ProfileSectionProps) => {
+const ProfileSection = ({ profileData }: ProfileSectionProps) => {
 
     const handleLogOut = () => {
         localStorage.clear();
@@ -28,6 +28,9 @@ const ProfileSection = ({profileData}:ProfileSectionProps) => {
                 </div>
             </div>
             <div className='flex flex-col p-2 bg-gray-800/95'>
+                <button className='text-start text-white hover:underline font-semibold'
+                    onClick={handleLogOut}
+                >My Tests</button>
                 <button className='text-start text-white hover:underline font-semibold'
                     onClick={handleLogOut}
                 >Log Out</button>
