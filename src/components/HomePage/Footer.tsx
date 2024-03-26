@@ -17,8 +17,8 @@ const Footer = () => {
                 <div className='flex flex-col items-center p-2'>
                     <h3 className='text-2xl font-semibold'>Address Info</h3>
                     <hr className='h-0.5 w-3/4 my-2 bg-white' />
-                    <p className='text-center'>C4F/33, behind F market, Janakpuri,<br /> New Delhi - 110058</p>
-                    <Image src='/homepage/social_media/maps.png' onClick={() => window.open('https://maps.app.goo.gl/uzEt5RNxaxkvr1RZA', '_blank')} className="h-10 w-10 md:h-12 md:w-12 mr-3 rounded-lg shadow-sm shadow-white p-1 cursor-pointer hover:border mt-2" alt="Social Media" width={75} height={100} />
+                    <p className='text-center'>Genius Associates Rd, Masoodpur, Sector B, <br /> Vasant Kunj, New Delhi, Delhi 110070</p>
+                    <Image src='/homepage/social_media/maps.png' onClick={() => window.open('https://maps.app.goo.gl/tMcP6JbZduaMwe6DA', '_blank')} className="h-10 w-10 md:h-12 md:w-12 mr-3 rounded-lg shadow-sm shadow-white p-1 cursor-pointer hover:border mt-2" alt="Social Media" width={75} height={100} />
                 </div>
                 <div className='flex flex-col items-center p-2'>
                     <h3 className='text-2xl font-semibold'>Social Media</h3>
