@@ -1,6 +1,9 @@
 import { databaseTypeList, tabsList } from '@/pages/courses/test-series';
 import React from 'react'
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import axiosClient from '@/axios/axiosClient';
+import { showAuthorizationErrorElseDefaultError } from '@/utils/authorizationError';
 
 interface TestCardProps {
     testDetails:{
@@ -19,6 +22,17 @@ interface TestCardProps {
 }
 
 const TestCard = ({testDetails}:TestCardProps) => {
+    const router = useRouter();
+
+    const handleTestClick = async (id:string) => {
+        try {
+            await axiosClient.get(`tests/test-attempt-registry/${id}`, {headers:{ Authorization: `Bearer ${localStorage.getItem("token")}`}});
+            router.push(`/courses/test-series/instructions/${id}`);
+        } catch (error:any) {
+            showAuthorizationErrorElseDefaultError(error);
+        }
+        
+    }
     return (
         <div key={testDetails._id} className='flex flex-col sm:flex-row p-4 sm:m-2 rounded-lg shadow-lg shadow-blue-800/50 sm:hover:scale-105'>
             <div className='block sm:hidden w-full mb-1'>
@@ -43,22 +57,22 @@ const TestCard = ({testDetails}:TestCardProps) => {
                     </div>
                 </div>
                 <div className='block lg:hidden mt-4'>
-                    <Link 
-                        href={`/courses/test-series/instructions/${testDetails._id}`} 
+                    <button
+                        onClick={() => handleTestClick(testDetails._id)} 
                         className='flex items-center justify-center text-center text-xl font-bold align-middle px-2 py-1 rounded-lg bg-blue-800 hover:bg-blue-700 text-white'
                     >
                         Start Test
-                    </Link>
+                    </button>
                 </div>    
                 
             </div>
             <div className='hidden lg:flex justify-center items-center w-1/4 '>
-                <Link 
-                    href={`/courses/test-series/instructions/${testDetails._id}`} 
+                <button
+                    onClick={() => handleTestClick(testDetails._id)} 
                     className='text-center text-xl font-bold align-middle px-6 py-3 rounded-lg bg-blue-800 hover:bg-blue-700 flex items-center  justify-center gap-2 text-white'
                 >
                     Start Test
-                </Link>
+                </button>
             </div>
         </div>
     )

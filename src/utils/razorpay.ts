@@ -1,5 +1,6 @@
 import axiosClient from "@/axios/axiosClient";
 import { toast } from "react-toastify";
+import { showAuthorizationErrorElseDefaultError } from "./authorizationError";
 
 export function loadRazorpayScript() {
     return new Promise((resolve) => {
@@ -46,7 +47,7 @@ export const handleBuyProduct = async (productType:string, productId:string) => 
       paymentObject.open();
 
     } catch (error: any) {
-      const errorMessage = error?.response?.data?.message || "An error occurred. Please try again later.";
-      toast.error(errorMessage);
+
+      showAuthorizationErrorElseDefaultError(error);
     }
   }

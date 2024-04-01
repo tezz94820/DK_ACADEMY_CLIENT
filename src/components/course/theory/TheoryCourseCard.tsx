@@ -1,3 +1,5 @@
+import axiosClient from '@/axios/axiosClient';
+import { showAuthorizationErrorElseDefaultError } from '@/utils/authorizationError';
 import { handleBuyProduct } from '@/utils/razorpay';
 import Image from 'next/image'
 import { useRouter } from 'next/router';
@@ -29,6 +31,15 @@ const TheoryCourseCard = ({ theoryCourse, showFreeContent = true }: TheoryCourse
 
   const handleNavigateToDescription = () => {
     router.push(`/courses/theory/explore?course_id=${theoryCourse._id}`);
+  }
+
+  const handleFreeContent = async (id:string) => {
+    try {
+      await axiosClient.get(`theory/free-lectures/${id}`, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } });      
+      router.push(`theory/explore/view-free-course?course_id=${id}`)
+    } catch (error:any) {
+      showAuthorizationErrorElseDefaultError(error);
+    }
   }
 
   return (
@@ -110,7 +121,7 @@ const TheoryCourseCard = ({ theoryCourse, showFreeContent = true }: TheoryCourse
               {
                 showFreeContent ?
                   <div className='grid grid-cols-2 gap-5 justify-between mt-3 font-semibold'>
-                    <button className='bg-blue-200 text-blue-800 hover:bg-blue-300 rounded-lg  py-1.5 text-base font-bold text-center align-middle tracking-widest' onClick={() => router.push(`theory/explore/view-free-course?course_id=${theoryCourse._id}`)}>Free Content</button>
+                    <button className='bg-blue-200 text-blue-800 hover:bg-blue-300 rounded-lg  py-1.5 text-base font-bold text-center align-middle tracking-widest' onClick={() => handleFreeContent(theoryCourse._id)}>Free Content</button>
                     <button className='bg-blue-800 text-white hover:bg-blue-600 rounded-lg py-1.5 text-base font-bold text-center align-middle tracking-widest' onClick={() => handleBuyProduct('theory', theoryCourse._id)}>Buy Now</button>
                   </div>
                   :

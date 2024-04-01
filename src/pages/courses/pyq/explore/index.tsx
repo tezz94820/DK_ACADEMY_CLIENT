@@ -4,6 +4,7 @@ import CourseLayout from '@/components/course/CourseLayout'
 import PyqCourseCard from '@/components/course/pyq/PyqCourseCard'
 import Description from '@/components/course/pyq/explore/Description'
 import Teachers from '@/components/course/pyq/explore/Teachers'
+import { showAuthorizationErrorElseDefaultError } from '@/utils/authorizationError'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
@@ -78,6 +79,17 @@ function Explore() {
   }, [router] );
 
 
+  
+  const handleAccessFreeVideos = async (id:string) => {
+    try {
+      await axiosClient.get(`pyq-pdf/access-free-pdf/${id}`, { headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } });
+      router.push(`explore/view-free-course?pdf_id=${id}`);
+    } catch (error:any) {
+      showAuthorizationErrorElseDefaultError(error);
+    }
+  }
+
+
   return (
     <HeaderLayout>
       <CourseLayout>
@@ -89,7 +101,7 @@ function Explore() {
           {/* free content */}
           <div className='w-full h-max my-4 flex items-center justify-center animate-pulse hover:animate-none'>
             <button className=' text-2xl text-blue-800 bg-gradient-to-r from-green-300 to-green-500 hover:text-white font-bold tracking-widest shadow-lg shadow-blue-800/50 p-1 md:px-5 md:py-2 border-gray-200 border-2 rounded-2xl'
-              onClick={() => router.push(`explore/view-free-course?pdf_id=${pyqCourseDetails._id}`)}
+              onClick={() => handleAccessFreeVideos(pyqCourseDetails._id)}
             >
               Access Free Videos
             </button>

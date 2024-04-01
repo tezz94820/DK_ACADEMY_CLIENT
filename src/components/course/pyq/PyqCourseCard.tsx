@@ -1,7 +1,11 @@
+import axiosClient from '@/axios/axiosClient';
+import { showAuthorizationErrorElseDefaultError } from '@/utils/authorizationError';
 import { handleBuyProduct } from '@/utils/razorpay';
+import { AxiosError } from 'axios';
 import Image from 'next/image'
 import { useRouter } from 'next/router';
 import React from 'react';
+import { toast } from 'react-toastify';
 
 type PyqCourseCardPropsType = {
   pyqCourse: {
@@ -31,6 +35,15 @@ const PyqCourseCard = ({ pyqCourse, showFreeContent = true }: PyqCourseCardProps
   
   const handleNavigateToDescription = () => {
     router.push(`/courses/pyq/explore?pdf_id=${pyqCourse._id}`);
+  }
+
+  const freeContentClick = async (id:string) => {
+    try {
+      await axiosClient.get(`pyq-pdf/access-free-pdf/${id}`, { headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } });
+      router.push(`/courses/pyq/explore/view-free-course?pdf_id=${id}`)
+    } catch (error:any) {
+      showAuthorizationErrorElseDefaultError(error);
+    }
   }
   
   return (
@@ -112,7 +125,7 @@ const PyqCourseCard = ({ pyqCourse, showFreeContent = true }: PyqCourseCardProps
               {
                 showFreeContent ?
                   <div className='grid grid-cols-2 gap-5 justify-between mt-3 font-semibold'>
-                    <button className='bg-blue-200 text-blue-800 hover:bg-blue-300 rounded-lg  py-1.5 text-base font-bold text-center align-middle tracking-widest' onClick={() => router.push(`/courses/pyq/explore/view-free-course?pdf_id=${pyqCourse._id}`)}>Free Content</button>
+                    <button className='bg-blue-200 text-blue-800 hover:bg-blue-300 rounded-lg  py-1.5 text-base font-bold text-center align-middle tracking-widest' onClick={() => freeContentClick(pyqCourse._id)}>Free Content</button>
                     <button className='bg-blue-800 text-white hover:bg-blue-600 rounded-lg py-1.5 text-base font-bold text-center align-middle tracking-widest' onClick={() => handleBuyProduct('pyq', pyqCourse._id)}>Buy Now</button>
                   </div>
                   :

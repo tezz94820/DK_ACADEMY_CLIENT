@@ -43,7 +43,7 @@ function VerifyOtp() {
       if(otp_verified){
         dispatch(login({token, user_id, name, phone}));
         toast.success("OTP verified successfully");
-        router.replace('/courses');
+        router.replace('/courses/pyq');
       }
     } catch (error:any) {
       //toast error message
