@@ -36,5 +36,10 @@ interface MobileNavLink{
       href: "/courses/ranker-questions",
       icon: '/test.svg'
     },
+    {
+      name: "Contact Us",
+      href: "/contact-us",
+      icon: '/contact-us.svg'
+    }
     
   ];
