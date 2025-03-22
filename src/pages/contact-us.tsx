@@ -70,7 +70,7 @@ function ContactUs() {
               Get In <span className="text-indigo-600">Touch</span>
             </h3>
             <p className="mt-4 leading-7 text-gray-200">
-            &quot;Success in JEE is not just about hard work, but about the right guidance and perseverance. The path to IIT begins with a single step—reach out today and let&apos;s shape your future together!&quot;
+              &quot;Success in JEE is not just about hard work, but about the right guidance and perseverance. The path to IIT begins with a single step—reach out today and let&apos;s shape your future together!&quot;
             </p>
             <p className='text-right mt-2 font-semibold'> --- Dharmendra Kumar</p>
 
@@ -190,8 +190,15 @@ function ContactUs() {
                   Phone Number *
                 </label>
                 <input
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                  id="grid-phone" type="phone" placeholder="797 *** **21" required name="phone" value={formData.phone} onChange={handleChange} />
+                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                  id="grid-phone"
+                  type="number"
+                  placeholder="797 *** **21"
+                  required
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                />
               </div>
             </div>
 
@@ -231,8 +238,8 @@ function ContactUs() {
                 {responseMessage && (
                   <motion.div
                     className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium shadow-md border ${formSuccess
-                        ? "text-green-700 bg-green-100 border-green-300"
-                        : "text-red-700 bg-red-100 border-red-300"
+                      ? "text-green-700 bg-green-100 border-green-300"
+                      : "text-red-700 bg-red-100 border-red-300"
                       }`}
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
