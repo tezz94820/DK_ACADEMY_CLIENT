@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { CheckCircle, XCircle } from "lucide-react";
 
 
-function contactUs() {
+function ContactUs() {
 
   const [formData, setFormData] = useState({
     first_name: '',
@@ -70,7 +70,7 @@ function contactUs() {
               Get In <span className="text-indigo-600">Touch</span>
             </h3>
             <p className="mt-4 leading-7 text-gray-200">
-              "Success in JEE is not just about hard work, but about the right guidance and perseverance. The path to IIT begins with a single step—reach out today and let’s shape your future together!"
+            &quot;Success in JEE is not just about hard work, but about the right guidance and perseverance. The path to IIT begins with a single step—reach out today and let&apos;s shape your future together!&quot;
             </p>
             <p className='text-right mt-2 font-semibold'> --- Dharmendra Kumar</p>
 
@@ -277,4 +277,4 @@ function contactUs() {
   )
 }
 
-export default contactUs
+export default ContactUs
