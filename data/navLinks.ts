@@ -22,9 +22,9 @@ export const navLinks:navLinksType = [
     icon: '/services.svg'
   },
   {
-    name: "About",
-    href: "/about",
-    icon: '/about.svg'
+    name: "Contact Us",
+    href: "/contact-us",
+    icon: '/contact-us.svg'
   },
   
 ];
