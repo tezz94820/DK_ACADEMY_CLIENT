@@ -68,7 +68,7 @@ function Modal({ setIsModalOpen }: ModalProps) {
     };
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-80 flex md:flex-row flex-col justify-evenly items-center z-50 px-6 gap-2">
+        <div className="fixed inset-0 bg-black bg-opacity-80 flex md:flex-row flex-col justify-evenly items-center z-50 px-6 gap-2 w-full min-h-screen">
             <div className='absolute h-full w-full -z-10' onClick={() => setIsModalOpen(false)} />
 
             <Image src='/homepage/social_media/call.png' onClick={() => window.open(`tel:+919325987875`)} className=" hidden md:block h-10 w-10 md:h-12 md:w-12 rounded-lg p-1 cursor-pointer hover:border-2 border-blue-800 shadow-md shadow-white" alt="Social Media" width={75} height={100} />
