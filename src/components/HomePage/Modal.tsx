@@ -71,10 +71,13 @@ function Modal({ setIsModalOpen }: ModalProps) {
         <div className="fixed inset-0 bg-black bg-opacity-80 flex md:flex-row flex-col justify-evenly items-center z-50 px-6 gap-2 w-full min-h-screen">
             <div className='absolute h-full w-full -z-10' onClick={() => setIsModalOpen(false)} />
 
-            <Image src='/homepage/social_media/call.png' onClick={() => window.open(`tel:+919325987875`)} className=" hidden md:block h-10 w-10 md:h-12 md:w-12 rounded-lg p-1 cursor-pointer hover:border-2 border-blue-800 shadow-md shadow-white" alt="Social Media" width={75} height={100} />
-            
+            <div className='flex flex-row gap-4'>
+                <Image src='/homepage/social_media/call.png' onClick={() => window.open(`tel:+919325987875`)} className="h-10 w-10 md:h-12 md:w-12 mr-3 rounded-lg p-1 cursor-pointer hover:border-2 border-blue-800 shadow-md shadow-white" alt="Social Media" width={75} height={100} />
+                <Image src='/homepage/social_media/whatsapp.png' onClick={() => window.open('https://wa.me/+919325987875?text=Hello%20DK%20Academy%20,%20I%20want%20to%20join%20the%20Academy.', '_blank')} className="md:hidden h-10 w-10 md:h-12 md:w-12 mr-3 rounded-lg p-1 cursor-pointer hover:border-2 border-blue-800 shadow-md shadow-white" alt="Social Media" width={75} height={100} />
+            </div>
+
             <div className='relative flex flex-row w-full h-fit lg:w-[33%]'>
-                <div className="bg-white p-3 w-full overflow-y-scroll relative h-[calc(100vh-4.6rem)] border-4 border-blue-800 rounded-3xl shadow-md md:shadow-xl shadow-white">
+                <div className="bg-white p-3 w-full overflow-y-scroll relative h-[calc(100vh-4.6rem)] md:h-fit lg:h-[calc(100vh-4.6rem)] border-4 border-blue-800 rounded-3xl shadow-md md:shadow-xl shadow-white">
 
                     <div className='flex flex-col '>
                         <div className="flex items-center mx-auto">
@@ -211,15 +214,10 @@ function Modal({ setIsModalOpen }: ModalProps) {
                     </form>
                 </div>
 
-                <Image src="/cancel.svg" onClick={() => setIsModalOpen(false)} className='absolute top-2 left-2 cursor-pointer z-50 bg-white rounded-full' alt='close modal' height={30} width={30} />
-            
+                <Image src="/cancel.svg" onClick={() => setIsModalOpen(false)} className='absolute top-2 left-2 cursor-pointer z-50 bg-white rounded-full' alt='close modal' height={30} width={30} />            
             </div>
 
-
-            <div className='flex flex-row gap-4'>
-                <Image src='/homepage/social_media/call.png' onClick={() => window.open(`tel:+919325987875`)} className="md:hidden h-10 w-10 md:h-12 md:w-12 mr-3 rounded-lg p-1 cursor-pointer hover:border-2 border-blue-800 shadow-md shadow-white" alt="Social Media" width={75} height={100} />
-                <Image src='/homepage/social_media/whatsapp.png' onClick={() => window.open('https://wa.me/+919325987875?text=Hello%20DK%20Academy%20,%20I%20want%20to%20join%20the%20Academy.', '_blank')} className="h-10 w-10 md:h-12 md:w-12 mr-3 rounded-lg p-1 cursor-pointer hover:border-2 border-blue-800 shadow-md shadow-white" alt="Social Media" width={75} height={100} />
-            </div>
+            <Image src='/homepage/social_media/whatsapp.png' onClick={() => window.open('https://wa.me/+919325987875?text=Hello%20DK%20Academy%20,%20I%20want%20to%20join%20the%20Academy.', '_blank')} className="hidden md:block h-10 w-10 md:h-12 md:w-12 mr-3 rounded-lg p-1 cursor-pointer hover:border-2 border-blue-800 shadow-md shadow-white" alt="Social Media" width={75} height={100} />
 
         </div >
 
