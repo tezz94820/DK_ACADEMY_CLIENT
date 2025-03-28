@@ -5,6 +5,8 @@ import Testimonial from '@/components/HomePage/Testimonial';
 import Head from 'next/head';
 import { testimonialContent } from '../../data/testimonialContent';
 import Footer from '@/components/HomePage/Footer';
+import { useState } from 'react';
+import Modal from '@/components/HomePage/Modal';
 
 
 const coursalImages = ['/homepage/coursal/1.png', '/homepage/coursal/2.png', '/homepage/coursal/3.png', '/homepage/coursal/2.png'];
@@ -18,7 +20,7 @@ const courseCardDetails = [
   {
     teacherImage: '/homepage/dksir.png',
     heading: 'Theory Courses',
-    topics: ['Lecture Video','Lecture Notes','Imp Questions', 'Short Tricks'],
+    topics: ['Lecture Video', 'Lecture Notes', 'Imp Questions', 'Short Tricks'],
     courseLink: '/courses/theory'
   },
   {
@@ -29,9 +31,17 @@ const courseCardDetails = [
   }
 ]
 export default function Home() {
+
+  const [isModalOpen, setIsModalOpen] = useState(true); // Modal opens by default
+
   return (
     <div className='m-0 px-2 md:px-5'>
       <Navbar />
+
+      {/* Modal Component */}
+      {isModalOpen && (
+        <Modal setIsModalOpen={setIsModalOpen} />
+      )}
 
       {/* coursal */}
       <section className='h-[16rem] md:h-[26rem] w-full mt-20 '>
@@ -55,8 +65,8 @@ export default function Home() {
         <div className='mt-10'>
           <div className='flex flex-col max-md:gap-4 items-center md:flex-row md:justify-evenly'>
             {
-              testimonialContent.map( item => (
-                <Testimonial key={item.name} name={item.name} parent={item.parent} profilePhoto={item.profilePhoto} video={item.video} videoPoster={item.videoPoster} textContent={item.textContent}/>
+              testimonialContent.map(item => (
+                <Testimonial key={item.name} name={item.name} parent={item.parent} profilePhoto={item.profilePhoto} video={item.video} videoPoster={item.videoPoster} textContent={item.textContent} />
               ))
             }
           </div>
@@ -65,7 +75,7 @@ export default function Home() {
 
       {/* Footer Section section */}
       <section className='w-full mt-5'>
-            <Footer />
+        <Footer />
       </section>
     </div>
   )

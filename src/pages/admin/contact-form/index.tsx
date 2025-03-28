@@ -8,6 +8,7 @@ type contactFormType = {
     last_name: string,
     email: string,
     phone: string,
+    class:string,
     message: string,
     called: boolean,
     date: string,
@@ -108,6 +109,7 @@ const ContactForm = () => {
                             <th className="p-2 sm:p-3 text-left">Last Name</th>
                             <th className="p-2 sm:p-3 text-left">Email</th>
                             <th className="p-2 sm:p-3 text-left">Phone</th>
+                            <th className="p-2 sm:p-3 text-left">Class</th>
                             <th className="p-2 sm:p-3 text-left">Message</th>
                         </tr>
                     </thead>
@@ -137,6 +139,7 @@ const ContactForm = () => {
                                 <td className="p-2 sm:p-3 border-b text-xs sm:text-sm">{item.last_name}</td>
                                 <td className="p-2 sm:p-3 border-b text-xs sm:text-sm">{item.email}</td>
                                 <td className="p-2 sm:p-3 border-b text-xs sm:text-sm">{item.phone}</td>
+                                <td className="p-2 sm:p-3 border-b text-xs sm:text-sm">{item.class}</td>
                                 <td className="p-2 sm:p-3 border-b text-xs sm:text-sm">
                                     <button
                                         className="text-blue-500 underline"
