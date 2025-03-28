@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 const dev = "http://localhost:5000/api/v1/";
 const prod = "https://api.dkacademy.co.in/api/v1/";
 
-const baseURL = dev;
+const baseURL = prod;
 
 const axiosClient = axios.create({
     baseURL: baseURL,
