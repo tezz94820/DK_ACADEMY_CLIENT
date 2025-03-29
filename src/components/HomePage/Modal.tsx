@@ -68,7 +68,7 @@ function Modal({ setIsModalOpen }: ModalProps) {
     };
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-80 flex md:flex-row flex-col justify-evenly items-center z-50 px-6 gap-2 w-full min-h-screen">
+        <div className="fixed inset-0 bg-black bg-opacity-80 flex md:flex-row flex-col items-center md:justify-evenly z-50 px-6 py-2 gap-4 w-full min-h-[100svh]">
             <div className='absolute h-full w-full -z-10' onClick={() => setIsModalOpen(false)} />
 
             <div className='flex flex-row gap-4'>
@@ -77,7 +77,7 @@ function Modal({ setIsModalOpen }: ModalProps) {
             </div>
 
             <div className='relative flex flex-row w-full h-fit lg:w-[33%]'>
-                <div className="bg-white p-3 w-full overflow-y-scroll relative h-[calc(100vh-4.6rem)] md:h-fit lg:h-[calc(100vh-4.6rem)] border-4 border-blue-800 rounded-3xl shadow-md md:shadow-xl shadow-white">
+                <div className="bg-white p-3 w-full overflow-y-scroll relative h-[calc(100vh-8.5rem)] md:h-fit lg:h-[calc(100vh-4rem)] border-4 border-blue-800 rounded-3xl shadow-md md:shadow-xl shadow-white">
 
                     <div className='flex flex-col '>
                         <div className="flex items-center mx-auto">
@@ -152,7 +152,7 @@ function Modal({ setIsModalOpen }: ModalProps) {
                                 htmlFor="grid-message">
                                 Your Message
                             </label>
-                            <textarea rows={10} id="grid-message"
+                            <textarea rows={2} id="grid-message"
                                 placeholder='Your Message'
                                 className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                 name='message'

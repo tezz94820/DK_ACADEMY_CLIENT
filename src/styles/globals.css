@@ -29,6 +29,10 @@
     display: none; /* Hide scrollbar on Webkit browsers (Chrome, Safari, etc.) */
   }
 
+  .hide_Scrollbar_track::-webkit-scrollbar-track {
+    @apply bg-red-500
+  }
+
   .print-hidden {
     @media print {
       display: none;
